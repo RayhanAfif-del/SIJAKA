@@ -9,7 +9,8 @@ class StatistikController extends Controller
 {
     public function index()
     {
-        $bekerja = Alumni::bekerja()->count();
+$bekerja = Alumni::bekerja()->count();
+        $melanjutkanStudi = Alumni::melanjutkanStudi()->count();
         $belumBekerja = Alumni::belumBekerja()->count();
 
         $perTahun = Alumni::selectRaw('tahun_lulus, status, count(*) as total')
@@ -18,6 +19,6 @@ class StatistikController extends Controller
             ->get()
             ->groupBy('tahun_lulus');
 
-        return view('public.statistik.index', compact('bekerja', 'belumBekerja', 'perTahun'));
+        return view('public.statistik.index', compact('bekerja', 'melanjutkanStudi', 'belumBekerja', 'perTahun'));
     }
 }

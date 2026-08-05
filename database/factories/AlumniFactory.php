@@ -16,7 +16,7 @@ class AlumniFactory extends Factory
             'nama' => fake()->name(),
             'jurusan' => fake()->randomElement($jurusan),
             'tahun_lulus' => fake()->numberBetween(2022, 2026),
-            'status' => fake()->randomElement(['Bekerja', 'Bekerja', 'Bekerja', 'Belum Bekerja']), // bobot ~70% bekerja
+'status' => fake()->randomElement(['Bekerja', 'Bekerja', 'Bekerja', 'Melanjutkan Studi', 'Melanjutkan Studi', 'Belum Bekerja']), // bobot ~50% bekerja, ~33% study, ~17% belum
         ];
     }
 }

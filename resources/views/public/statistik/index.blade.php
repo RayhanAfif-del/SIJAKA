@@ -8,7 +8,7 @@
     </section>
 
     <section class="max-w-7xl mx-auto px-4 py-14">
-        @php $totalAlumniStat = $bekerja + $belumBekerja; @endphp
+@php $totalAlumniStat = $bekerja + $melanjutkanStudi + $belumBekerja; @endphp
 
         <div class="grid sm:grid-cols-3 gap-6 mb-12">
             <div class="bg-white border border-gray-100 rounded-xl p-6 text-center">
@@ -20,8 +20,8 @@
                 <p class="text-sm text-gray-500 mt-1">Sudah Bekerja ({{ $totalAlumniStat ? round($bekerja / $totalAlumniStat * 100) : 0 }}%)</p>
             </div>
             <div class="bg-amber-50 rounded-xl p-6 text-center">
-                <p class="text-3xl font-bold text-amber-600">{{ $belumBekerja }}</p>
-                <p class="text-sm text-gray-500 mt-1">Belum Bekerja ({{ $totalAlumniStat ? round($belumBekerja / $totalAlumniStat * 100) : 0 }}%)</p>
+                <p class="text-3xl font-bold text-amber-600">{{ $melanjutkanStudi }}</p>
+                <p class="text-sm text-gray-500 mt-1">Melanjutkan Studi ({{ $totalAlumniStat ? round($melanjutkanStudi / $totalAlumniStat * 100) : 0 }}%)</p>
             </div>
         </div>
 
@@ -29,9 +29,9 @@
         <div class="bg-white border border-gray-100 rounded-xl divide-y divide-gray-100">
             @forelse ($perTahun as $tahun => $rows)
                 @php
-                    $tBekerja = $rows->firstWhere('status', 'Bekerja')->total ?? 0;
-                    $tBelum = $rows->firstWhere('status', 'Belum Bekerja')->total ?? 0;
-                    $tTotal = $tBekerja + $tBelum;
+$tBekerja = $rows->firstWhere('status', 'Bekerja')->total ?? 0;
+                    $tStudi = $rows->firstWhere('status', 'Melanjutkan Studi')->total ?? 0;
+                    $tTotal = $tBekerja + $tStudi;
                     $persen = $tTotal ? round($tBekerja / $tTotal * 100) : 0;
                 @endphp
                 <div class="p-5">

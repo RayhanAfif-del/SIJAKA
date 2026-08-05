@@ -31,7 +31,7 @@
                         <td class="px-5 py-3 text-gray-500">{{ $item->jurusan }}</td>
                         <td class="px-5 py-3 text-gray-500">{{ $item->tahun_lulus }}</td>
                         <td class="px-5 py-3">
-                            <span class="text-xs font-medium px-2.5 py-1 rounded-full {{ $item->status === 'Bekerja' ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700' }}">{{ $item->status }}</span>
+<span class="text-xs font-medium px-2.5 py-1 rounded-full {{ match($item->status) { 'Bekerja' => 'bg-green-100 text-green-700', 'Melanjutkan Studi' => 'bg-blue-100 text-blue-700', default => 'bg-amber-100 text-amber-700' } }}">{{ $item->status }}</span>
                         </td>
                         <td class="px-5 py-3">
                             <div class="flex items-center justify-end gap-2">

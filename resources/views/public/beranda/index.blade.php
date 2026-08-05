@@ -162,15 +162,15 @@
                 <h2 class="font-semibold text-blue-900">Statistik Penyerapan Alumni</h2>
                 <a href="{{ route('statistik.index') }}" class="text-sm text-blue-600 hover:underline">Lihat Semua &rarr;</a>
             </div>
-            @php $totalAlumniBeranda = $alumniBekerja + $alumniBelumBekerja; @endphp
+@php $totalAlumniBeranda = $alumniBekerja + $alumniMelanjutkanStudi + $alumniBelumBekerja; @endphp
             <div class="bg-white rounded-xl border border-gray-100 p-6 grid grid-cols-2 gap-4">
                 <div class="bg-blue-50 rounded-lg p-4 text-center">
                     <p class="text-2xl font-bold text-blue-700">{{ $alumniBekerja }}</p>
                     <p class="text-xs text-gray-500 mt-1">Sudah Bekerja</p>
                 </div>
                 <div class="bg-amber-50 rounded-lg p-4 text-center">
-                    <p class="text-2xl font-bold text-amber-600">{{ $alumniBelumBekerja }}</p>
-                    <p class="text-xs text-gray-500 mt-1">Belum Bekerja</p>
+                    <p class="text-2xl font-bold text-amber-600">{{ $alumniMelanjutkanStudi }}</p>
+                    <p class="text-xs text-gray-500 mt-1">Melanjutkan Studi</p>
                 </div>
                 <div class="col-span-2 text-center text-sm text-gray-500 pt-2">
                     Total Alumni Terdata: <span class="font-semibold text-gray-700">{{ $totalAlumniBeranda }}</span>

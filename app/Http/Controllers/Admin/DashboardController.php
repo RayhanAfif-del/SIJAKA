@@ -18,7 +18,8 @@ class DashboardController extends Controller
             'totalArtikel' => Artikel::count(),
             'totalAlumni' => Alumni::count(),
 
-            'alumniBekerja' => Alumni::bekerja()->count(),
+'alumniBekerja' => Alumni::bekerja()->count(),
+            'alumniMelanjutkanStudi' => Alumni::melanjutkanStudi()->count(),
             'alumniBelumBekerja' => Alumni::belumBekerja()->count(),
 
             'lowonganMenunggu' => Lowongan::menunggu()->with('mitra')->latest()->take(5)->get(),

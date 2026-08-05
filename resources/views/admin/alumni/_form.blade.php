@@ -22,7 +22,7 @@
 <div class="mb-6">
     <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
     <select name="status" required class="w-full sm:w-56 rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500 text-sm">
-        @foreach (['Bekerja', 'Belum Bekerja'] as $status)
+@foreach (['Bekerja', 'Melanjutkan Studi', 'Belum Bekerja'] as $status)
             <option value="{{ $status }}" @selected(old('status', $alumni->status ?? '') === $status)>{{ $status }}</option>
         @endforeach
     </select>
