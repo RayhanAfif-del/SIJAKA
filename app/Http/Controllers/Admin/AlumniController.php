@@ -32,21 +32,21 @@ class AlumniController extends Controller
         return redirect()->route('admin.alumni.index')->with('status', 'Data alumni berhasil ditambahkan.');
     }
 
-    public function edit(Alumni $alumni)
+public function edit(Alumni $alumnus)
     {
-        return view('admin.alumni.edit', compact('alumni'));
+        return view('admin.alumni.edit', ['alumni' => $alumnus]);
     }
 
-    public function update(AlumniRequest $request, Alumni $alumni): RedirectResponse
+    public function update(AlumniRequest $request, Alumni $alumnus): RedirectResponse
     {
-        $alumni->update($request->validated());
+        $alumnus->update($request->validated());
 
         return redirect()->route('admin.alumni.index')->with('status', 'Data alumni berhasil diperbarui.');
     }
 
-    public function destroy(Alumni $alumni): RedirectResponse
+    public function destroy(Alumni $alumnus): RedirectResponse
     {
-        $alumni->delete();
+        $alumnus->delete();
 
         return back()->with('status', 'Data alumni berhasil dihapus.');
     }
