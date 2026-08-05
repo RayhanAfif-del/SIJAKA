@@ -2,7 +2,7 @@
 
     <section class="bg-blue-50">
         <div class="max-w-7xl mx-auto px-4 py-10">
-            <p class="text-sm text-gray-400 mb-2"><a href="{{ route('home') }}" class="hover:text-blue-600">Beranda</a> &gt; Struktur Organisasi</p>
+            <p class="text-sm text-gray-400 mb-2"><a href="{{ route('home') }}" class="hover:text-blue-600">Beranda</a> &gt; <a href="{{ route('profil.index') }}" class="hover:text-blue-600">Profil SIJAKA</a> &gt; Struktur Organisasi</p>
             <h1 class="text-3xl font-bold text-gray-900 mb-2">Struktur Organisasi</h1>
             <p class="text-gray-500 text-sm max-w-2xl">Susunan pengurus BKK SIJAKA SMK N 1 Bangsri yang bertanggung jawab menjalankan layanan informasi karier.</p>
         </div>

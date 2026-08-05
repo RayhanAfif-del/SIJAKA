@@ -57,9 +57,18 @@
                     <a href="{{ route('lowongan.index') }}" class="text-sm text-blue-600 hover:underline">Lihat Semua &rarr;</a>
                 </div>
                 <div class="grid sm:grid-cols-3 gap-4">
-                    @foreach ($lowonganUnggulan as $item)
+@foreach ($lowonganUnggulan as $item)
                         <div class="border border-gray-100 rounded-xl p-4 hover:shadow-md transition">
-                            <p class="font-semibold text-blue-700 text-sm mb-2">{{ $item->mitra->nama_perusahaan }}</p>
+                            <div class="flex items-center gap-2 mb-2">
+                                <div class="w-9 h-9 rounded-lg bg-blue-100 flex items-center justify-center text-blue-600 text-xs font-semibold overflow-hidden flex-shrink-0">
+                                    @if ($item->mitra->logo)
+                                        <img src="{{ Storage::url($item->mitra->logo) }}" class="w-full h-full object-cover" alt="{{ $item->mitra->nama_perusahaan }}">
+                                    @else
+                                        {{ strtoupper(substr($item->mitra->nama_perusahaan, 0, 2)) }}
+                                    @endif
+                                </div>
+                                <p class="font-semibold text-blue-700 text-sm">{{ $item->mitra->nama_perusahaan }}</p>
+                            </div>
                             <p class="font-semibold text-gray-800 mb-1">{{ $item->posisi }}</p>
                             <p class="text-xs text-gray-400 mb-2">&#128205; {{ $item->lokasi }}</p>
                             <span class="inline-block text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded mb-3">{{ $item->jenis_pekerjaan }}</span>
@@ -86,11 +95,20 @@
                 <a href="{{ route('lowongan.index') }}" class="text-sm text-blue-600 hover:underline">Lihat Semua &rarr;</a>
             </div>
             <div class="bg-white rounded-xl border border-gray-100 divide-y divide-gray-100">
-                @forelse ($lowonganTerbaru as $item)
-                    <a href="{{ route('lowongan.show', $item) }}" class="flex items-center justify-between p-4 hover:bg-gray-50 transition">
-                        <span>
-                            <span class="block text-sm font-semibold text-gray-800">{{ $item->posisi }}</span>
-                            <span class="block text-xs text-gray-400">{{ $item->mitra->nama_perusahaan }} &middot; {{ $item->lokasi }}</span>
+@forelse ($lowonganTerbaru as $item)
+                    <a href="{{ route('lowongan.show', $item) }}" class="flex items-center justify-between gap-3 p-4 hover:bg-gray-50 transition">
+                        <span class="flex items-center gap-3">
+                            <span class="w-9 h-9 rounded-lg bg-blue-100 flex items-center justify-center text-blue-600 text-xs font-semibold overflow-hidden flex-shrink-0">
+                                @if ($item->mitra->logo)
+                                    <img src="{{ Storage::url($item->mitra->logo) }}" class="w-full h-full object-cover" alt="{{ $item->mitra->nama_perusahaan }}">
+                                @else
+                                    {{ strtoupper(substr($item->mitra->nama_perusahaan, 0, 2)) }}
+                                @endif
+                            </span>
+                            <span>
+                                <span class="block text-sm font-semibold text-gray-800">{{ $item->posisi }}</span>
+                                <span class="block text-xs text-gray-400">{{ $item->mitra->nama_perusahaan }} &middot; {{ $item->lokasi }}</span>
+                            </span>
                         </span>
                         <span class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded">{{ $item->jenis_pekerjaan }}</span>
                     </a>

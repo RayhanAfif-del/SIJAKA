@@ -17,14 +17,23 @@
 
         <div class="grid lg:grid-cols-3 gap-8">
             <div class="lg:col-span-2 space-y-8">
-                <div class="flex items-start justify-between border-b border-gray-100 pb-6">
-                    <div>
-                        <h2 class="text-xl font-bold text-gray-900 mb-1">{{ $lowongan->posisi }}</h2>
-                        <p class="text-blue-600 font-medium mb-2">{{ $lowongan->mitra->nama_perusahaan }}</p>
-                        <div class="flex flex-wrap gap-3 text-xs text-gray-500">
+<div class="flex items-start justify-between border-b border-gray-100 pb-6">
+                    <div class="flex items-start gap-4">
+                        <div class="w-16 h-16 rounded-xl bg-blue-100 flex items-center justify-center text-blue-600 text-base font-semibold overflow-hidden flex-shrink-0">
+                            @if ($lowongan->mitra->logo)
+                                <img src="{{ Storage::url($lowongan->mitra->logo) }}" class="w-full h-full object-cover" alt="{{ $lowongan->mitra->nama_perusahaan }}">
+                            @else
+                                {{ strtoupper(substr($lowongan->mitra->nama_perusahaan, 0, 2)) }}
+                            @endif
+                        </div>
+                        <div>
+                            <h2 class="text-xl font-bold text-gray-900 mb-1">{{ $lowongan->posisi }}</h2>
+                            <p class="text-blue-600 font-medium mb-2">{{ $lowongan->mitra->nama_perusahaan }}</p>
+<div class="flex flex-wrap gap-3 text-xs text-gray-500">
                             <span>&#128205; {{ $lowongan->lokasi }}</span>
                             <span>&#9200; {{ $lowongan->jenis_pekerjaan }}</span>
                             @if ($lowongan->gaji)<span>&#128176; {{ $lowongan->gaji }}</span>@endif
+                        </div>
                         </div>
                     </div>
                     @if ($lowongan->unggulan)
