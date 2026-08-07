@@ -21,7 +21,7 @@
         </div>
     </section>
 
-<section class="bg-gray-50 py-14">
+    <section class="bg-gray-50 py-14">
         <div class="max-w-7xl mx-auto px-4">
             <p class="text-center text-sm font-semibold text-blue-600 mb-8">&middot;&middot; VISI &amp; MISI &middot;&middot;</p>
             <div class="grid lg:grid-cols-2 gap-6">
@@ -44,10 +44,10 @@
                 </div>
             </div>
         </div>
-</section>
+    </section>
 
     <section class="max-w-7xl mx-auto px-4 py-14">
-<div class="text-center mb-8">
+        <div class="text-center mb-8">
             <p class="text-sm font-semibold text-blue-600 mb-1">&middot;&middot; STRUKTUR ORGANISASI &middot;&middot;</p>
             <h2 class="text-2xl font-bold text-gray-900">Susunan Pengurus BKK SIJAKA</h2>
         </div>
