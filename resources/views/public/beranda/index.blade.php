@@ -17,6 +17,7 @@
                     <span class="flex items-center gap-2"><span class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">&#128101;</span> Terpercaya</span>
                     <span class="flex items-center gap-2"><span class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">&#128188;</span> Peluang Kerja</span>
                     <span class="flex items-center gap-2"><span class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">&#128200;</span> Karier Sukses</span>
+                    <span class="flex items-center gap-2"><span class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">&#128200;</span> Di Isi Opo Iki</span>
                 </div>
             </div>
             <div class="rounded-2xl overflow-hidden shadow-lg">
@@ -31,19 +32,19 @@
     <section class="max-w-7xl mx-auto px-4 -mt-8 relative z-10">
         <div class="bg-white rounded-xl shadow-md border border-gray-100 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 divide-x divide-y sm:divide-y-0 divide-gray-100">
             @foreach ([
-                ['label' => 'Lowongan Pekerjaan', 'desc' => 'Temukan peluang kerja sesuai minat Anda', 'route' => 'lowongan.index'],
-                ['label' => 'Artikel Dunia Kerja', 'desc' => 'Tips, berita, dan informasi seputar dunia kerja', 'route' => 'artikel.index'],
-                ['label' => 'Galeri Kegiatan', 'desc' => 'Dokumentasi kegiatan BKK terbaru', 'route' => 'galeri.index'],
-                ['label' => 'Mitra Perusahaan', 'desc' => 'Perusahaan terbaik yang bekerja sama dengan kami', 'route' => 'profil.index'],
-                ['label' => 'Statistik Alumni', 'desc' => 'Data penyerapan alumni dan capaian BKK', 'route' => 'statistik.index'],
+                ['label' => 'Lowongan Pekerjaan', 'desc' => 'Temukan peluang kerja sesuai minat Anda'],
+                ['label' => 'Artikel Dunia Kerja', 'desc' => 'Tips, berita, dan informasi seputar dunia kerja'],
+                ['label' => 'Galeri Kegiatan', 'desc' => 'Dokumentasi kegiatan BKK terbaru'],
+                ['label' => 'Mitra Perusahaan', 'desc' => 'Perusahaan terbaik yang bekerja sama dengan kami'],
+                ['label' => 'Statistik Alumni', 'desc' => 'Data penyerapan alumni dan capaian BKK'],
             ] as $item)
-                <a href="{{ route($item['route']) }}" class="p-5 flex items-start gap-3 hover:bg-blue-50/50 transition">
-                    <span class="w-9 h-9 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center flex-shrink-0">&#9679;</span>
+            <div class="p-5 flex items-start gap-3 hover:bg-blue-50/50 transition">
+                <span class="w-9 h-9 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center flex-shrink-0">&#9679;</span>
                     <span>
                         <span class="block text-sm font-semibold text-gray-800">{{ $item['label'] }}</span>
                         <span class="block text-xs text-gray-400 mt-0.5">{{ $item['desc'] }}</span>
-                    </span>
-                </a>
+                </span>
+            </div>
             @endforeach
         </div>
     </section>
@@ -149,9 +150,15 @@
             <div class="flex items-center justify-between mb-4">
                 <h2 class="font-semibold text-blue-900">Mitra Perusahaan Kami</h2>
             </div>
-            <div class="bg-white rounded-xl border border-gray-100 p-6 flex flex-wrap gap-4">
+<div class="bg-white rounded-xl border border-gray-100 p-6 flex flex-wrap gap-4">
                 @forelse ($mitra as $item)
-                    <span class="px-4 py-2 rounded-lg bg-gray-50 text-sm text-gray-600 font-medium">{{ $item->nama_perusahaan }}</span>
+                    <span class="w-16 h-16 rounded-xl bg-gray-50 border border-gray-100 flex items-center justify-center overflow-hidden">
+                        @if ($item->logo)
+                            <img src="{{ Storage::url($item->logo) }}" class="w-full h-full object-contain" alt="{{ $item->nama_perusahaan }}" title="{{ $item->nama_perusahaan }}">
+                        @else
+                            <span class="text-xs font-semibold text-gray-400 px-1 text-center">{{ strtoupper(substr($item->nama_perusahaan, 0, 2)) }}</span>
+                        @endif
+                    </span>
                 @empty
                     <p class="text-sm text-gray-400">Belum ada mitra.</p>
                 @endforelse
