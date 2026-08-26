@@ -5,13 +5,13 @@
         <p class="text-sm text-gray-500">Atur teks utama, tombol, dan identitas singkat yang tampil di halaman utama web.</p>
     </div>
 
-    <div class="grid lg:grid-cols-3 gap-6">
-        <div class="lg:col-span-2 bg-white rounded-xl border border-gray-100 shadow-sm p-6">
+    <div class="grid lg:grid-cols-3 gap-4 max-w-6xl mx-auto">
+        <div class="lg:col-span-2 admin-form-panel">
             <form method="POST" action="{{ route('admin.pengaturan-beranda.update') }}" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
-                <div class="grid sm:grid-cols-2 gap-5">
+                <div class="grid sm:grid-cols-2 gap-4">
                     <div class="sm:col-span-2">
                         <label class="block text-sm font-medium text-gray-700 mb-1">Nama Website</label>
                         <input type="text" name="site_name" value="{{ old('site_name', $pengaturanWebsite->site_name) }}" class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500 text-sm">
@@ -113,14 +113,14 @@
                     </div>
                 </div>
 
-                <div class="mt-6 flex items-center gap-3">
+                <div class="mt-5 flex items-center gap-3">
                     <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-5 py-2.5 rounded-lg transition">Simpan Perubahan</button>
                     <a href="{{ route('admin.dashboard') }}" class="text-sm text-gray-500 hover:text-gray-700">Kembali ke dashboard</a>
                 </div>
             </form>
         </div>
 
-        <div class="bg-blue-950 text-white rounded-xl p-6 shadow-sm">
+        <div class="bg-blue-950 text-white rounded-xl p-5 shadow-sm">
             <p class="text-sm text-blue-200 uppercase tracking-wide mb-2">Preview</p>
             <div class="w-16 h-16 rounded-2xl bg-white/10 border border-white/10 overflow-hidden flex items-center justify-center mb-4">
                 @if ($pengaturanWebsite->site_icon)
@@ -139,7 +139,7 @@
                 <span class="inline-flex items-center px-3 py-1 rounded-full bg-white/10 text-xs">{{ $pengaturanWebsite->hero_badge }}</span>
                 <span class="inline-flex items-center px-3 py-1 rounded-full bg-white/10 text-xs">{{ $pengaturanWebsite->site_name }}</span>
             </div>
-            <div class="mt-5 rounded-2xl overflow-hidden bg-white/10 border border-white/10 h-44 flex items-center justify-center">
+            <div class="mt-4 rounded-2xl overflow-hidden bg-white/10 border border-white/10 h-44 flex items-center justify-center">
                 @if ($pengaturanWebsite->hero_image)
                     <img src="{{ \Illuminate\Support\Facades\Storage::url($pengaturanWebsite->hero_image) }}" alt="Preview Foto Beranda" class="w-full h-full object-cover">
                 @else

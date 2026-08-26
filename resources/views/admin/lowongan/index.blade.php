@@ -6,62 +6,79 @@
             'disetujui' => 'bg-green-100 text-green-700',
             'ditolak' => 'bg-red-100 text-red-700',
         ];
+        $statusFilters = [
+            'Semua' => null,
+            'Menunggu' => 'menunggu',
+            'Disetujui' => 'disetujui',
+            'Ditolak' => 'ditolak',
+        ];
     @endphp
 
-    <div class="mb-6">
-        <h1 class="text-xl font-semibold text-gray-800">Kelola Lowongan</h1>
-        <p class="text-sm text-gray-500">Verifikasi dan kelola lowongan yang diajukan oleh mitra.</p>
+    <div class="admin-page-header">
+        <div>
+            <h1 class="admin-page-title">Kelola Lowongan</h1>
+            <p class="admin-page-subtitle">Verifikasi dan kelola lowongan yang diajukan oleh mitra.</p>
+        </div>
     </div>
 
-    <div class="flex flex-wrap gap-2 mb-6">
-        <a href="{{ route('admin.lowongan.index') }}" class="px-4 py-1.5 rounded-full text-sm {{ !request('status') ? 'bg-blue-600 text-white' : 'border border-gray-200 text-gray-600 hover:bg-gray-50' }}">Semua</a>
-        <a href="{{ route('admin.lowongan.index', ['status' => 'menunggu']) }}" class="px-4 py-1.5 rounded-full text-sm {{ request('status') === 'menunggu' ? 'bg-blue-600 text-white' : 'border border-gray-200 text-gray-600 hover:bg-gray-50' }}">Menunggu</a>
-        <a href="{{ route('admin.lowongan.index', ['status' => 'disetujui']) }}" class="px-4 py-1.5 rounded-full text-sm {{ request('status') === 'disetujui' ? 'bg-blue-600 text-white' : 'border border-gray-200 text-gray-600 hover:bg-gray-50' }}">Disetujui</a>
-        <a href="{{ route('admin.lowongan.index', ['status' => 'ditolak']) }}" class="px-4 py-1.5 rounded-full text-sm {{ request('status') === 'ditolak' ? 'bg-blue-600 text-white' : 'border border-gray-200 text-gray-600 hover:bg-gray-50' }}">Ditolak</a>
+    <div class="admin-toolbar mb-4">
+        @foreach ($statusFilters as $label => $value)
+            <a href="{{ is_null($value) ? route('admin.lowongan.index') : route('admin.lowongan.index', ['status' => $value]) }}"
+               class="admin-filter-chip {{ request('status') === $value || (is_null($value) && !request('status')) ? 'bg-blue-600 border-blue-600 text-white' : 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50' }}">
+                {{ $label }}
+            </a>
+        @endforeach
     </div>
 
-    <div class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
-        <table class="w-full text-sm">
-            <thead class="bg-gray-50 text-gray-500 text-xs uppercase">
+    <div class="admin-table-shell">
+        <table class="admin-table">
+            <thead class="admin-table-head">
                 <tr>
-                    <th class="text-left px-5 py-3">Posisi</th>
-                    <th class="text-left px-5 py-3">Mitra</th>
-                    <th class="text-left px-5 py-3">Lokasi</th>
-                    <th class="text-left px-5 py-3">Status</th>
-                    <th class="text-right px-5 py-3">Aksi</th>
+                    <th class="text-left">Posisi</th>
+                    <th class="text-left">Mitra</th>
+                    <th class="text-left">Lokasi</th>
+                    <th class="text-left">Status</th>
+                    <th class="text-right">Aksi</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-gray-100">
+            <tbody>
                 @forelse ($lowongan as $item)
-                    <tr>
-                        <td class="px-5 py-3 font-medium text-gray-800">{{ $item->posisi }}</td>
-                        <td class="px-5 py-3 text-gray-500">{{ $item->mitra->nama_perusahaan }}</td>
-                        <td class="px-5 py-3 text-gray-500">{{ $item->lokasi }}</td>
-                        <td class="px-5 py-3">
-                            <span class="text-xs font-medium px-2.5 py-1 rounded-full {{ $statusColor[$item->status] ?? 'bg-gray-100 text-gray-600' }}">{{ ucfirst($item->status) }}</span>
+                    <tr class="admin-table-row">
+                        <td class="admin-table-cell font-medium text-slate-800">{{ $item->posisi }}</td>
+                        <td class="admin-table-cell">{{ $item->mitra->nama_perusahaan }}</td>
+                        <td class="admin-table-cell">{{ $item->lokasi }}</td>
+                        <td class="admin-table-cell">
+                            <span class="text-xs font-medium px-2.5 py-1 rounded-full {{ $statusColor[$item->status] ?? 'bg-slate-100 text-slate-600' }}">
+                                {{ ucfirst($item->status) }}
+                            </span>
                         </td>
-                        <td class="px-5 py-3">
-                            <div class="flex items-center justify-end gap-2 flex-wrap">
+                        <td class="admin-table-cell">
+                            <div class="admin-action-group">
                                 @if ($item->status === 'menunggu')
                                     <form method="POST" action="{{ route('admin.lowongan.approve', $item) }}">
-                                        @csrf @method('PATCH')
-                                        <button type="submit" class="text-xs text-green-700 border border-green-200 rounded-lg px-3 py-1.5 hover:bg-green-50">Setujui</button>
+                                        @csrf
+                                        @method('PATCH')
+                                        <button type="submit" class="admin-action-link border-green-200 text-green-700 hover:bg-green-50">Setujui</button>
                                     </form>
                                     <form method="POST" action="{{ route('admin.lowongan.reject', $item) }}">
-                                        @csrf @method('PATCH')
-                                        <button type="submit" class="text-xs text-red-600 border border-red-200 rounded-lg px-3 py-1.5 hover:bg-red-50">Tolak</button>
+                                        @csrf
+                                        @method('PATCH')
+                                        <button type="submit" class="admin-action-link border-red-200 text-red-600 hover:bg-red-50">Tolak</button>
                                     </form>
                                 @endif
-                                <a href="{{ route('admin.lowongan.edit', $item) }}" class="text-xs text-blue-600 border border-blue-200 rounded-lg px-3 py-1.5 hover:bg-blue-50">Edit</a>
+                                <a href="{{ route('admin.lowongan.edit', $item) }}" class="admin-action-link border-blue-200 text-blue-600 hover:bg-blue-50">Edit</a>
                                 <form method="POST" action="{{ route('admin.lowongan.destroy', $item) }}" onsubmit="return confirm('Hapus lowongan ini?')">
-                                    @csrf @method('DELETE')
-                                    <button type="submit" class="text-xs text-red-600 border border-red-200 rounded-lg px-3 py-1.5 hover:bg-red-50">Hapus</button>
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="admin-action-link border-red-200 text-red-600 hover:bg-red-50">Hapus</button>
                                 </form>
                             </div>
                         </td>
                     </tr>
                 @empty
-                    <tr><td colspan="5" class="px-5 py-8 text-center text-gray-400">Tidak ada data lowongan.</td></tr>
+                    <tr>
+                        <td colspan="5" class="admin-empty-state">Tidak ada data lowongan.</td>
+                    </tr>
                 @endforelse
             </tbody>
         </table>

@@ -1,8 +1,8 @@
 <x-layouts.public title="Profil SIJAKA">
 
-    <section class="bg-blue-950 text-white">
+    <section class="bg-blue-800 text-white">
         <div class="max-w-7xl mx-auto px-4 py-10">
-            <p class="text-sm text-blue-300 mb-2"><a href="{{ route('home') }}" class="hover:text-white">Beranda</a> &gt; Profil</p>
+            <p class="text-sm text-blue-200 mb-2"><a href="{{ route('home') }}" class="hover:text-white">Beranda</a> &gt; Profil</p>
             <h1 class="text-3xl font-bold mb-3">Profil SIJAKA<br>SMKN 1 Bangsri</h1>
             <p class="text-blue-200 max-w-2xl text-sm leading-relaxed">SIJAKA (Sistem Informasi Jejaring Karier) adalah platform resmi BKK SMKN 1 Bangsri yang menghubungkan pencari kerja dengan dunia usaha dan industri.</p>
         </div>

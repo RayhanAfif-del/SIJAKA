@@ -1,9 +1,9 @@
 <x-layouts.public title="Galeri Kegiatan">
 
-    <section class="bg-blue-50">
+    <section class="bg-blue-800 text-white">
         <div class="max-w-7xl mx-auto px-4 py-10">
-            <h1 class="text-3xl font-bold text-gray-900 mb-2">Galeri Kegiatan</h1>
-            <p class="text-gray-500 text-sm max-w-2xl">Dokumentasi berbagai kegiatan yang telah dilaksanakan oleh SIJAKA SMK N 1 Bangsri bersama sekolah, siswa, alumni, dan mitra.</p>
+            <h1 class="text-3xl font-bold mb-2">Galeri Kegiatan</h1>
+            <p class="text-blue-200 text-sm max-w-2xl">Dokumentasi berbagai kegiatan yang telah dilaksanakan oleh SIJAKA SMK N 1 Bangsri bersama sekolah, siswa, alumni, dan mitra.</p>
         </div>
     </section>
 

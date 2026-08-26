@@ -18,9 +18,9 @@
     <div class="flex min-h-screen">
 
         {{-- Sidebar --}}
-        <aside class="w-64 bg-slate-950/95 text-white flex-shrink-0 fixed inset-y-0 left-0 z-30 transform transition-transform lg:translate-x-0 border-r border-white/10 backdrop-blur-xl"
+        <aside class="w-60 bg-slate-950/95 text-white flex-shrink-0 fixed inset-y-0 left-0 z-30 transform transition-transform lg:translate-x-0 border-r border-white/10 backdrop-blur-xl"
                :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'">
-            <div class="h-16 flex items-center gap-3 px-5 border-b border-white/10 bg-white/5">
+            <div class="h-16 flex items-center gap-3 px-4 border-b border-white/10 bg-white/5">
                 <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center text-white font-bold text-sm shadow-lg overflow-hidden">
                     @if ($pengaturanLayout->site_icon)
                         <img src="{{ $siteIconUrl }}" alt="Icon SIJAKA" class="w-full h-full object-cover">
@@ -34,7 +34,7 @@
                 </div>
             </div>
 
-            <nav class="p-3 space-y-1 overflow-y-auto" style="max-height: calc(100vh - 4rem)">
+            <nav class="p-2.5 space-y-1 overflow-y-auto" style="max-height: calc(100vh - 4rem)">
                 <x-admin.nav-link href="{{ route('admin.dashboard') }}" :active="request()->routeIs('admin.dashboard')">
                     Dashboard
                 </x-admin.nav-link>
@@ -43,7 +43,7 @@
                     Lihat Website
                 </x-admin.nav-link>
 
-                <p class="px-4 pt-4 pb-1 text-[11px] uppercase tracking-[0.2em] text-slate-400">Pengaturan</p>
+                <p class="px-4 pt-4 pb-1 text-[10px] uppercase tracking-[0.24em] text-slate-400">Pengaturan</p>
                 <x-admin.nav-link href="{{ route('admin.pengaturan-beranda.edit') }}" :active="request()->routeIs('admin.pengaturan-beranda.*')">
                     Beranda
                 </x-admin.nav-link>
@@ -54,7 +54,7 @@
                     Kontak
                 </x-admin.nav-link>
 
-                <p class="px-4 pt-4 pb-1 text-[11px] uppercase tracking-[0.2em] text-slate-400">Kelola Data</p>
+                <p class="px-4 pt-4 pb-1 text-[10px] uppercase tracking-[0.24em] text-slate-400">Kelola Data</p>
                 <x-admin.nav-link href="{{ route('admin.struktur-organisasi.index') }}" :active="request()->routeIs('admin.struktur-organisasi.*')">
                     Struktur Organisasi
                 </x-admin.nav-link>
@@ -74,7 +74,7 @@
                     Alumni
                 </x-admin.nav-link>
 
-                <p class="px-4 pt-4 pb-1 text-[11px] uppercase tracking-[0.2em] text-slate-400">Lainnya</p>
+                <p class="px-4 pt-4 pb-1 text-[10px] uppercase tracking-[0.24em] text-slate-400">Lainnya</p>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-slate-200 hover:bg-white/10 hover:text-white transition-all duration-200">
@@ -85,16 +85,16 @@
         </aside>
 
         {{-- Main --}}
-        <div class="flex-1 lg:ml-64 min-w-0">
-            <header class="h-16 bg-white/80 backdrop-blur-xl border-b border-white/70 shadow-sm flex items-center justify-between px-6 sticky top-0 z-20">
+        <div class="flex-1 lg:ml-60 min-w-0">
+            <header class="h-16 bg-white/80 backdrop-blur-xl border-b border-white/70 shadow-sm flex items-center justify-between px-4 sticky top-0 z-20">
                 <button class="lg:hidden text-slate-500" @click="sidebarOpen = !sidebarOpen">
                     &#9776;
                 </button>
                 <div class="hidden md:block">
-                    <p class="text-xs uppercase tracking-[0.2em] text-slate-400">Dashboard</p>
-                    <p class="text-sm font-semibold text-slate-800">{{ $title ?? 'Dashboard Admin' }}</p>
+                    <p class="text-[10px] uppercase tracking-[0.24em] text-slate-400">Dashboard</p>
+                    <p class="text-sm font-semibold text-slate-800 leading-tight">{{ $title ?? 'Dashboard Admin' }}</p>
                 </div>
-                <div class="flex items-center gap-3">
+                <div class="flex items-center gap-2 sm:gap-3">
                     <a href="{{ route('admin.website') }}" target="_blank" rel="noopener noreferrer" class="hidden sm:inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 shadow-sm transition hover:border-blue-200 hover:text-blue-700">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5M12 12L21 3m0 0h-6m6 0v6"/>
@@ -112,14 +112,14 @@
                 </div>
             </header>
 
-            <main class="p-4 sm:p-6 lg:p-8">
+            <main class="p-3 sm:p-4 lg:p-6">
                 @if (session('status'))
-                    <div class="mb-5 px-4 py-3 rounded-2xl bg-emerald-50 text-emerald-700 text-sm border border-emerald-100 shadow-sm">
+                    <div class="mb-4 px-4 py-3 rounded-2xl bg-emerald-50 text-emerald-700 text-sm border border-emerald-100 shadow-sm">
                         {{ session('status') }}
                     </div>
                 @endif
 
-                <div class="max-w-[1600px] mx-auto">
+                <div class="max-w-[1440px] mx-auto">
                     {{ $slot }}
                 </div>
             </main>

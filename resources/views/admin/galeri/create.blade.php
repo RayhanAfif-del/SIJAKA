@@ -5,7 +5,7 @@
         <p class="text-sm text-gray-500">Unggah dokumentasi kegiatan baru.</p>
     </div>
 
-    <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-6 max-w-xl">
+    <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-6 max-w-xl mx-auto">
         <form method="POST" action="{{ route('admin.galeri.store') }}" enctype="multipart/form-data">
             @csrf
             @include('admin.galeri._form')

@@ -1,9 +1,9 @@
 <x-layouts.public title="Statistik Alumni">
 
-    <section class="bg-blue-50">
+    <section class="bg-blue-800 text-white">
         <div class="max-w-7xl mx-auto px-4 py-10">
-            <h1 class="text-3xl font-bold text-gray-900 mb-2">Statistik Penyerapan Alumni</h1>
-            <p class="text-gray-500 text-sm max-w-2xl">Data capaian penyerapan tenaga kerja alumni SMK N 1 Bangsri dari tahun ke tahun.</p>
+            <h1 class="text-3xl font-bold mb-2">Statistik Penyerapan Alumni</h1>
+            <p class="text-blue-200 text-sm max-w-2xl">Data capaian penyerapan tenaga kerja alumni SMK N 1 Bangsri dari tahun ke tahun.</p>
         </div>
     </section>
 

@@ -16,15 +16,15 @@
     $iconPath = $icon ?? $defaultIcons[$color] ?? $defaultIcons['blue'];
 @endphp
 
-<div class="dashboard-card p-5 overflow-hidden relative">
+<div class="dashboard-card p-4 overflow-hidden relative">
     <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r {{ $colors[$color] ?? $colors['blue'] }}"></div>
-    <div class="flex items-start justify-between gap-4">
+    <div class="flex items-start justify-between gap-3">
         <div>
-            <p class="text-sm text-slate-500">{{ $label }}</p>
-            <p class="mt-2 text-3xl font-semibold tracking-tight text-slate-900">{{ $value }}</p>
+            <p class="text-xs uppercase tracking-[0.18em] text-slate-500">{{ $label }}</p>
+            <p class="mt-2 text-3xl font-semibold tracking-tight text-slate-900 leading-none">{{ $value }}</p>
         </div>
-        <div class="w-11 h-11 rounded-2xl flex items-center justify-center {{ $colors[$color] ?? $colors['blue'] }} shadow-sm">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+        <div class="w-10 h-10 rounded-2xl flex items-center justify-center {{ $colors[$color] ?? $colors['blue'] }} shadow-sm shrink-0">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="{{ $iconPath }}"/>
             </svg>
         </div>

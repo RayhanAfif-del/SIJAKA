@@ -1,9 +1,9 @@
 <x-layouts.public title="Lowongan Pekerjaan">
 
-    <section class="bg-blue-50">
+    <section class="bg-blue-800 text-white">
         <div class="max-w-7xl mx-auto px-4 py-10">
-            <h1 class="text-3xl font-bold text-gray-900 mb-2">Lowongan Pekerjaan</h1>
-            <p class="text-gray-500 text-sm">Temukan peluang kerja terbaik dari perusahaan mitra SIJAKA SMK N 1 Bangsri.</p>
+            <h1 class="text-3xl font-bold mb-2">Lowongan Pekerjaan</h1>
+            <p class="text-blue-200 text-sm">Temukan peluang kerja terbaik dari perusahaan mitra SIJAKA SMK N 1 Bangsri.</p>
         </div>
     </section>
 
