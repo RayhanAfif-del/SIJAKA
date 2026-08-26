@@ -16,6 +16,9 @@ class Kontak extends Model
         'instagram',
         'facebook',
         'youtube',
+        'map_link',
+        'latitude',
+        'longitude',
     ];
 
     public static function singleton(): self
@@ -30,6 +33,9 @@ class Kontak extends Model
                 'instagram' => '',
                 'facebook' => '',
                 'youtube' => '',
+                'map_link' => '',
+                'latitude' => null,
+                'longitude' => null,
             ]
         );
     }

@@ -37,6 +37,14 @@
                 @error('jam_operasional') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
             </div>
 
+            <div class="mb-5">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Lokasi Google Maps</label>
+                <input type="text" name="map_link" value="{{ old('map_link', $kontak->map_link) }}" placeholder="FQC2+X9 Bangsri, Kabupaten Jepara, Jawa Tengah"
+                    class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500 text-sm">
+                <p class="mt-1 text-xs text-gray-500">Isi dengan alamat, plus code, atau link Google Maps. Ini akan dipakai untuk menampilkan peta langsung di halaman kontak.</p>
+                @error('map_link') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+            </div>
+
             <div class="grid sm:grid-cols-3 gap-4 mb-6">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Instagram</label>

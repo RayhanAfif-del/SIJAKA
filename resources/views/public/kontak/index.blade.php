@@ -84,8 +84,67 @@
             </div>
         </div>
 
-        <div class="rounded-2xl overflow-hidden h-72 lg:h-full bg-white border border-gray-100 shadow-sm flex items-center justify-center text-blue-400 text-sm font-medium">
-            Lokasi BKK SMK N 1 Bangsri
+        <div class="rounded-2xl overflow-hidden bg-white border border-gray-100 shadow-sm min-h-72">
+            @php
+                $mapSource = trim((string) ($kontak->map_link ?: $kontak->alamat));
+                $isMapUrl = filter_var($mapSource, FILTER_VALIDATE_URL);
+                $mapQuery = $mapSource;
+
+                if ($isMapUrl) {
+                    $parsed = parse_url($mapSource);
+                    $mapQuery = $parsed['query'] ?? $parsed['path'] ?? $kontak->alamat;
+                    $mapQuery = trim((string) $mapQuery);
+                }
+
+                $mapEmbedUrl = 'https://www.google.com/maps?q=' . urlencode($mapQuery) . '&output=embed';
+                $mapOpenUrl = $isMapUrl
+                    ? $mapSource
+                    : 'https://www.google.com/maps/search/?api=1&query=' . urlencode($mapSource);
+            @endphp
+
+            @if ($mapSource !== '')
+                <div class="relative h-72 lg:h-full min-h-72">
+                    <iframe
+                        title="Peta Lokasi BKK SMK N 1 Bangsri"
+                        src="{{ $mapEmbedUrl }}"
+                        class="w-full h-full pointer-events-none"
+                        style="border: 0;"
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                    ></iframe>
+                    <a
+                        href="{{ $mapOpenUrl }}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="absolute inset-0 flex items-end justify-center p-4 bg-black/0 hover:bg-black/5 transition"
+                        aria-label="Buka lokasi di Google Maps"
+                    >
+                        <span class="inline-flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 text-xs font-semibold text-gray-800 shadow-lg backdrop-blur">
+                            <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M14 3h7v7"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M10 14L21 3"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 14v6a1 1 0 01-1 1H4a1 1 0 01-1-1V4a1 1 0 011-1h6"/>
+                            </svg>
+                            Klik peta untuk buka Google Maps
+                        </span>
+                    </a>
+                </div>
+                <div class="border-t border-gray-100 px-5 py-4 text-sm text-gray-500 flex flex-wrap items-center justify-between gap-3">
+                    <span class="truncate">Lokasi: {{ $kontak->map_link ?: $kontak->alamat }}</span>
+                    <a
+                        href="{{ $mapOpenUrl }}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-blue-600 hover:underline font-medium"
+                    >
+                        Buka di tab baru
+                    </a>
+                </div>
+            @else
+                <div class="h-72 lg:h-full min-h-72 flex items-center justify-center text-blue-400 text-sm font-medium bg-blue-50">
+                    Link lokasi peta belum diatur
+                </div>
+            @endif
         </div>
     </section>
 
