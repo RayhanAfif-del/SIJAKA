@@ -8,15 +8,42 @@
     </section>
 
     <section class="max-w-7xl mx-auto px-4 py-8">
-        <form method="GET" action="{{ route('artikel.index') }}" class="flex gap-3 mb-10">
-            <input type="text" name="cari" value="{{ request('cari') }}" placeholder="Cari artikel"
-                class="flex-1 rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500 text-sm">
-            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-6 py-2.5 rounded-lg transition">Cari</button>
-        </form>
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 sm:p-5 mb-10">
+            <form method="GET" action="{{ route('artikel.index') }}" class="grid gap-3 lg:grid-cols-[1fr_auto_auto] items-end">
+                <div>
+                    <label for="cari" class="block text-sm font-medium text-gray-700 mb-1">Cari artikel</label>
+                    <input
+                        id="cari"
+                        type="text"
+                        name="cari"
+                        value="{{ request('cari') }}"
+                        placeholder="Judul, kategori, atau isi artikel"
+                    >
+                </div>
+
+                <button type="submit" class="inline-flex items-center justify-center rounded-xl bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700">
+                    Cari
+                </button>
+
+                @if (request()->filled('cari'))
+                    <a href="{{ route('artikel.index') }}" class="inline-flex items-center justify-center rounded-xl border border-gray-200 px-6 py-3 text-sm font-semibold text-gray-600 transition hover:bg-gray-50">
+                        Reset
+                    </a>
+                @endif
+            </form>
+
+            @if (request()->filled('cari'))
+                <div class="mt-4 flex flex-wrap items-center gap-2 text-xs text-gray-500">
+                    <span class="font-medium text-gray-700">Filter aktif:</span>
+                    <span class="rounded-full bg-blue-50 px-3 py-1 text-blue-700">Kata kunci: {{ request('cari') }}</span>
+                    <span class="rounded-full bg-gray-100 px-3 py-1 text-gray-600">{{ $artikel->total() }} hasil</span>
+                </div>
+            @endif
+        </div>
 
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             @forelse ($artikel as $item)
-                <div class="border border-gray-100 rounded-xl overflow-hidden hover:shadow-md transition flex flex-col">
+                <div class="border border-gray-100 rounded-xl overflow-hidden hover:shadow-md transition flex flex-col bg-white">
                     <div class="h-44 bg-gray-100 relative">
                         @if ($item->gambar)
                             <img src="{{ Storage::url($item->gambar) }}" class="w-full h-full object-cover" alt="{{ $item->judul }}">

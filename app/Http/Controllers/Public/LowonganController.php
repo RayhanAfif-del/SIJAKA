@@ -10,24 +10,32 @@ class LowonganController extends Controller
 {
     public function index(Request $request)
     {
+        $keyword = trim((string) $request->input('cari', ''));
+        $lokasi = trim((string) $request->input('lokasi', ''));
+
         $lowongan = Lowongan::disetujui()
             ->with('mitra')
-            ->when($request->filled('cari'), function ($query) use ($request) {
-                $keyword = $request->input('cari');
+            ->when($keyword !== '', function ($query) use ($keyword) {
                 $query->where(function ($q) use ($keyword) {
                     $q->where('posisi', 'like', "%{$keyword}%")
+                        ->orWhere('lokasi', 'like', "%{$keyword}%")
+                        ->orWhere('jenis_pekerjaan', 'like', "%{$keyword}%")
                         ->orWhereHas('mitra', fn ($m) => $m->where('nama_perusahaan', 'like', "%{$keyword}%"));
                 });
             })
-            ->when($request->filled('lokasi'), function ($query) use ($request) {
-                $query->where('lokasi', $request->input('lokasi'));
+            ->when($lokasi !== '', function ($query) use ($lokasi) {
+                $query->where('lokasi', $lokasi);
             })
             ->latest()
             ->paginate(9)
             ->withQueryString();
 
         // Untuk isi dropdown filter lokasi
-        $daftarLokasi = Lowongan::disetujui()->distinct()->pluck('lokasi');
+        $daftarLokasi = Lowongan::disetujui()
+            ->whereNotNull('lokasi')
+            ->distinct()
+            ->orderBy('lokasi')
+            ->pluck('lokasi');
 
         return view('public.lowongan.index', compact('lowongan', 'daftarLokasi'));
     }

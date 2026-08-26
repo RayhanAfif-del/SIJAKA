@@ -8,21 +8,57 @@
     </section>
 
     <section class="max-w-7xl mx-auto px-4 py-8">
-        <form method="GET" action="{{ route('lowongan.index') }}" class="flex flex-col sm:flex-row gap-3 mb-10">
-            <input type="text" name="cari" value="{{ request('cari') }}" placeholder="Cari lowongan (perusahaan, posisi)"
-                class="flex-1 rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500 text-sm">
-            <select name="lokasi" class="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500 text-sm">
-                <option value="">Semua Lokasi</option>
-                @foreach ($daftarLokasi as $lokasi)
-                    <option value="{{ $lokasi }}" @selected(request('lokasi') === $lokasi)>{{ $lokasi }}</option>
-                @endforeach
-            </select>
-            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-6 py-2.5 rounded-lg transition">Cari</button>
-        </form>
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 sm:p-5 mb-10">
+            <form method="GET" action="{{ route('lowongan.index') }}" class="grid gap-3 lg:grid-cols-[1fr_260px_auto_auto] items-end">
+                <div>
+                    <label for="cari" class="block text-sm font-medium text-gray-700 mb-1">Cari lowongan</label>
+                    <input
+                        id="cari"
+                        type="text"
+                        name="cari"
+                        value="{{ request('cari') }}"
+                        placeholder="Posisi, perusahaan, lokasi, atau jenis pekerjaan"
+                    >
+                </div>
+
+                <div>
+                    <label for="lokasi" class="block text-sm font-medium text-gray-700 mb-1">Lokasi</label>
+                    <select id="lokasi" name="lokasi">
+                        <option value="">Semua lokasi</option>
+                        @foreach ($daftarLokasi as $lokasi)
+                            <option value="{{ $lokasi }}" @selected(request('lokasi') === $lokasi)>{{ $lokasi }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <button type="submit" class="inline-flex items-center justify-center rounded-xl bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700">
+                    Cari
+                </button>
+
+                @if (request()->filled('cari') || request()->filled('lokasi'))
+                    <a href="{{ route('lowongan.index') }}" class="inline-flex items-center justify-center rounded-xl border border-gray-200 px-6 py-3 text-sm font-semibold text-gray-600 transition hover:bg-gray-50">
+                        Reset
+                    </a>
+                @endif
+            </form>
+
+            @if (request()->filled('cari') || request()->filled('lokasi'))
+                <div class="mt-4 flex flex-wrap items-center gap-2 text-xs text-gray-500">
+                    <span class="font-medium text-gray-700">Filter aktif:</span>
+                    @if (request()->filled('cari'))
+                        <span class="rounded-full bg-blue-50 px-3 py-1 text-blue-700">Kata kunci: {{ request('cari') }}</span>
+                    @endif
+                    @if (request()->filled('lokasi'))
+                        <span class="rounded-full bg-amber-50 px-3 py-1 text-amber-700">Lokasi: {{ request('lokasi') }}</span>
+                    @endif
+                    <span class="rounded-full bg-gray-100 px-3 py-1 text-gray-600">{{ $lowongan->total() }} hasil</span>
+                </div>
+            @endif
+        </div>
 
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             @forelse ($lowongan as $item)
-<div class="border border-gray-100 rounded-xl p-5 hover:shadow-md transition flex flex-col">
+                <div class="border border-gray-100 rounded-xl p-5 hover:shadow-md transition flex flex-col bg-white">
                     <div class="flex items-center gap-3 mb-3">
                         <div class="w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center text-blue-600 text-sm font-semibold overflow-hidden flex-shrink-0">
                             @if ($item->mitra->logo)

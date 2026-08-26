@@ -16,16 +16,19 @@
     $iconPath = $icon ?? $defaultIcons[$color] ?? $defaultIcons['blue'];
 @endphp
 
-<div class="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
-    <div class="flex items-center gap-3 mb-3">
-        <div class="w-10 h-10 rounded-lg flex items-center justify-center {{ $colors[$color] ?? $colors['blue'] }}">
+<div class="dashboard-card p-5 overflow-hidden relative">
+    <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r {{ $colors[$color] ?? $colors['blue'] }}"></div>
+    <div class="flex items-start justify-between gap-4">
+        <div>
+            <p class="text-sm text-slate-500">{{ $label }}</p>
+            <p class="mt-2 text-3xl font-semibold tracking-tight text-slate-900">{{ $value }}</p>
+        </div>
+        <div class="w-11 h-11 rounded-2xl flex items-center justify-center {{ $colors[$color] ?? $colors['blue'] }} shadow-sm">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="{{ $iconPath }}"/>
             </svg>
         </div>
-        <p class="text-sm text-gray-500">{{ $label }}</p>
     </div>
-    <p class="text-2xl font-semibold text-gray-800">{{ $value }}</p>
     @if ($change)
         <p class="text-xs text-green-600 mt-1">{{ $change }}</p>
     @endif

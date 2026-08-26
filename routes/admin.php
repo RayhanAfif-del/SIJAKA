@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/website', fn () => redirect()->route('home'))->name('website');
 
     // Singleton: profil BKK & kontak hanya edit, tidak ada create/delete
     Route::get('/profil-bkk', [ProfilBkkController::class, 'edit'])->name('profil-bkk.edit');

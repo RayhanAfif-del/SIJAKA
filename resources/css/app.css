@@ -1,1 +1,67 @@
 @import "tailwindcss";
+
+@layer base {
+    :root {
+        color-scheme: light;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        @apply bg-slate-50 text-slate-800 antialiased;
+    }
+
+    ::selection {
+        @apply bg-blue-600 text-white;
+    }
+
+    input:not([type='checkbox']):not([type='radio']):not([type='file']),
+    textarea,
+    select {
+        @apply w-full rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm text-slate-900 shadow-sm transition;
+        @apply placeholder:text-slate-400;
+        @apply focus:border-blue-500 focus:outline-none focus:ring-4 focus:ring-blue-500/10;
+    }
+
+    textarea {
+        @apply min-h-28;
+    }
+
+    input[type='file'] {
+        @apply block w-full text-sm text-slate-600;
+    }
+
+    input[type='file']::file-selector-button {
+        @apply mr-3 rounded-lg border-0 bg-blue-50 px-4 py-2 text-sm font-medium text-blue-700 transition;
+    }
+
+    input[type='file']::file-selector-button:hover {
+        @apply bg-blue-100;
+    }
+
+    input:disabled,
+    textarea:disabled,
+    select:disabled {
+        @apply cursor-not-allowed bg-slate-100 text-slate-500;
+    }
+}
+
+@layer components {
+    .dashboard-shell {
+        @apply min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(59,130,246,0.12),_transparent_35%),linear-gradient(to_bottom,_#f8fafc,_#eef2ff_55%,_#f8fafc)] text-slate-800;
+    }
+
+    .dashboard-panel {
+        @apply rounded-2xl border border-white/70 bg-white/90 shadow-[0_10px_30px_rgba(15,23,42,0.08)] backdrop-blur;
+    }
+
+    .dashboard-card {
+        @apply rounded-2xl border border-slate-200/80 bg-white shadow-sm transition hover:shadow-md;
+    }
+
+    .dashboard-section-title {
+        @apply text-sm font-semibold uppercase tracking-[0.18em] text-slate-500;
+    }
+}

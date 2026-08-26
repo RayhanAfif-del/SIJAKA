@@ -10,8 +10,14 @@ class ArtikelController extends Controller
 {
     public function index(Request $request)
     {
-        $artikel = Artikel::when($request->filled('cari'), function ($query) use ($request) {
-                $query->where('judul', 'like', '%'.$request->input('cari').'%');
+        $keyword = trim((string) $request->input('cari', ''));
+
+        $artikel = Artikel::when($keyword !== '', function ($query) use ($keyword) {
+                $query->where(function ($q) use ($keyword) {
+                    $q->where('judul', 'like', "%{$keyword}%")
+                        ->orWhere('kategori', 'like', "%{$keyword}%")
+                        ->orWhere('konten', 'like', "%{$keyword}%");
+                });
             })
             ->latest()
             ->paginate(6)
