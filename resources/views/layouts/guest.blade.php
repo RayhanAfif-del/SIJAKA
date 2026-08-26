@@ -1,30 +1,57 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ $title ?? config('app.name', 'SIJAKA') }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
-            <div>
-                <a href="/">
-                    <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-                </a>
-            </div>
+    <body class="font-sans antialiased text-slate-900 bg-slate-50">
+        
+        <div class="min-h-screen flex flex-col sm:justify-center items-center px-4 py-12 sm:px-6 lg:px-8 relative">
+            
+            {{-- Subtle Background Gradient (Memberi kedalaman tanpa mengganggu) --}}
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(59,130,246,0.08),_transparent_40%)] pointer-events-none"></div>
 
-            <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
-                {{ $slot }}
+            <div class="relative z-10 w-full max-w-md">
+                
+                {{-- Logo Area --}}
+                <div class="flex justify-center mb-8">
+                    <a href="{{ route('home') }}" class="flex flex-col items-center group">
+                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-600 to-cyan-500 flex items-center justify-center text-white font-bold text-2xl shadow-lg shadow-blue-500/20 group-hover:shadow-xl group-hover:scale-105 transition-all duration-300">
+                            {{-- Ganti 'SI' dengan tag <img> jika Anda memiliki file logo --}}
+                            {{-- <img src="{{ asset('logo.png') }}" alt="Logo" class="w-full h-full object-cover rounded-2xl"> --}}
+                            SI
+                        </div>
+                        <span class="mt-4 text-xl font-bold text-slate-900 tracking-tight group-hover:text-blue-600 transition">SIJAKA</span>
+                        <span class="text-xs text-slate-500 font-medium">Sistem Informasi Jejaring Karier</span>
+                    </a>
+                </div>
+
+                {{-- Card Container --}}
+                <div class="bg-white rounded-2xl shadow-xl border border-slate-200/60 p-6 sm:p-8 backdrop-blur-sm">
+                    {{ $slot }}
+                </div>
+
+                {{-- Back to Home Link --}}
+                <div class="mt-6 text-center">
+                    <a href="{{ route('home') }}" class="inline-flex items-center gap-1.5 text-sm font-medium text-slate-500 hover:text-blue-600 transition">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                        </svg>
+                        Kembali ke beranda
+                    </a>
+                </div>
             </div>
         </div>
+
     </body>
 </html>

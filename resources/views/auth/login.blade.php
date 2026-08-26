@@ -11,20 +11,21 @@
 </head>
 <body class="min-h-screen overflow-x-hidden font-sans antialiased bg-slate-950 text-white">
     <div class="min-h-screen grid lg:grid-cols-[1.15fr_0.85fr]">
+        
+        {{-- Left Side: Branding & Illustration --}}
         <section class="relative overflow-hidden bg-[radial-gradient(circle_at_top_left,_rgba(14,165,233,0.35),_transparent_32%),radial-gradient(circle_at_bottom_right,_rgba(59,130,246,0.28),_transparent_28%),linear-gradient(135deg,_#020617_0%,_#0f172a_48%,_#1e3a8a_100%)] px-6 py-8 sm:px-10 lg:px-12 lg:py-10 flex flex-col justify-between">
-
             <div class="relative z-10 max-w-xl pt-10 lg:pt-0">
-                <h1 class="mt-6 text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight text-white">
+                <h1 class="mt-6 text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight text-white tracking-tight">
                     Kelola layanan karier dengan tampilan yang lebih nyaman.
                 </h1>
                 <p class="mt-5 max-w-lg text-sm sm:text-base leading-7 text-slate-300">
                     Masuk untuk mengelola lowongan, profil mitra, artikel, galeri, dan pengaturan web utama dari satu dashboard yang rapi.
-                </p><br>
+                </p>
             </div>
 
-            <div class="relative z-10 mt-10 lg:mt-0">
-                <div class="rounded-[2rem] border border-white/10 bg-white/10 backdrop-blur-md shadow-2xl overflow-hidden">
-                    <svg viewBox="0 0 960 620" class="block w-full h-[300px] sm:h-[360px] lg:h-[420px]" role="img" aria-labelledby="loginArtTitle loginArtDesc" xmlns="http://www.w3.org/2000/svg">
+            <div class="relative z-10 mt-10 lg:mt-0 hidden lg:block">
+                <div class="rounded-[2rem] border border-white/10 bg-white/5 backdrop-blur-md shadow-2xl overflow-hidden ring-1 ring-white/10">
+                    <svg viewBox="0 0 960 620" class="block w-full h-[420px]" role="img" aria-labelledby="loginArtTitle loginArtDesc" xmlns="http://www.w3.org/2000/svg">
                         <title id="loginArtTitle">Ilustrasi dashboard SIJAKA</title>
                         <desc id="loginArtDesc">Visual dummy modern bernuansa biru untuk halaman login.</desc>
                         <defs>
@@ -64,23 +65,26 @@
             </div>
         </section>
 
-        <section class="relative flex items-center justify-center px-4 py-10 sm:px-6 lg:px-10 bg-[radial-gradient(circle_at_top_right,_rgba(59,130,246,0.10),_transparent_30%),linear-gradient(to_bottom,_#f8fafc,_#eef2ff_65%,_#f8fafc)]">
-            <div class="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.65),rgba(255,255,255,0.95))]"></div>
+        {{-- Right Side: Login Form --}}
+        <section class="relative flex items-center justify-center px-4 py-10 sm:px-6 lg:px-10 bg-slate-50">
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(59,130,246,0.08),_transparent_40%)]"></div>
 
-            <div class="relative z-10 w-full max-w-lg">
-                <div class="dashboard-panel p-6 sm:p-8 lg:p-10 border border-white/70">
+            <div class="relative z-10 w-full max-w-md">
+                {{-- Card Form --}}
+                <div class="bg-white rounded-2xl shadow-xl border border-slate-200/60 p-6 sm:p-8 lg:p-10">
                     <div class="flex items-center gap-3 mb-8">
-                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-600 to-cyan-500 flex items-center justify-center shadow-lg">
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 to-cyan-500 flex items-center justify-center shadow-lg shadow-blue-500/20 ring-1 ring-white/50">
                             <span class="text-white font-bold text-lg">SI</span>
                         </div>
                         <div>
-                            <p class="text-xs uppercase tracking-[0.2em] text-slate-400">Masuk ke aplikasi</p>
-                            <h2 class="text-2xl font-bold text-slate-900">Login SIJAKA</h2>
+                            <p class="text-xs uppercase tracking-[0.2em] text-slate-400 font-semibold">Masuk ke aplikasi</p>
+                            <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Login SIJAKA</h2>
                         </div>
                     </div>
 
                     @if (session('status'))
-                        <div class="mb-5 rounded-2xl border border-emerald-100 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+                        <div class="mb-6 rounded-xl border border-emerald-100 bg-emerald-50 px-4 py-3 text-sm text-emerald-700 flex items-center gap-2">
+                            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                             {{ session('status') }}
                         </div>
                     @endif
@@ -89,62 +93,76 @@
                         @csrf
                         <input type="hidden" name="role" x-model="role">
 
-                        <div class="rounded-2xl border border-slate-200 bg-slate-50 p-1">
+                        {{-- Role Toggle --}}
+                        <div class="rounded-xl border border-slate-200 bg-slate-50 p-1">
                             <div class="grid grid-cols-2 gap-1">
                                 <button type="button" @click="role = 'admin'"
-                                    :class="role === 'admin' ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200' : 'text-slate-500 hover:text-slate-700'"
-                                    class="rounded-xl px-4 py-2.5 text-sm font-semibold transition">
+                                    :class="role === 'admin' ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200' : 'text-slate-500 hover:text-slate-700 hover:bg-slate-100'"
+                                    class="rounded-lg px-4 py-2.5 text-sm font-semibold transition-all duration-200">
                                     Admin
                                 </button>
                                 <button type="button" @click="role = 'mitra'"
-                                    :class="role === 'mitra' ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200' : 'text-slate-500 hover:text-slate-700'"
-                                    class="rounded-xl px-4 py-2.5 text-sm font-semibold transition">
-                                    Mitra
+                                    :class="role === 'mitra' ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200' : 'text-slate-500 hover:text-slate-700 hover:bg-slate-100'"
+                                    class="rounded-lg px-4 py-2.5 text-sm font-semibold transition-all duration-200">
+                                    Mitra Perusahaan
                                 </button>
                             </div>
                         </div>
 
+                        {{-- Email Input --}}
                         <div>
                             <label for="email" class="mb-1.5 block text-sm font-medium text-slate-700">Email</label>
-                            <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus placeholder="nama@perusahaan.com">
+                            <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus placeholder="nama@perusahaan.com"
+                                class="w-full rounded-lg border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 text-sm transition placeholder:text-slate-400">
                             @error('email')
-                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                                <p class="mt-1.5 text-xs text-red-600 flex items-center gap-1">
+                                    <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+                                    {{ $message }}
+                                </p>
                             @enderror
                         </div>
 
+                        {{-- Password Input --}}
                         <div>
                             <div class="mb-1.5 flex items-center justify-between gap-3">
                                 <label for="password" class="block text-sm font-medium text-slate-700">Password</label>
                                 @if (Route::has('password.request'))
-                                    <a href="{{ route('password.request') }}" class="text-sm font-medium text-blue-600 hover:text-blue-700 hover:underline">
+                                    <a href="{{ route('password.request') }}" class="text-xs font-medium text-blue-600 hover:text-blue-700 hover:underline transition">
                                         Lupa password?
                                     </a>
                                 @endif
                             </div>
-                            <input id="password" type="password" name="password" required>
+                            <input id="password" type="password" name="password" required placeholder="••••••••"
+                                class="w-full rounded-lg border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 text-sm transition placeholder:text-slate-400">
                             @error('password')
-                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                                <p class="mt-1.5 text-xs text-red-600 flex items-center gap-1">
+                                    <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+                                    {{ $message }}
+                                </p>
                             @enderror
                         </div>
 
+                        {{-- Remember Me & Mode Indicator --}}
                         <div class="flex items-center justify-between gap-4">
-                            <label for="remember_me" class="flex items-center gap-2 text-sm text-slate-600">
-                                <input id="remember_me" type="checkbox" name="remember" class="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500">
+                            <label for="remember_me" class="flex items-center gap-2 text-sm text-slate-600 cursor-pointer">
+                                <input id="remember_me" type="checkbox" name="remember" class="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-2 focus:ring-blue-500/20 transition cursor-pointer">
                                 Ingat saya
                             </label>
-                            <span class="text-xs text-slate-400" x-text="role === 'admin' ? 'Mode Admin' : 'Mode Mitra'"></span>
+                            <span class="text-xs font-medium text-slate-400 bg-slate-100 px-2 py-1 rounded-md" x-text="role === 'admin' ? 'Mode: Admin' : 'Mode: Mitra'"></span>
                         </div>
 
-                        <button type="submit" class="w-full rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-500/20">
+                        {{-- Submit Button --}}
+                        <button type="submit" class="w-full rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-slate-900/20 transition-all duration-200 hover:bg-slate-800 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-slate-900/20 active:scale-[0.98]">
                             Masuk
                         </button>
                     </form>
 
-                    <div class="mt-8 flex items-center justify-between text-sm">
-                        <a href="{{ route('home') }}" class="text-slate-500 hover:text-blue-600 transition">
-                            &larr; Kembali ke beranda
+                    <div class="mt-8 flex items-center justify-between text-sm pt-6 border-t border-slate-100">
+                        <a href="{{ route('home') }}" class="text-slate-500 hover:text-blue-600 transition flex items-center gap-1">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+                            Kembali ke beranda
                         </a>
-                        <span class="text-slate-400">SIJAKA</span>
+                        <span class="text-slate-400 font-medium">SIJAKA</span>
                     </div>
                 </div>
             </div>
