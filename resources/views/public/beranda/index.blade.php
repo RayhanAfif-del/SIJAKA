@@ -27,10 +27,43 @@
                     <a href="{{ $heroSecondaryUrl }}" class="bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 text-sm font-medium px-5 py-3 rounded-lg transition">{{ $heroSecondaryLabel }}</a>
                 </div>
                 <div class="flex flex-wrap gap-6 text-sm text-gray-600">
-                    <span class="flex items-center gap-2"><span class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">&#128101;</span> Terpercaya</span>
-                    <span class="flex items-center gap-2"><span class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">&#128188;</span> Peluang Kerja</span>
-                    <span class="flex items-center gap-2"><span class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">&#128200;</span> Karier Sukses</span>
-                    <span class="flex items-center gap-2"><span class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">&#128200;</span> Di Isi Opo Iki</span>
+                    <span class="flex items-center gap-2">
+                        <span class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 22s8-4 8-10V6l-8-4-8 4v6c0 6 8 10 8 10z"/>
+                            </svg>
+                        </span>
+                        Terpercaya
+                    </span>
+                    <span class="flex items-center gap-2">
+                        <span class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 7h18M5 7v12a2 2 0 002 2h10a2 2 0 002-2V7"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M10 11h4"/>
+                            </svg>
+                        </span>
+                        Peluang Kerja
+                    </span>
+                    <span class="flex items-center gap-2">
+                        <span class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 19V5"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 19h16"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 15l3-4 3 2 4-6"/>
+                            </svg>
+                        </span>
+                        Karier Sukses
+                    </span>
+                    <span class="flex items-center gap-2">
+                        <span class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2"/>
+                                <circle cx="12" cy="12" r="9"/>
+                            </svg>
+                        </span>
+                        Di Isi Opo Iki
+                    </span>
                 </div>
             </div>
             <div class="rounded-2xl overflow-hidden shadow-lg bg-white">
@@ -88,7 +121,7 @@
                 ['label' => 'Mitra Perusahaan', 'desc' => 'Perusahaan terbaik yang bekerja sama dengan kami'],
                 ['label' => 'Statistik Alumni', 'desc' => 'Data penyerapan alumni dan capaian BKK'],
             ] as $item)
-            <div class="p-5 flex items-start gap-3 hover:bg-blue-50/50 transition">
+            <div class="p-5 flex items-start gap-3">
                 <span class="w-9 h-9 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center flex-shrink-0">&#9679;</span>
                     <span>
                         <span class="block text-sm font-semibold text-gray-800">{{ $item['label'] }}</span>
