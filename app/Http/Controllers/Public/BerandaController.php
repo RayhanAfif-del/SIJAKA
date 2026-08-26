@@ -7,6 +7,7 @@ use App\Models\Alumni;
 use App\Models\Artikel;
 use App\Models\Kontak;
 use App\Models\Lowongan;
+use App\Models\PengaturanWebsite;
 use App\Models\Mitra;
 use App\Models\ProfilBkk;
 
@@ -16,12 +17,13 @@ class BerandaController extends Controller
     {
         return view('public.beranda.index', [
             'profilBkk' => ProfilBkk::singleton(),
+            'pengaturanWebsite' => PengaturanWebsite::singleton(),
             'mitra' => Mitra::latest()->take(8)->get(),
             'lowonganUnggulan' => Lowongan::disetujui()->unggulan()->latest()->take(3)->get(),
             'lowonganTerbaru' => Lowongan::disetujui()->latest()->take(3)->get(),
             'artikelTerbaru' => Artikel::latest()->take(3)->get(),
             'kontak' => Kontak::singleton(),
-'alumniBekerja' => Alumni::bekerja()->count(),
+            'alumniBekerja' => Alumni::bekerja()->count(),
             'alumniMelanjutkanStudi' => Alumni::melanjutkanStudi()->count(),
             'alumniBelumBekerja' => Alumni::belumBekerja()->count(),
         ]);

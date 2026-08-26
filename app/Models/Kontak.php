@@ -20,6 +20,17 @@ class Kontak extends Model
 
     public static function singleton(): self
     {
-        return self::firstOrCreate(['id' => 1]);
+        return self::firstOrCreate(
+            ['id' => 1],
+            [
+                'alamat' => '',
+                'email' => '',
+                'telepon' => '',
+                'jam_operasional' => '',
+                'instagram' => '',
+                'facebook' => '',
+                'youtube' => '',
+            ]
+        );
     }
 }

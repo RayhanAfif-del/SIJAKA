@@ -26,11 +26,18 @@
                     Dashboard
                 </x-admin.nav-link>
 
-                <p class="px-4 pt-4 pb-1 text-[11px] uppercase tracking-wide text-blue-400">Kelola Data</p>
-
+                <p class="px-4 pt-4 pb-1 text-[11px] uppercase tracking-wide text-blue-400">Pengaturan</p>
+                <x-admin.nav-link href="{{ route('admin.pengaturan-beranda.edit') }}" :active="request()->routeIs('admin.pengaturan-beranda.*')">
+                    Beranda
+                </x-admin.nav-link>
                 <x-admin.nav-link href="{{ route('admin.profil-bkk.edit') }}" :active="request()->routeIs('admin.profil-bkk.*')">
                     Profil BKK
                 </x-admin.nav-link>
+                <x-admin.nav-link href="{{ route('admin.kontak.edit') }}" :active="request()->routeIs('admin.kontak.*')">
+                    Kontak
+                </x-admin.nav-link>
+
+                <p class="px-4 pt-4 pb-1 text-[11px] uppercase tracking-wide text-blue-400">Kelola Data</p>
                 <x-admin.nav-link href="{{ route('admin.struktur-organisasi.index') }}" :active="request()->routeIs('admin.struktur-organisasi.*')">
                     Struktur Organisasi
                 </x-admin.nav-link>
@@ -48,9 +55,6 @@
                 </x-admin.nav-link>
                 <x-admin.nav-link href="{{ route('admin.alumni.index') }}" :active="request()->routeIs('admin.alumni.*')">
                     Alumni
-                </x-admin.nav-link>
-                <x-admin.nav-link href="{{ route('admin.kontak.edit') }}" :active="request()->routeIs('admin.kontak.*')">
-                    Kontak
                 </x-admin.nav-link>
 
                 <p class="px-4 pt-4 pb-1 text-[11px] uppercase tracking-wide text-blue-400">Lainnya</p>

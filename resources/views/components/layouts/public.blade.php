@@ -10,6 +10,7 @@
 
     @php
         $kontakLayout = \App\Models\Kontak::singleton();
+        $pengaturanLayout = \App\Models\PengaturanWebsite::singleton();
     @endphp
 
     {{-- Top bar --}}
@@ -63,8 +64,8 @@
                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422A12.083 12.083 0 0112 20.055 12.083 12.083 0 015.84 10.578L12 14z"/></svg>
                 </div>
                 <div class="leading-tight">
-                    <p class="font-bold text-blue-900 text-base">Sistem Informasi Jejaring Karier</p>
-                    <p class="text-xs text-gray-400">SMK N 1 Bangsri</p>
+                    <p class="font-bold text-blue-900 text-base">{{ $pengaturanLayout->site_name }}</p>
+                    <p class="text-xs text-gray-400">{{ $pengaturanLayout->site_tagline }}</p>
                 </div>
             </a>
 
@@ -120,11 +121,11 @@
                         <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/></svg>
                     </div>
                     <div>
-                        <p class="font-semibold text-white leading-tight">Sistem Informasi Jejaring Karier</p>
-                        <p class="text-xs text-blue-300">SMK N 1 Bangsri</p>
+                        <p class="font-semibold text-white leading-tight">{{ $pengaturanLayout->site_name }}</p>
+                        <p class="text-xs text-blue-300">{{ $pengaturanLayout->site_tagline }}</p>
                     </div>
                 </div>
-                <p class="text-blue-300 leading-relaxed">SIJAKA SMK N 1 Bangsri berkomitmen menjadi jembatan karier terbaik antara dunia pendidikan dan dunia kerja.</p>
+                <p class="text-blue-300 leading-relaxed">{{ $pengaturanLayout->footer_text }}</p>
             </div>
 
             <div>
@@ -161,7 +162,7 @@
             </div>
         </div>
         <div class="border-t border-blue-900 py-4 text-center text-xs text-blue-400">
-            &copy; {{ now()->year }} SIJAKA SMK N 1 Bangsri. All rights reserved.
+            &copy; {{ now()->year }} {{ $pengaturanLayout->site_name }}. All rights reserved.
         </div>
     </footer>
 

@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\GaleriController;
 use App\Http\Controllers\Admin\KontakController;
 use App\Http\Controllers\Admin\LowonganController;
 use App\Http\Controllers\Admin\MitraController;
+use App\Http\Controllers\Admin\PengaturanBerandaController;
 use App\Http\Controllers\Admin\ProfilBkkController;
 use App\Http\Controllers\Admin\StrukturOrganisasiController;
 use Illuminate\Support\Facades\Route;
@@ -31,6 +32,9 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
     Route::resource('artikel', ArtikelController::class);
     Route::resource('galeri', GaleriController::class);
     Route::resource('alumni', AlumniController::class);
+
+    Route::get('/pengaturan/beranda', [PengaturanBerandaController::class, 'edit'])->name('pengaturan-beranda.edit');
+    Route::put('/pengaturan/beranda', [PengaturanBerandaController::class, 'update'])->name('pengaturan-beranda.update');
 
     Route::get('/kontak', [KontakController::class, 'edit'])->name('kontak.edit');
     Route::put('/kontak', [KontakController::class, 'update'])->name('kontak.update');
