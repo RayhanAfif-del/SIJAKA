@@ -16,6 +16,8 @@ class PengaturanWebsiteRequest extends FormRequest
         return [
             'site_name' => ['required', 'string', 'max:255'],
             'site_tagline' => ['required', 'string', 'max:255'],
+            'site_icon' => ['nullable', 'image', 'max:2048'],
+            'hero_image' => ['nullable', 'image', 'max:4096'],
             'hero_badge' => ['required', 'string', 'max:255'],
             'hero_title_prefix' => ['required', 'string', 'max:255'],
             'hero_title_highlight' => ['required', 'string', 'max:255'],

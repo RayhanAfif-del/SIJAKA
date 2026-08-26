@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $title ?? 'Dashboard Admin' }} - SIJAKA</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @php
+        $pengaturanLayout = \App\Models\PengaturanWebsite::singleton();
+        $siteIconUrl = $pengaturanLayout->site_icon
+            ? \Illuminate\Support\Facades\Storage::url($pengaturanLayout->site_icon)
+            : asset('favicon.ico');
+    @endphp
+    <link rel="icon" href="{{ $siteIconUrl }}">
 </head>
 <body class="dashboard-shell font-sans antialiased" x-data="{ sidebarOpen: false }">
 
@@ -14,7 +21,13 @@
         <aside class="w-64 bg-slate-950/95 text-white flex-shrink-0 fixed inset-y-0 left-0 z-30 transform transition-transform lg:translate-x-0 border-r border-white/10 backdrop-blur-xl"
                :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'">
             <div class="h-16 flex items-center gap-3 px-5 border-b border-white/10 bg-white/5">
-                <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center text-white font-bold text-sm shadow-lg">SI</div>
+                <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center text-white font-bold text-sm shadow-lg overflow-hidden">
+                    @if ($pengaturanLayout->site_icon)
+                        <img src="{{ $siteIconUrl }}" alt="Icon SIJAKA" class="w-full h-full object-cover">
+                    @else
+                        SI
+                    @endif
+                </div>
                 <div>
                     <p class="font-semibold leading-tight tracking-wide">SIJAKA</p>
                     <p class="text-[11px] text-slate-300 leading-tight">Sistem Informasi Jejaring Karier</p>

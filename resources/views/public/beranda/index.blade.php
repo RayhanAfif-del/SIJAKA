@@ -10,6 +10,7 @@
         $heroPrimaryUrl = $pengaturanWebsite->hero_primary_url ?: route('lowongan.index');
         $heroSecondaryLabel = $pengaturanWebsite->hero_secondary_label ?: 'Tentang BKK';
         $heroSecondaryUrl = $pengaturanWebsite->hero_secondary_url ?: route('profil.index');
+        $heroImageUrl = $pengaturanWebsite->hero_image ? \Illuminate\Support\Facades\Storage::url($pengaturanWebsite->hero_image) : null;
     @endphp
 
     {{-- Hero --}}
@@ -33,38 +34,46 @@
                 </div>
             </div>
             <div class="rounded-2xl overflow-hidden shadow-lg bg-white">
-                <svg
-                    viewBox="0 0 960 720"
-                    class="w-full h-64 sm:h-80 block"
-                    role="img"
-                    aria-labelledby="heroDummyTitle heroDummyDesc"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <title id="heroDummyTitle">{{ $heroBadge }}</title>
-                    <desc id="heroDummyDesc">Ilustrasi dummy dengan nuansa biru dan oranye untuk halaman utama.</desc>
-                    <rect width="960" height="720" rx="40" fill="#EFF6FF" />
-                    <circle cx="780" cy="120" r="110" fill="#FDE68A" fill-opacity="0.75" />
-                    <circle cx="160" cy="620" r="140" fill="#BFDBFE" fill-opacity="0.7" />
-                    <path d="M120 520C200 410 310 370 430 370C550 370 640 420 760 320C822 268 870 238 920 220V720H120V520Z" fill="#1D4ED8" fill-opacity="0.12" />
-                    <path d="M70 560C170 470 285 440 410 440C548 440 652 506 778 430C835 395 878 367 930 350V720H70V560Z" fill="#0EA5E9" fill-opacity="0.18" />
-                    <rect x="110" y="120" width="740" height="460" rx="32" fill="white" opacity="0.8" />
-                    <rect x="150" y="160" width="260" height="20" rx="10" fill="#DBEAFE" />
-                    <rect x="150" y="202" width="370" height="22" rx="11" fill="#93C5FD" />
-                    <rect x="150" y="250" width="520" height="16" rx="8" fill="#E2E8F0" />
-                    <rect x="150" y="282" width="460" height="16" rx="8" fill="#E2E8F0" />
-                    <rect x="150" y="314" width="420" height="16" rx="8" fill="#E2E8F0" />
-                    <rect x="150" y="370" width="220" height="140" rx="24" fill="#DBEAFE" />
-                    <rect x="402" y="370" width="220" height="140" rx="24" fill="#FEF3C7" />
-                    <rect x="654" y="370" width="120" height="140" rx="24" fill="#E0F2FE" />
-                    <circle cx="260" cy="435" r="34" fill="#2563EB" />
-                    <circle cx="512" cy="435" r="34" fill="#F59E0B" />
-                    <circle cx="714" cy="435" r="34" fill="#0EA5E9" />
-                    <path d="M250 435L258 443L273 426" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M502 435L510 443L525 426" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M704 435L712 443L727 426" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
-                    <text x="150" y="530" fill="#1E3A8A" font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="700">{{ $heroBadge }}</text>
-                    <text x="150" y="566" fill="#64748B" font-family="Arial, Helvetica, sans-serif" font-size="20">Dummy image untuk tampilan beranda</text>
-                </svg>
+                @if ($heroImageUrl)
+                    <img
+                        src="{{ $heroImageUrl }}"
+                        alt="Foto beranda utama"
+                        class="w-full h-64 sm:h-80 object-cover"
+                    >
+                @else
+                    <svg
+                        viewBox="0 0 960 720"
+                        class="w-full h-64 sm:h-80 block"
+                        role="img"
+                        aria-labelledby="heroDummyTitle heroDummyDesc"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <title id="heroDummyTitle">{{ $heroBadge }}</title>
+                        <desc id="heroDummyDesc">Ilustrasi dummy dengan nuansa biru dan oranye untuk halaman utama.</desc>
+                        <rect width="960" height="720" rx="40" fill="#EFF6FF" />
+                        <circle cx="780" cy="120" r="110" fill="#FDE68A" fill-opacity="0.75" />
+                        <circle cx="160" cy="620" r="140" fill="#BFDBFE" fill-opacity="0.7" />
+                        <path d="M120 520C200 410 310 370 430 370C550 370 640 420 760 320C822 268 870 238 920 220V720H120V520Z" fill="#1D4ED8" fill-opacity="0.12" />
+                        <path d="M70 560C170 470 285 440 410 440C548 440 652 506 778 430C835 395 878 367 930 350V720H70V560Z" fill="#0EA5E9" fill-opacity="0.18" />
+                        <rect x="110" y="120" width="740" height="460" rx="32" fill="white" opacity="0.8" />
+                        <rect x="150" y="160" width="260" height="20" rx="10" fill="#DBEAFE" />
+                        <rect x="150" y="202" width="370" height="22" rx="11" fill="#93C5FD" />
+                        <rect x="150" y="250" width="520" height="16" rx="8" fill="#E2E8F0" />
+                        <rect x="150" y="282" width="460" height="16" rx="8" fill="#E2E8F0" />
+                        <rect x="150" y="314" width="420" height="16" rx="8" fill="#E2E8F0" />
+                        <rect x="150" y="370" width="220" height="140" rx="24" fill="#DBEAFE" />
+                        <rect x="402" y="370" width="220" height="140" rx="24" fill="#FEF3C7" />
+                        <rect x="654" y="370" width="120" height="140" rx="24" fill="#E0F2FE" />
+                        <circle cx="260" cy="435" r="34" fill="#2563EB" />
+                        <circle cx="512" cy="435" r="34" fill="#F59E0B" />
+                        <circle cx="714" cy="435" r="34" fill="#0EA5E9" />
+                        <path d="M250 435L258 443L273 426" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M502 435L510 443L525 426" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M704 435L712 443L727 426" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+                        <text x="150" y="530" fill="#1E3A8A" font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="700">{{ $heroBadge }}</text>
+                        <text x="150" y="566" fill="#64748B" font-family="Arial, Helvetica, sans-serif" font-size="20">Dummy image untuk tampilan beranda</text>
+                    </svg>
+                @endif
             </div>
         </div>
     </section>

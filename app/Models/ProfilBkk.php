@@ -9,6 +9,7 @@ class ProfilBkk extends Model
     protected $table = 'profil_bkk';
 
     protected $fillable = [
+        'gambar',
         'profil',
         'visi',
         'misi',

@@ -14,6 +14,7 @@ class ProfilBkkRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'gambar' => ['nullable', 'image', 'max:2048'],
             'profil' => ['required', 'string'],
             'visi' => ['required', 'string'],
             'misi' => ['required', 'string'],

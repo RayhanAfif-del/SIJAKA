@@ -11,6 +11,8 @@ class PengaturanWebsite extends Model
     protected $fillable = [
         'site_name',
         'site_tagline',
+        'site_icon',
+        'hero_image',
         'hero_badge',
         'hero_title_prefix',
         'hero_title_highlight',
@@ -30,6 +32,8 @@ class PengaturanWebsite extends Model
             [
                 'site_name' => 'Sistem Informasi Jejaring Karier',
                 'site_tagline' => 'SMK N 1 Bangsri',
+                'site_icon' => null,
+                'hero_image' => null,
                 'hero_badge' => 'BKK SMKN 1 Bangsri',
                 'hero_title_prefix' => 'Jembatan Karier',
                 'hero_title_highlight' => 'untuk Masa Depan',

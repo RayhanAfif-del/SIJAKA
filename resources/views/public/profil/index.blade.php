@@ -10,7 +10,11 @@
 
     <section class="max-w-7xl mx-auto px-4 py-14 grid lg:grid-cols-2 gap-10 items-center">
         <div class="rounded-2xl overflow-hidden bg-blue-100 h-72 flex items-center justify-center text-blue-400 font-medium">
-            Foto Kegiatan BKK
+            @if ($profilBkk->gambar)
+                <img src="{{ Storage::url($profilBkk->gambar) }}" class="w-full h-full object-cover" alt="Gambar Profil BKK">
+            @else
+                Foto Kegiatan BKK
+            @endif
         </div>
         <div>
             <p class="text-blue-600 text-sm font-semibold mb-1">TENTANG KAMI</p>

@@ -12,7 +12,11 @@
         $kontakLayout = \App\Models\Kontak::singleton();
         $pengaturanLayout = \App\Models\PengaturanWebsite::singleton();
         $showLoginAdmin = ! auth('admin')->check() && ! auth('mitra')->check();
+        $siteIconUrl = $pengaturanLayout->site_icon
+            ? \Illuminate\Support\Facades\Storage::url($pengaturanLayout->site_icon)
+            : asset('favicon.ico');
     @endphp
+    <link rel="icon" href="{{ $siteIconUrl }}">
 
     {{-- Top bar --}}
     <div class="bg-blue-950 text-blue-100 text-xs">
@@ -61,8 +65,12 @@
     <header class="bg-white border-b border-gray-100 sticky top-0 z-30">
         <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
             <a href="{{ route('home') }}" class="flex items-center gap-3">
-                <div class="w-11 h-11 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0">
-                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422A12.083 12.083 0 0112 20.055 12.083 12.083 0 015.84 10.578L12 14z"/></svg>
+                <div class="w-11 h-11 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0 overflow-hidden">
+                    @if ($pengaturanLayout->site_icon)
+                        <img src="{{ $siteIconUrl }}" alt="Icon SIJAKA" class="w-full h-full object-cover">
+                    @else
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422A12.083 12.083 0 0112 20.055 12.083 12.083 0 015.84 10.578L12 14z"/></svg>
+                    @endif
                 </div>
                 <div class="leading-tight">
                     <p class="font-bold text-blue-900 text-base">{{ $pengaturanLayout->site_name }}</p>
@@ -122,8 +130,12 @@
         <div class="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-sm">
             <div>
                 <div class="flex items-center gap-2 mb-3">
-                    <div class="w-9 h-9 rounded-full bg-blue-600 flex items-center justify-center">
-                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/></svg>
+                    <div class="w-9 h-9 rounded-full bg-blue-600 flex items-center justify-center overflow-hidden">
+                        @if ($pengaturanLayout->site_icon)
+                            <img src="{{ $siteIconUrl }}" alt="Icon SIJAKA" class="w-full h-full object-cover">
+                        @else
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/></svg>
+                        @endif
                     </div>
                     <div>
                         <p class="font-semibold text-white leading-tight">{{ $pengaturanLayout->site_name }}</p>
