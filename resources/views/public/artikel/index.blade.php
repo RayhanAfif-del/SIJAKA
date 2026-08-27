@@ -75,128 +75,13 @@
 
     {{-- Articles Magazine Layout --}}
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
-        
-        @forelse ($artikel as $index => $item)
-            @php
-                $kategoriKey = strtolower($item->kategori ?? '');
-                $kc = $kategoriColors[$kategoriKey] ?? ['bg' => 'bg-slate-100', 'text' => 'text-slate-700', 'border' => 'border-slate-200'];
-            @endphp
+        @php
+            $artikelItems = $artikel->getCollection();
+            $showFeatured = $artikel->currentPage() === 1 && !request()->filled('cari') && $artikelItems->isNotEmpty();
+            $gridItems = $showFeatured ? $artikelItems->slice(1) : $artikelItems;
+        @endphp
 
-            {{-- Artikel Terbaru (Artikel Pertama) - Tampil Besar --}}
-            @if ($index === 0 && !request()->filled('cari'))
-                <article class="group bg-white rounded-3xl border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-500 mb-10" data-aos="fade-up">
-                    <div class="grid lg:grid-cols-2 gap-0">
-                        {{-- Thumbnail Besar --}}
-                        <a href="{{ route('artikel.show', $item) }}" class="relative block h-64 lg:h-auto bg-gradient-to-br from-blue-50 to-slate-100 overflow-hidden">
-                            @if ($item->gambar)
-                                <img src="{{ Storage::url($item->gambar) }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="{{ $item->judul }}">
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
-                            @else
-                                <div class="w-full h-full flex items-center justify-center">
-                                    <svg class="w-24 h-24 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
-                                </div>
-                            @endif
-                            
-                            {{-- Badge Terbaru --}}
-                            <div class="absolute top-4 left-4">
-                                <span class="inline-flex items-center gap-1.5 bg-white/90 backdrop-blur-sm text-slate-900 text-xs font-bold px-3 py-1.5 rounded-full shadow-lg">
-                                    <svg class="w-3.5 h-3.5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                                    Terbaru
-                                </span>
-                            </div>
-                        </a>
-
-                        {{-- Content --}}
-                        <div class="p-8 lg:p-10 flex flex-col justify-center">
-                            <div class="flex items-center gap-3 mb-4">
-                                <span class="inline-flex items-center gap-1.5 {{ $kc['bg'] }} {{ $kc['text'] }} border {{ $kc['border'] }} text-xs font-semibold px-3 py-1 rounded-full">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-current"></span>
-                                    {{ $item->kategori ?: 'Umum' }}
-                                </span>
-                                <span class="text-xs text-gray-400 flex items-center gap-1">
-                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                                    {{ $item->created_at->translatedFormat('d M Y') }}
-                                </span>
-                            </div>
-
-                            <a href="{{ route('artikel.show', $item) }}" class="block mb-4">
-                                <h2 class="text-2xl lg:text-3xl font-bold text-gray-900 leading-tight group-hover:text-blue-700 transition-colors">
-                                    {{ $item->judul }}
-                                </h2>
-                            </a>
-                            
-                            <p class="text-gray-600 text-base leading-relaxed mb-6 line-clamp-3">
-                                {{ Str::limit(strip_tags($item->konten), 200) }}
-                            </p>
-
-                            <a href="{{ route('artikel.show', $item) }}" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold transition group/link">
-                                Baca Selengkapnya
-                                <svg class="w-4 h-4 transition-transform group-hover/link:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-                            </a>
-                        </div>
-                    </div>
-                </article>
-
-            {{-- Artikel Lainnya (Grid) --}}
-            @else
-                @if ($index === 1 || ($index === 0 && request()->filled('cari')))
-                    {{-- Mulai Grid untuk artikel setelah yang pertama --}}
-                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                @endif
-
-                <article class="group bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-xl hover:border-blue-100 hover:-translate-y-1 transition-all duration-300 flex flex-col" data-aos="fade-up" data-aos-delay="{{ ($index % 3) * 100 }}">
-                    
-                    {{-- Thumbnail --}}
-                    <a href="{{ route('artikel.show', $item) }}" class="relative block h-48 bg-gradient-to-br from-blue-50 to-slate-100 overflow-hidden">
-                        @if ($item->gambar)
-                            <img src="{{ Storage::url($item->gambar) }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="{{ $item->judul }}">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                        @else
-                            <div class="w-full h-full flex items-center justify-center">
-                                <svg class="w-16 h-16 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
-                            </div>
-                        @endif
-                        
-                        {{-- Kategori Badge --}}
-                        <span class="absolute top-3 left-3 inline-flex items-center gap-1.5 {{ $kc['bg'] }} {{ $kc['text'] }} border {{ $kc['border'] }} text-xs font-semibold px-2.5 py-1 rounded-full backdrop-blur-sm">
-                            <span class="w-1.5 h-1.5 rounded-full bg-current opacity-60"></span>
-                            {{ $item->kategori ?: 'Umum' }}
-                        </span>
-                    </a>
-
-                    {{-- Content --}}
-                    <div class="p-5 flex flex-col flex-1">
-                        <a href="{{ route('artikel.show', $item) }}" class="block mb-3">
-                            <h3 class="font-bold text-gray-900 text-lg leading-snug line-clamp-2 group-hover:text-blue-700 transition-colors">
-                                {{ $item->judul }}
-                            </h3>
-                        </a>
-                        
-                        <p class="text-sm text-gray-500 mb-4 line-clamp-2 leading-relaxed flex-1">
-                            {{ Str::limit(strip_tags($item->konten), 120) }}
-                        </p>
-
-                        <div class="flex items-center justify-between pt-4 border-t border-gray-100">
-                            <span class="inline-flex items-center gap-1.5 text-xs text-gray-400">
-                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                                {{ $item->created_at->translatedFormat('d M Y') }}
-                            </span>
-                            <a href="{{ route('artikel.show', $item) }}" class="inline-flex items-center gap-1 text-sm font-semibold text-blue-600 hover:text-blue-700 transition group/btn">
-                                Baca
-                                <svg class="w-3.5 h-3.5 transition-transform group-hover/btn:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-                            </a>
-                        </div>
-                    </div>
-                </article>
-
-                {{-- Tutup Grid di item terakhir --}}
-                @if ($loop->last && ($index > 0 || request()->filled('cari')))
-                    </div>
-                @endif
-            @endif
-
-        @empty
-            {{-- Empty State --}}
+        @if ($artikelItems->isEmpty())
             <div class="py-16 text-center" data-aos="fade-up">
                 <div class="max-w-md mx-auto">
                     <div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-5">
@@ -229,7 +114,117 @@
                     @endif
                 </div>
             </div>
-        @endforelse
+        @else
+            @if ($showFeatured)
+                @php
+                    $item = $artikelItems->first();
+                    $kategoriKey = strtolower($item->kategori ?? '');
+                    $kc = $kategoriColors[$kategoriKey] ?? ['bg' => 'bg-slate-100', 'text' => 'text-slate-700', 'border' => 'border-slate-200'];
+                @endphp
+
+                <article class="group bg-white rounded-3xl border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-500 mb-10" data-aos="fade-up">
+                    <div class="grid lg:grid-cols-2 gap-0">
+                        <a href="{{ route('artikel.show', $item) }}" class="relative block h-64 lg:h-auto bg-gradient-to-br from-blue-50 to-slate-100 overflow-hidden">
+                            @if ($item->gambar)
+                                <img src="{{ Storage::url($item->gambar) }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="{{ $item->judul }}">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+                            @else
+                                <div class="w-full h-full flex items-center justify-center">
+                                    <svg class="w-24 h-24 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+                                </div>
+                            @endif
+
+                            <div class="absolute top-4 left-4">
+                                <span class="inline-flex items-center gap-1.5 bg-white/90 backdrop-blur-sm text-slate-900 text-xs font-bold px-3 py-1.5 rounded-full shadow-lg">
+                                    <svg class="w-3.5 h-3.5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                                    Terbaru
+                                </span>
+                            </div>
+                        </a>
+
+                        <div class="p-8 lg:p-10 flex flex-col justify-center">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="inline-flex items-center gap-1.5 {{ $kc['bg'] }} {{ $kc['text'] }} border {{ $kc['border'] }} text-xs font-semibold px-3 py-1 rounded-full">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-current"></span>
+                                    {{ $item->kategori ?: 'Umum' }}
+                                </span>
+                                <span class="text-xs text-gray-400 flex items-center gap-1">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                    {{ $item->created_at->translatedFormat('d M Y') }}
+                                </span>
+                            </div>
+
+                            <a href="{{ route('artikel.show', $item) }}" class="block mb-4">
+                                <h2 class="text-2xl lg:text-3xl font-bold text-gray-900 leading-tight group-hover:text-blue-700 transition-colors">
+                                    {{ $item->judul }}
+                                </h2>
+                            </a>
+
+                            <p class="text-gray-600 text-base leading-relaxed mb-6 line-clamp-3">
+                                {{ Str::limit(strip_tags($item->konten), 200) }}
+                            </p>
+
+                            <a href="{{ route('artikel.show', $item) }}" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold transition group/link">
+                                Baca Selengkapnya
+                                <svg class="w-4 h-4 transition-transform group-hover/link:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            @endif
+
+            @if ($gridItems->isNotEmpty())
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    @foreach ($gridItems as $index => $item)
+                        @php
+                            $kategoriKey = strtolower($item->kategori ?? '');
+                            $kc = $kategoriColors[$kategoriKey] ?? ['bg' => 'bg-slate-100', 'text' => 'text-slate-700', 'border' => 'border-slate-200'];
+                        @endphp
+
+                        <article class="group bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-xl hover:border-blue-100 hover:-translate-y-1 transition-all duration-300 flex flex-col" data-aos="fade-up" data-aos-delay="{{ ($index % 3) * 100 }}">
+                            <a href="{{ route('artikel.show', $item) }}" class="relative block h-48 bg-gradient-to-br from-blue-50 to-slate-100 overflow-hidden">
+                                @if ($item->gambar)
+                                    <img src="{{ Storage::url($item->gambar) }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="{{ $item->judul }}">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                @else
+                                    <div class="w-full h-full flex items-center justify-center">
+                                        <svg class="w-16 h-16 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+                                    </div>
+                                @endif
+
+                                <span class="absolute top-3 left-3 inline-flex items-center gap-1.5 {{ $kc['bg'] }} {{ $kc['text'] }} border {{ $kc['border'] }} text-xs font-semibold px-2.5 py-1 rounded-full backdrop-blur-sm">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-current opacity-60"></span>
+                                    {{ $item->kategori ?: 'Umum' }}
+                                </span>
+                            </a>
+
+                            <div class="p-5 flex flex-col flex-1">
+                                <a href="{{ route('artikel.show', $item) }}" class="block mb-3">
+                                    <h3 class="font-bold text-gray-900 text-lg leading-snug line-clamp-2 group-hover:text-blue-700 transition-colors">
+                                        {{ $item->judul }}
+                                    </h3>
+                                </a>
+
+                                <p class="text-sm text-gray-500 mb-4 line-clamp-2 leading-relaxed flex-1">
+                                    {{ Str::limit(strip_tags($item->konten), 120) }}
+                                </p>
+
+                                <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                                    <span class="inline-flex items-center gap-1.5 text-xs text-gray-400">
+                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                        {{ $item->created_at->translatedFormat('d M Y') }}
+                                    </span>
+                                    <a href="{{ route('artikel.show', $item) }}" class="inline-flex items-center gap-1 text-sm font-semibold text-blue-600 hover:text-blue-700 transition group/btn">
+                                        Baca
+                                        <svg class="w-3.5 h-3.5 transition-transform group-hover/btn:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </article>
+                    @endforeach
+                </div>
+            @endif
+        @endif
 
         {{-- Pagination --}}
         @if ($artikel->hasPages())
