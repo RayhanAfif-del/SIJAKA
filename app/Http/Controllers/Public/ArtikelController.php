@@ -20,7 +20,7 @@ class ArtikelController extends Controller
                 });
             })
             ->latest()
-            ->paginate(6)
+            ->paginate(7)
             ->withQueryString();
 
         return view('public.artikel.index', compact('artikel'));

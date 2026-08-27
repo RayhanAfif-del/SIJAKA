@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $title ?? 'SIJAKA' }} - SMK N 1 Bangsri</title>
+    
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     
     @php
@@ -15,7 +16,15 @@
             : asset('favicon.ico');
     @endphp
     <link rel="icon" href="{{ $siteIconUrl }}">
+
+    {{-- AOS Animation Library --}}
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    {{-- TAMBAHKAN BARIS INI AGAR CSS DARI BERANDA BISA DIBACA --}}
+    @stack('styles')
+    
 </head>
+
 <body class="bg-slate-50 font-sans antialiased text-slate-800 flex flex-col min-h-screen" x-data="{ mobileMenu: false }">
 
     {{-- Top Bar --}}
@@ -266,5 +275,14 @@
     </footer>
 
     @stack('scripts')
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            easing: 'ease-out-cubic',
+            once: true,
+            offset: 50
+        });
+    </script>
 </body>
 </html>
