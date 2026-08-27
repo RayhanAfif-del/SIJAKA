@@ -179,5 +179,4 @@
             </div>
         </div>
     </section>
-
 </x-layouts.public>
