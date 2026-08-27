@@ -24,8 +24,7 @@ class BerandaController extends Controller
             'artikelTerbaru' => Artikel::latest()->take(3)->get(),
             'kontak' => Kontak::singleton(),
             'alumniBekerja' => Alumni::bekerja()->count(),
-            'alumniMelanjutkanStudi' => Alumni::melanjutkanStudi()->count(),
-            'alumniBelumBekerja' => Alumni::belumBekerja()->count(),
+            'alumniMelanjutkanStudi' => Alumni::melanjutkanStudi()->count() + Alumni::belumBekerja()->count(),
         ]);
     }
 }

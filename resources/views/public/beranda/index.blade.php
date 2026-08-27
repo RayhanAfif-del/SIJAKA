@@ -326,7 +326,7 @@
     {{-- ============================================ --}}
     {{-- STATISTIK BENTO GRID                         --}}
     {{-- ============================================ --}}
-    @php $totalAlumniBeranda = $alumniBekerja + $alumniMelanjutkanStudi + $alumniBelumBekerja; @endphp
+    @php $totalAlumniBeranda = $alumniBekerja + $alumniMelanjutkanStudi; @endphp
     
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
         <div class="text-center mb-10" data-aos="fade-up">
@@ -373,7 +373,7 @@
                 </div>
                 <div>
                     <p class="text-3xl font-extrabold text-gray-900 tracking-tight">{{ number_format($alumniMelanjutkanStudi) }}</p>
-                    <p class="text-xs font-semibold text-gray-500 mt-1 uppercase tracking-wide">Kuliah</p>
+                    <p class="text-xs font-semibold text-gray-500 mt-1 uppercase tracking-wide">Melanjutkan Studi</p>
                     @if ($totalAlumniBeranda > 0)
                         <p class="text-xs text-amber-600 font-bold mt-1">{{ round($alumniMelanjutkanStudi / $totalAlumniBeranda * 100) }}%</p>
                     @endif
@@ -397,19 +397,19 @@
                 </a>
             </div>
 
-            {{-- Kotak Lebar: Belum Bekerja --}}
+            {{-- Kotak Lebar: Statistik Alumni --}}
             <div class="col-span-2 md:col-span-2 bg-white border border-gray-100 rounded-2xl p-6 flex items-center justify-between hover:border-gray-200 hover:shadow-lg transition-all duration-300">
                 <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 bg-gray-100 text-gray-600 rounded-xl flex items-center justify-center">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
                     </div>
                     <div>
-                        <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Menunggu Kerja</p>
-                        <p class="text-2xl font-extrabold text-gray-900 tracking-tight">{{ number_format($alumniBelumBekerja) }}</p>
+                        <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Detail Statistik</p>
+                        <p class="text-2xl font-extrabold text-gray-900 tracking-tight">Lihat capaian alumni</p>
                     </div>
                 </div>
                 <a href="{{ route('statistik.index') }}" class="hidden sm:inline-flex items-center gap-1 text-sm font-semibold text-blue-600 hover:text-blue-700">
-                    Detail Statistik
+                    Buka Statistik
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                 </a>
             </div>
