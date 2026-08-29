@@ -6,9 +6,7 @@
             <div class="flex items-center gap-8">
                 {{-- Logo --}}
                 <a href="{{ route('dashboard') }}" class="flex items-center gap-2.5 group shrink-0">
-                    <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-600 to-cyan-500 flex items-center justify-center text-white font-bold text-xs shadow-md shadow-blue-500/20 group-hover:shadow-lg transition-all duration-300">
-                        SI
-                    </div>
+                    <x-application-logo class="h-9 w-auto max-w-[2.25rem] group-hover:scale-105 transition-transform duration-300" />
                     <span class="text-lg font-bold text-slate-900 tracking-tight hidden sm:block group-hover:text-blue-600 transition">SIJAKA</span>
                 </a>
 

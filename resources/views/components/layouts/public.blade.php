@@ -79,11 +79,11 @@
             <div class="flex items-center justify-between h-16">
                 {{-- Logo --}}
                 <a href="{{ route('home') }}" class="flex items-center gap-3 group">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-cyan-500 flex items-center justify-center flex-shrink-0 overflow-hidden shadow-md shadow-blue-500/20 group-hover:shadow-lg transition">
+                    <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 overflow-hidden bg-transparent">
                         @if ($pengaturanLayout->site_icon)
-                            <img src="{{ $siteIconUrl }}" alt="Icon SIJAKA" class="w-full h-full object-cover">
+                            <img src="{{ $siteIconUrl }}" alt="Icon SIJAKA" class="w-full h-full object-contain bg-transparent">
                         @else
-                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422A12.083 12.083 0 0112 20.055 12.083 12.083 0 015.84 10.578L12 14z"/></svg>
+                            <x-application-logo class="w-full h-full object-contain" />
                         @endif
                     </div>
                     <div class="leading-tight hidden sm:block">
@@ -191,11 +191,11 @@
                 {{-- Brand --}}
                 <div class="lg:col-span-1">
                     <div class="flex items-center gap-3 mb-4">
-                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-cyan-500 flex items-center justify-center overflow-hidden shadow-md">
+                        <div class="w-10 h-10 rounded-xl flex items-center justify-center overflow-hidden bg-transparent">
                             @if ($pengaturanLayout->site_icon)
-                                <img src="{{ $siteIconUrl }}" alt="Icon SIJAKA" class="w-full h-full object-cover">
+                                <img src="{{ $siteIconUrl }}" alt="Icon SIJAKA" class="w-full h-full object-contain bg-transparent">
                             @else
-                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/></svg>
+                                <x-application-logo class="w-full h-full object-contain" />
                             @endif
                         </div>
                         <div>

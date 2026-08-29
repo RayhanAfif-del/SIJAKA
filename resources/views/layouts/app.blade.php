@@ -23,9 +23,7 @@
                 <div class="flex justify-between h-16">
                     <div class="flex items-center">
                         <a href="{{ route('home') }}" class="flex items-center gap-2 group">
-                            <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-cyan-500 flex items-center justify-center text-white font-bold text-xs shadow-sm">
-                                SI
-                            </div>
+                            <x-application-logo class="h-8 w-auto max-w-[2rem] group-hover:scale-105 transition-transform duration-300" />
                             <span class="text-lg font-bold text-slate-900 tracking-tight group-hover:text-blue-600 transition">SIJAKA</span>
                         </a>
                     </div>

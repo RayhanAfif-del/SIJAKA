@@ -54,11 +54,11 @@
             
             {{-- Logo Area --}}
             <div class="h-16 flex items-center gap-3 px-5 border-b border-white/10 bg-white/5 shrink-0">
-                <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center text-white font-bold text-xs shadow-lg shadow-blue-500/20 overflow-hidden shrink-0 ring-1 ring-white/10">
+                <div class="w-9 h-9 rounded-xl flex items-center justify-center overflow-hidden shrink-0 bg-transparent">
                     @if ($pengaturanLayout->site_icon)
-                        <img src="{{ $siteIconUrl }}" alt="Icon SIJAKA" class="w-full h-full object-cover">
+                        <img src="{{ $siteIconUrl }}" alt="Icon SIJAKA" class="w-full h-full object-contain bg-transparent">
                     @else
-                        SI
+                        <x-application-logo class="w-full h-full object-contain" />
                     @endif
                 </div>
                 <div class="min-w-0">

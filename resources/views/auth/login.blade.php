@@ -73,8 +73,8 @@
                 {{-- Card Form --}}
                 <div class="bg-white rounded-2xl shadow-xl border border-slate-200/60 p-6 sm:p-8 lg:p-10">
                     <div class="flex items-center gap-3 mb-8">
-                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 to-cyan-500 flex items-center justify-center shadow-lg shadow-blue-500/20 ring-1 ring-white/50">
-                            <span class="text-white font-bold text-lg">SI</span>
+                        <div class="w-12 h-12 rounded-xl flex items-center justify-center overflow-hidden bg-transparent">
+                            <x-application-logo class="w-full h-full object-contain" />
                         </div>
                         <div>
                             <p class="text-xs uppercase tracking-[0.2em] text-slate-400 font-semibold">Masuk ke aplikasi</p>

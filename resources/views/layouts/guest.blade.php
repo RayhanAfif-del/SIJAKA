@@ -26,11 +26,7 @@
                 {{-- Logo Area --}}
                 <div class="flex justify-center mb-8">
                     <a href="{{ route('home') }}" class="flex flex-col items-center group">
-                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-600 to-cyan-500 flex items-center justify-center text-white font-bold text-2xl shadow-lg shadow-blue-500/20 group-hover:shadow-xl group-hover:scale-105 transition-all duration-300">
-                            {{-- Ganti 'SI' dengan tag <img> jika Anda memiliki file logo --}}
-                            {{-- <img src="{{ asset('logo.png') }}" alt="Logo" class="w-full h-full object-cover rounded-2xl"> --}}
-                            SI
-                        </div>
+                        <x-application-logo class="h-16 w-auto max-w-[4rem] group-hover:scale-105 transition-transform duration-300" />
                         <span class="mt-4 text-xl font-bold text-slate-900 tracking-tight group-hover:text-blue-600 transition">SIJAKA</span>
                         <span class="text-xs text-slate-500 font-medium">Sistem Informasi Jejaring Karier</span>
                     </a>
