@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Alumni;
 use App\Models\Artikel;
 use App\Models\Kontak;
+use App\Models\Galeri;
 use App\Models\Lowongan;
 use App\Models\PengaturanWebsite;
 use App\Models\Mitra;
@@ -22,6 +23,7 @@ class BerandaController extends Controller
             'lowonganUnggulan' => Lowongan::disetujui()->unggulan()->latest()->take(3)->get(),
             'lowonganTerbaru' => Lowongan::disetujui()->latest()->take(3)->get(),
             'artikelTerbaru' => Artikel::latest()->take(3)->get(),
+            'galeri' => Galeri::latest('tanggal')->take(5)->get(),
             'kontak' => Kontak::singleton(),
             'alumniBekerja' => Alumni::bekerja()->count(),
             'alumniMelanjutkanStudi' => Alumni::melanjutkanStudi()->count() + Alumni::belumBekerja()->count(),
