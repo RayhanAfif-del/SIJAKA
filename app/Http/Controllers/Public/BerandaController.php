@@ -21,7 +21,7 @@ class BerandaController extends Controller
             'pengaturanWebsite' => PengaturanWebsite::singleton(),
             'mitra' => Mitra::latest()->take(8)->get(),
             'lowonganUnggulan' => Lowongan::disetujui()->unggulan()->latest()->take(3)->get(),
-            'lowonganTerbaru' => Lowongan::disetujui()->latest()->take(3)->get(),
+            'lowonganTerbaru' => Lowongan::disetujui()->latest()->take(4)->get(),
             'artikelTerbaru' => Artikel::latest()->take(3)->get(),
             'galeri' => Galeri::latest('tanggal')->take(5)->get(),
             'kontak' => Kontak::singleton(),

@@ -135,18 +135,6 @@
                 </div>
             @endif
 
-            {{-- CTA Section --}}
-            <div class="mt-16 text-center" data-aos="fade-up">
-                <div class="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-2xl p-8 border border-blue-100">
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Ingin Bergabung dengan Tim Kami?</h3>
-                    <p class="text-gray-600 mb-5 max-w-xl mx-auto">Kami selalu terbuka untuk kolaborasi dan kontribusi dari alumni serta mitra yang berdedikasi.</p>
-                    <a href="{{ route('kontak.index') }}" class="inline-flex items-center gap-2 px-6 py-3 bg-slate-900 hover:bg-slate-800 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-slate-900/10">
-                        Hubungi Kami
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-                    </a>
-                </div>
-            </div>
-
         @else
             {{-- Empty State --}}
             <div class="py-20 text-center" data-aos="fade-up">

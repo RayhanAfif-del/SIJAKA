@@ -1,7 +1,6 @@
 <x-layouts.public title="Beranda">
 
     @php
-        $heroBadge = $pengaturanWebsite->hero_badge ?: 'BKK SMKN 1 Bangsri';
         $heroTitlePrefix = $pengaturanWebsite->hero_title_prefix ?: 'Jembatan Karier';
         $heroTitleHighlight = $pengaturanWebsite->hero_title_highlight ?: 'untuk Masa Depan';
         $heroTitleSuffix = $pengaturanWebsite->hero_title_suffix ?: 'Gemilang';
@@ -16,18 +15,25 @@
     {{-- ============================================ --}}
     {{-- HERO SECTION - Premium Design               --}}
     {{-- ============================================ --}}
-    <section class="relative min-h-screen bg-gradient-to-br from-blue-950 via-blue-900 to-indigo-900 overflow-hidden">
+    <section class="relative min-h-screen bg-[#024CD4] overflow-hidden">
         
+        {{-- Hero Background Image --}}
+        @if ($heroImageUrl)
+            <div class="absolute inset-0">
+                <img src="{{ $heroImageUrl }}" alt="Foto beranda utama" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-[#024CD4]/75"></div>
+            </div>
+        @endif
+
         {{-- Animated Background Pattern --}}
-        <div class="absolute inset-0 opacity-20">
-            <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%23ffffff&quot; fill-opacity=&quot;0.05&quot;%3E%3Cpath d=&quot;M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=%2260%22 height=%2260%22 viewBox=%220 0 60 60%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cg fill=%22none%22 fill-rule=%22evenodd%22%3E%3Cg fill=%22%23ffffff%22 fill-opacity=%220.05%22%3E%3Cpath d=%22M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
         </div>
 
-        {{-- Animated Gradient Orbs --}}
+        {{-- Subtle Gradient Orbs --}}
         <div class="absolute inset-0 overflow-hidden">
-            <div class="absolute -top-40 -right-40 w-[600px] h-[600px] bg-blue-500 rounded-full mix-blend-screen filter blur-3xl opacity-20 animate-pulse"></div>
-            <div class="absolute -bottom-40 -left-40 w-[600px] h-[600px] bg-indigo-500 rounded-full mix-blend-screen filter blur-3xl opacity-20 animate-pulse animation-delay-2000"></div>
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-cyan-400 rounded-full mix-blend-screen filter blur-3xl opacity-10 animate-pulse animation-delay-4000"></div>
+            <div class="absolute -top-40 -right-40 w-[600px] h-[600px] bg-[#024CD4]/50 rounded-full filter blur-3xl opacity-15"></div>
+            <div class="absolute -bottom-40 -left-40 w-[600px] h-[600px] bg-[#024CD4]/70 rounded-full filter blur-3xl opacity-10"></div>
         </div>
 
         {{-- Floating Particles --}}
@@ -39,23 +45,15 @@
             @endfor
         </div>
 
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 grid lg:grid-cols-2 gap-12 items-center min-h-screen">
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 flex items-center min-h-screen">
             
             {{-- Hero Content --}}
-            <div class="max-w-2xl" data-aos="fade-right" data-aos-duration="1000">
-                {{-- Premium Badge --}}
-                <span class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-xl border border-white/20 text-amber-300 text-xs font-bold px-4 py-2 rounded-full mb-8 shadow-lg">
-                    <span class="relative flex h-2 w-2">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
-                    </span>
-                    {{ $heroBadge }}
-                </span>
-                
-                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-[1.1] tracking-tight mb-6">
+            <div class="max-w-3xl" data-aos="fade-up" data-aos-duration="1000">
+
+                <h1 class="text-4xl sm:text-5xl lg:text-7xl font-extrabold text-white leading-[1.1] tracking-tight mb-6">
                     {{ $heroTitlePrefix }} 
                     <span class="relative inline-block">
-                        <span class="bg-gradient-to-r from-amber-400 to-yellow-300 bg-clip-text text-transparent">
+                        <span class="text-amber-300">
                             {{ $heroTitleHighlight }}
                         </span>
                         <svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 200 8" fill="none">
@@ -65,21 +63,20 @@
                     <br>{{ $heroTitleSuffix }}
                 </h1>
                 
-                <p class="text-blue-200 text-lg leading-relaxed mb-10 max-w-xl">
+                <p class="text-[#d0e3ff] text-lg sm:text-xl leading-relaxed mb-10 max-w-2xl">
                     {{ $heroDescription }}
                 </p>
                 
                 <div class="flex flex-wrap gap-4 mb-12">
                     <a href="{{ $heroPrimaryUrl }}" 
-                       class="group relative inline-flex items-center gap-2 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-900 text-sm font-bold px-8 py-4 rounded-xl shadow-2xl shadow-amber-500/30 transition-all duration-300 hover:-translate-y-1 hover:shadow-amber-500/50">
-                        <span class="absolute inset-0 bg-white/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                       class="group relative inline-flex items-center gap-2 bg-amber-400 hover:bg-amber-500 text-slate-900 text-sm font-bold px-8 py-4 rounded-xl shadow-lg transition-all duration-300 hover:-translate-y-1">
                         <span class="relative">{{ $heroPrimaryLabel }}</span>
                         <svg class="w-4 h-4 relative group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                         </svg>
                     </a>
                     <a href="{{ $heroSecondaryUrl }}" 
-                       class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-xl border border-white/20 hover:bg-white/20 hover:border-white/30 text-white text-sm font-semibold px-8 py-4 rounded-xl transition-all duration-300 hover:-translate-y-1">
+                       class="inline-flex items-center gap-2 bg-white/15 border border-white/30 hover:bg-white/25 text-white text-sm font-semibold px-8 py-4 rounded-xl transition-all duration-300 hover:-translate-y-1">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
@@ -91,13 +88,13 @@
                 <div class="flex flex-wrap gap-3">
                     @php
                         $features = [
-                            ['icon' => 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z', 'text' => 'Terpercaya'],
-                            ['icon' => 'M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z', 'text' => 'Peluang Kerja'],
-                            ['icon' => 'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6', 'text' => 'Karier Sukses'],
+                            ['icon' => 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z', 'text' => 'Terpercaya', 'desc' => 'Informasi valid dan update'],
+                            ['icon' => 'M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z', 'text' => 'Peluang Kerja', 'desc' => 'Ribuan lowongan dari perusahaan terbaik'],
+                            ['icon' => 'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6', 'text' => 'Karier Sukses', 'desc' => 'Wujudkan masa depan karier Anda'],
                         ];
                     @endphp
                     @foreach ($features as $feature)
-                        <span class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-xl border border-white/20 px-4 py-2 rounded-full text-xs font-medium text-blue-100 shadow-lg">
+                        <span class="inline-flex items-center gap-2 bg-white/15 border border-white/25 px-4 py-2 rounded-full text-xs font-medium text-white shadow-lg">
                             <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="{{ $feature['icon'] }}"/>
                             </svg>
@@ -106,56 +103,13 @@
                     @endforeach
                 </div>
             </div>
-
-            {{-- Hero Image with 3D Effect --}}
-            <div class="relative lg:pl-8" data-aos="fade-left" data-aos-duration="1000">
-                <div class="relative group">
-                    {{-- Glow Effect --}}
-                    <div class="absolute -inset-4 bg-gradient-to-r from-amber-500/20 to-blue-500/20 rounded-3xl blur-2xl group-hover:blur-3xl transition-all duration-300"></div>
-                    
-                    <div class="relative rounded-2xl overflow-hidden shadow-2xl ring-1 ring-white/20 transform group-hover:scale-[1.02] transition-transform duration-300">
-                        @if ($heroImageUrl)
-                            <img src="{{ $heroImageUrl }}" alt="Foto beranda utama" class="w-full h-72 sm:h-96 lg:h-[500px] object-cover">
-                        @else
-                            <svg viewBox="0 0 960 720" class="w-full h-72 sm:h-96 lg:h-[500px] block" xmlns="http://www.w3.org/2000/svg">
-                                <defs>
-                                    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                                        <stop offset="0%" style="stop-color:#1e3a8a;stop-opacity:1" />
-                                        <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:1" />
-                                    </linearGradient>
-                                    <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
-                                        <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:1" />
-                                        <stop offset="100%" style="stop-color:#fbbf24;stop-opacity:1" />
-                                    </linearGradient>
-                                </defs>
-                                <rect width="960" height="720" rx="40" fill="url(#grad1)" />
-                                <circle cx="780" cy="120" r="110" fill="url(#grad2)" fill-opacity="0.8" />
-                                <circle cx="160" cy="620" r="140" fill="#60a5fa" fill-opacity="0.5" />
-                                <path d="M120 520C200 410 310 370 430 370C550 370 640 420 760 320C822 268 870 238 920 220V720H120V520Z" fill="#ffffff" fill-opacity="0.1" />
-                                <rect x="110" y="120" width="740" height="460" rx="32" fill="white" opacity="0.95" />
-                                <rect x="150" y="160" width="260" height="20" rx="10" fill="#bfdbfe" />
-                                <rect x="150" y="202" width="370" height="22" rx="11" fill="#93c5fd" />
-                                <rect x="150" y="370" width="220" height="140" rx="24" fill="#dbeafe" />
-                                <rect x="402" y="370" width="220" height="140" rx="24" fill="#fef3c7" />
-                                <rect x="654" y="370" width="120" height="140" rx="24" fill="#e0f2fe" />
-                                <circle cx="260" cy="435" r="34" fill="#2563eb" />
-                                <circle cx="512" cy="435" r="34" fill="#f59e0b" />
-                                <circle cx="714" cy="435" r="34" fill="#0ea5e9" />
-                                <path d="M250 435L258 443L273 426" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M502 435L510 443L525 426" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M704 435L712 443L727 426" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
-                        @endif
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
 
     {{-- ============================================ --}}
     {{-- INFINITE MARQUEE - LOGO MITRA                --}}
     {{-- ============================================ --}}
-    <section class="bg-white border-b border-gray-100 py-12 overflow-hidden">
+    <section class="bg-white border-b border-gray-100 py-10 lg:py-14 overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 text-center">
             <p class="text-xs font-bold text-gray-400 uppercase tracking-[0.2em]" data-aos="fade-up">
                 Dipercaya oleh perusahaan terkemuka
@@ -189,23 +143,23 @@
     {{-- ============================================ --}}
     {{-- QUICK LINKS - Premium Glassmorphism          --}}
     {{-- ============================================ --}}
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-20 mb-16" data-aos="fade-up">
-        <div class="bg-white/80 backdrop-blur-2xl rounded-2xl shadow-2xl shadow-gray-200/50 border border-white/60 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 divide-y sm:divide-y-0 sm:divide-x divide-gray-100/80">
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-14 relative z-20" data-aos="fade-up">
+        <div class="bg-white rounded-2xl shadow-xl border border-gray-100 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 divide-y sm:divide-y-0 sm:divide-x divide-gray-100">
             @foreach ([
-                ['label' => 'Lowongan Pekerjaan', 'desc' => 'Temukan peluang kerja', 'icon' => 'M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z', 'url' => route('lowongan.index'), 'color' => 'from-blue-500 to-blue-600'],
-                ['label' => 'Artikel Dunia Kerja', 'desc' => 'Tips & informasi terkini', 'icon' => 'M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z', 'url' => route('artikel.index'), 'color' => 'from-emerald-500 to-emerald-600'],
-                ['label' => 'Galeri Kegiatan', 'desc' => 'Dokumentasi BKK terbaru', 'icon' => 'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z', 'url' => route('galeri.index'), 'color' => 'from-purple-500 to-purple-600'],
-                ['label' => 'Mitra Perusahaan', 'desc' => 'Rekanan terbaik kami', 'icon' => 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4', 'url' => route('lowongan.index'), 'color' => 'from-amber-500 to-amber-600'],
-                ['label' => 'Statistik Alumni', 'desc' => 'Data penyerapan alumni', 'icon' => 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z', 'url' => route('statistik.index'), 'color' => 'from-rose-500 to-rose-600'],
+                ['label' => 'Lowongan Pekerjaan', 'desc' => 'Temukan peluang kerja sesuai minat Anda', 'icon' => 'M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z', 'url' => route('lowongan.index'), 'color' => 'bg-[#024CD4]'],
+                ['label' => 'Artikel Dunia Kerja', 'desc' => 'Tips, berita, dan informasi seputar dunia kerja', 'icon' => 'M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z', 'url' => route('artikel.index'), 'color' => 'bg-[#024CD4]'],
+                ['label' => 'Galeri Kegiatan', 'desc' => 'Dokumentasi kegiatan BKK terbaru', 'icon' => 'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z', 'url' => route('galeri.index'), 'color' => 'bg-[#024CD4]'],
+                ['label' => 'Mitra Perusahaan', 'desc' => 'Perusahaan terbaik yang bekerja sama dengan kami', 'icon' => 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4', 'url' => route('lowongan.index'), 'color' => 'bg-[#024CD4]'],
+                ['label' => 'Statistik Alumni', 'desc' => 'Data penyerapan alumni dan capaian BKK', 'icon' => 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z', 'url' => route('statistik.index'), 'color' => 'bg-[#024CD4]'],
             ] as $item)
                 <a href="{{ $item['url'] }}" class="group p-6 flex flex-col items-center text-center gap-4 hover:bg-gradient-to-b hover:from-gray-50 hover:to-white transition-all duration-300 relative">
-                    <span class="w-14 h-14 rounded-2xl bg-gradient-to-br {{ $item['color'] }} text-white flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+                    <span class="w-14 h-14 rounded-2xl {{ $item['color'] }} text-white flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="{{ $item['icon'] }}"/>
                         </svg>
                     </span>
                     <div>
-                        <span class="block text-sm font-bold text-gray-800 group-hover:text-blue-700 transition-colors">{{ $item['label'] }}</span>
+                        <span class="block text-sm font-bold text-gray-800 group-hover:text-[#013ba8] transition-colors">{{ $item['label'] }}</span>
                         <span class="block text-xs text-gray-500 mt-2 leading-relaxed">{{ $item['desc'] }}</span>
                     </div>
                 </a>
@@ -217,18 +171,18 @@
     {{-- LOWONGAN UNGGULAN - Enhanced Design          --}}
     {{-- ============================================ --}}
     @if ($lowonganUnggulan->isNotEmpty())
-        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-14">
             <div class="grid lg:grid-cols-3 gap-8">
                 <div class="lg:col-span-2">
                     <div class="flex items-center justify-between mb-8" data-aos="fade-up">
                         <div>
                             <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 flex items-center gap-3">
-                                <span class="w-1 h-8 bg-gradient-to-b from-amber-400 to-amber-600 rounded-full"></span>
+                                <span class="w-1 h-8 bg-[#024CD4] rounded-full"></span>
                                 Lowongan Unggulan
                             </h2>
                             <p class="text-gray-500 mt-2 text-sm">Peluang karier terbaik untuk masa depanmu</p>
                         </div>
-                        <a href="{{ route('lowongan.index') }}" class="group inline-flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 px-4 py-2 rounded-lg transition-all duration-200">
+                        <a href="{{ route('lowongan.index') }}" class="group inline-flex items-center gap-2 text-sm font-semibold text-[#024CD4] hover:text-[#013ba8] bg-[#024CD4]/10 hover:bg-[#024CD4]/20 px-4 py-2 rounded-lg transition-all duration-200">
                             Lihat Semua 
                             <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
@@ -238,12 +192,12 @@
                     
                     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach ($lowonganUnggulan as $index => $item)
-                            <div class="group bg-white border border-gray-100 rounded-2xl p-6 hover:shadow-2xl hover:border-blue-200 hover:-translate-y-2 transition-all duration-300 flex flex-col relative overflow-hidden" data-aos="fade-up" data-aos-delay="{{ $index * 100 }}">
+                            <div class="group bg-white border border-gray-100 rounded-2xl p-6 hover:shadow-2xl hover:border-[#024CD4]/40 hover:-translate-y-2 transition-all duration-300 flex flex-col relative overflow-hidden" data-aos="fade-up" data-aos-delay="{{ $index * 100 }}">
                                 {{-- Hover Effect Line --}}
-                                <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-blue-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
+                                <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#024CD4] to-[#013ba8] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
                                 
                                 <div class="flex items-center gap-3 mb-4">
-                                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center text-blue-600 text-sm font-bold overflow-hidden flex-shrink-0 ring-2 ring-blue-100 group-hover:ring-blue-200 transition-all">
+                                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-[#024CD4]/10 to-[#024CD4]/20 flex items-center justify-center text-[#024CD4] text-sm font-bold overflow-hidden flex-shrink-0 ring-2 ring-[#024CD4]/20 group-hover:ring-[#024CD4]/40 transition-all">
                                         @if ($item->mitra->logo)
                                             <img src="{{ Storage::url($item->mitra->logo) }}" class="w-full h-full object-cover" alt="{{ $item->mitra->nama_perusahaan }}">
                                         @else
@@ -258,7 +212,7 @@
                                     </div>
                                 </div>
                                 
-                                <h3 class="font-bold text-gray-900 mb-3 line-clamp-2 min-h-[3rem] group-hover:text-blue-700 transition-colors">
+                                <h3 class="font-bold text-gray-900 mb-3 line-clamp-2 min-h-[3rem] group-hover:text-[#013ba8] transition-colors">
                                     {{ $item->posisi }}
                                 </h3>
                                 
@@ -271,10 +225,10 @@
                                 </div>
                                 
                                 <div class="mt-auto pt-4 border-t border-gray-100 flex items-center justify-between">
-                                    <span class="inline-block text-xs font-semibold bg-blue-50 text-blue-700 px-3 py-1.5 rounded-lg group-hover:bg-blue-100 transition-colors">
+                                    <span class="inline-block text-xs font-semibold bg-[#024CD4]/10 text-[#013ba8] px-3 py-1.5 rounded-lg group-hover:bg-[#024CD4]/20 transition-colors">
                                         {{ $item->jenis_pekerjaan }}
                                     </span>
-                                    <a href="{{ route('lowongan.show', $item) }}" class="inline-flex items-center gap-1 text-xs font-semibold text-blue-600 hover:text-blue-700 group-hover:gap-2 transition-all">
+                                    <a href="{{ route('lowongan.show', $item) }}" class="inline-flex items-center gap-1 text-xs font-semibold text-[#024CD4] hover:text-[#013ba8] group-hover:gap-2 transition-all">
                                         Detail 
                                         <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
@@ -287,37 +241,36 @@
                 </div>
 
                 {{-- CTA Box - Enhanced --}}
-                <div class="relative bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 rounded-2xl p-8 text-white flex flex-col justify-between shadow-2xl shadow-blue-600/30 overflow-hidden" data-aos="fade-left">
+                <div class="relative bg-[#024CD4] rounded-2xl p-8 text-white flex flex-col justify-between shadow-xl overflow-hidden" data-aos="fade-left">
                     {{-- Decorative Elements --}}
                     <div class="absolute top-0 right-0 -mr-16 -mt-16 w-48 h-48 bg-white/10 rounded-full blur-2xl"></div>
-                    <div class="absolute bottom-0 left-0 -ml-16 -mb-16 w-48 h-48 bg-amber-400/20 rounded-full blur-2xl"></div>
-                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-cyan-400/10 rounded-full blur-3xl"></div>
+                    <div class="absolute bottom-0 left-0 -ml-16 -mb-16 w-48 h-48 bg-[#024CD4]/40 rounded-full blur-2xl"></div>
                     
                     <div class="relative z-10">
-                        <div class="w-14 h-14 bg-white/10 backdrop-blur-xl rounded-2xl flex items-center justify-center mb-6 shadow-lg">
+                        <div class="w-14 h-14 bg-white/15 rounded-2xl flex items-center justify-center mb-6 shadow-lg">
                             <svg class="w-7 h-7 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
                             </svg>
                         </div>
                         <h3 class="text-3xl font-bold mb-4 leading-tight">Saatnya Raih Karier Impianmu!</h3>
-                        <p class="text-blue-100 text-sm leading-relaxed mb-6">
+                        <p class="text-[#d0e3ff] text-sm leading-relaxed mb-6">
                             Temukan ribuan lowongan kerja terbaik dari perusahaan terpercaya. Mulai perjalanan kariermu sekarang!
                         </p>
                         
                         {{-- Mini Stats --}}
                         <div class="grid grid-cols-2 gap-4 mb-8">
-                            <div class="bg-white/10 backdrop-blur-xl rounded-xl p-4 text-center">
-                                <p class="text-2xl font-bold text-amber-400">{{ $lowonganUnggulan->count() }}+</p>
-                                <p class="text-xs text-blue-100 mt-1">Lowongan Aktif</p>
+                            <div class="bg-white/15 rounded-xl p-4 text-center">
+                                <p class="text-2xl font-bold text-white">{{ $lowonganUnggulan->count() }}+</p>
+                                <p class="text-xs text-[#d0e3ff] mt-1">Lowongan Aktif</p>
                             </div>
-                            <div class="bg-white/10 backdrop-blur-xl rounded-xl p-4 text-center">
-                                <p class="text-2xl font-bold text-amber-400">{{ $mitra->count() ?? 0 }}+</p>
-                                <p class="text-xs text-blue-100 mt-1">Mitra Perusahaan</p>
+                            <div class="bg-white/15 rounded-xl p-4 text-center">
+                                <p class="text-2xl font-bold text-white">{{ $mitra->count() ?? 0 }}+</p>
+                                <p class="text-xs text-[#d0e3ff] mt-1">Mitra Perusahaan</p>
                             </div>
                         </div>
                     </div>
                     
-                    <a href="{{ route('lowongan.index') }}" class="relative z-10 group inline-flex items-center justify-center gap-2 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-amber-950 text-sm font-bold px-6 py-4 rounded-xl w-full transition-all duration-300 hover:shadow-2xl hover:shadow-amber-500/30 hover:-translate-y-1">
+                    <a href="{{ route('lowongan.index') }}" class="relative z-10 group inline-flex items-center justify-center gap-2 bg-amber-400 hover:bg-amber-500 text-slate-900 text-sm font-bold px-6 py-4 rounded-xl w-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
                         Cari Lowongan Sekarang
                         <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
@@ -331,17 +284,17 @@
     {{-- ============================================ --}}
     {{-- LOWONGAN & ARTIKEL TERBARU                   --}}
     {{-- ============================================ --}}
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 lg:pb-20 grid lg:grid-cols-2 gap-8 lg:gap-12">
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-14 grid lg:grid-cols-2 gap-8 lg:gap-12">
         {{-- Lowongan Terbaru --}}
         <div data-aos="fade-up">
             <div class="flex items-center justify-between mb-6">
                 <div>
                     <h2 class="text-2xl font-bold text-gray-900 flex items-center gap-3">
-                        <span class="w-1 h-8 bg-gradient-to-b from-blue-500 to-blue-700 rounded-full"></span>
+                        <span class="w-1 h-8 bg-[#024CD4] rounded-full"></span>
                         Lowongan Terbaru
                     </h2>
                 </div>
-                <a href="{{ route('lowongan.index') }}" class="group inline-flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 px-4 py-2 rounded-lg transition-all">
+                <a href="{{ route('lowongan.index') }}" class="group inline-flex items-center gap-2 text-sm font-semibold text-[#024CD4] hover:text-[#013ba8] bg-[#024CD4]/10 hover:bg-[#024CD4]/20 px-4 py-2 rounded-lg transition-all">
                     Lihat Semua 
                     <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
@@ -350,9 +303,9 @@
             </div>
             <div class="bg-white rounded-2xl border border-gray-100 shadow-lg shadow-gray-100/50 divide-y divide-gray-50 overflow-hidden">
                 @forelse ($lowonganTerbaru as $item)
-                    <a href="{{ route('lowongan.show', $item) }}" class="group flex items-center justify-between gap-4 p-5 hover:bg-gradient-to-r hover:from-blue-50 hover:to-transparent transition-all duration-200">
+                    <a href="{{ route('lowongan.show', $item) }}" class="group flex items-center justify-between gap-4 p-5 hover:bg-gradient-to-r hover:from-[#024CD4]/5 hover:to-transparent transition-all duration-200">
                         <span class="flex items-center gap-4 min-w-0">
-                            <span class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center text-blue-600 text-sm font-bold overflow-hidden flex-shrink-0 ring-2 ring-blue-100 group-hover:ring-blue-200 transition-all">
+                            <span class="w-12 h-12 rounded-xl bg-gradient-to-br from-[#024CD4]/10 to-[#024CD4]/20 flex items-center justify-center text-[#024CD4] text-sm font-bold overflow-hidden flex-shrink-0 ring-2 ring-[#024CD4]/20 group-hover:ring-[#024CD4]/40 transition-all">
                                 @if ($item->mitra->logo)
                                     <img src="{{ Storage::url($item->mitra->logo) }}" class="w-full h-full object-cover" alt="{{ $item->mitra->nama_perusahaan }}">
                                 @else
@@ -360,7 +313,7 @@
                                 @endif
                             </span>
                             <span class="min-w-0">
-                                <span class="block text-sm font-bold text-gray-800 group-hover:text-blue-700 transition-colors line-clamp-1">{{ $item->posisi }}</span>
+                                <span class="block text-sm font-bold text-gray-800 group-hover:text-[#013ba8] transition-colors line-clamp-1">{{ $item->posisi }}</span>
                                 <span class="flex items-center gap-1 text-xs text-gray-500 mt-1">
                                     <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
@@ -370,10 +323,10 @@
                             </span>
                         </span>
                         <span class="flex items-center gap-3">
-                            <span class="text-xs font-semibold bg-gray-100 text-gray-600 px-3 py-1.5 rounded-lg whitespace-nowrap group-hover:bg-blue-100 group-hover:text-blue-700 transition-colors">
+                            <span class="text-xs font-semibold bg-gray-100 text-gray-600 px-3 py-1.5 rounded-lg whitespace-nowrap group-hover:bg-[#024CD4]/20 group-hover:text-[#013ba8] transition-colors">
                                 {{ $item->jenis_pekerjaan }}
                             </span>
-                            <svg class="w-4 h-4 text-gray-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-4 h-4 text-gray-400 group-hover:text-[#024CD4] group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                             </svg>
                         </span>
@@ -396,7 +349,7 @@
             <div class="flex items-center justify-between mb-6">
                 <div>
                     <h2 class="text-2xl font-bold text-gray-900 flex items-center gap-3">
-                        <span class="w-1 h-8 bg-gradient-to-b from-emerald-500 to-emerald-700 rounded-full"></span>
+                        <span class="w-1 h-8 bg-[#024CD4] rounded-full"></span>
                         Artikel Terbaru
                     </h2>
                 </div>
@@ -452,11 +405,11 @@
         </div>
     </section>
 
-        {{-- ============================================ --}}
+    {{-- ============================================ --}}
     {{-- GALERI KEGIATAN - Homepage Section           --}}
     {{-- ============================================ --}}
     @if (isset($galeri) && $galeri->count() > 0)
-        <section class="relative bg-gradient-to-br from-blue-950 via-blue-900 to-indigo-900 py-16 lg:py-20 overflow-hidden">
+        <section class="relative bg-[#024CD4] py-10 lg:py-14 overflow-hidden">
             {{-- Animated Background Pattern --}}
             <div class="absolute inset-0 opacity-20 pointer-events-none">
                 <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%23ffffff&quot; fill-opacity=&quot;0.05&quot;%3E%3Cpath d=&quot;M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
@@ -464,30 +417,23 @@
 
             {{-- Animated Gradient Orbs --}}
             <div class="absolute inset-0 overflow-hidden pointer-events-none">
-                <div class="absolute -top-40 -right-40 w-[600px] h-[600px] bg-blue-500 rounded-full mix-blend-screen filter blur-3xl opacity-20 animate-pulse"></div>
-                <div class="absolute -bottom-40 -left-40 w-[600px] h-[600px] bg-indigo-500 rounded-full mix-blend-screen filter blur-3xl opacity-20 animate-pulse animation-delay-2000"></div>
-                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-cyan-400 rounded-full mix-blend-screen filter blur-3xl opacity-10 animate-pulse animation-delay-4000"></div>
+                <div class="absolute -top-40 -right-40 w-[600px] h-[600px] bg-[#024CD4]/50 rounded-full filter blur-3xl opacity-15"></div>
+                <div class="absolute -bottom-40 -left-40 w-[600px] h-[600px] bg-[#024CD4]/70 rounded-full filter blur-3xl opacity-10"></div>
             </div>
 
             <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 {{-- Section Header --}}
                 <div class="flex items-center justify-between mb-10" data-aos="fade-up">
                     <div>
-                        <span class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-xl border border-white/20 text-amber-300 text-xs font-bold px-4 py-2 rounded-full mb-4">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                            </svg>
-                            GALERI KEGIATAN
-                        </span>
                         <h2 class="text-3xl sm:text-4xl font-bold text-white flex items-center gap-3">
-                            <span class="w-1 h-10 bg-gradient-to-b from-amber-400 to-yellow-300 rounded-full"></span>
+                            <span class="w-1 h-10 bg-white rounded-full"></span>
                             Dokumentasi Kegiatan BKK
                         </h2>
-                        <p class="text-blue-100 mt-3 max-w-xl">
+                        <p class="text-[#d0e3ff] mt-3 max-w-xl">
                             Momen-momen berharga dari berbagai kegiatan yang telah kami laksanakan bersama mitra dan siswa.
                         </p>
                     </div>
-                    <a href="{{ route('galeri.index') }}" class="hidden sm:inline-flex items-center gap-2 group bg-white/10 backdrop-blur-xl text-white hover:bg-white/20 text-sm font-semibold px-6 py-3 rounded-xl border border-white/20 hover:border-white/30 hover:shadow-lg transition-all duration-200">
+                    <a href="{{ route('galeri.index') }}" class="hidden sm:inline-flex items-center gap-2 group bg-white/15 text-white hover:bg-white/25 text-sm font-semibold px-6 py-3 rounded-xl border border-white/25 hover:border-white/35 hover:shadow-lg transition-all duration-200">
                         Lihat Semua Galeri
                         <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
@@ -501,7 +447,7 @@
                         @php
                             $kategoriKey = strtolower($item->kategori ?? '');
                             $kategoriColors = [
-                                'workshop'           => ['bg' => 'bg-blue-50',    'text' => 'text-blue-700',    'dot' => 'bg-blue-500'],
+                                'workshop'           => ['bg' => 'bg-[#024CD4]/10', 'text' => 'text-[#013ba8]', 'dot' => 'bg-[#024CD4]'],
                                 'seminar'            => ['bg' => 'bg-violet-50',  'text' => 'text-violet-700',  'dot' => 'bg-violet-500'],
                                 'kunjungan industri' => ['bg' => 'bg-emerald-50', 'text' => 'text-emerald-700', 'dot' => 'bg-emerald-500'],
                                 'job fair'           => ['bg' => 'bg-amber-50',   'text' => 'text-amber-700',   'dot' => 'bg-amber-500'],
@@ -577,7 +523,7 @@
 
                 {{-- Mobile View All Button --}}
                 <div class="mt-8 text-center sm:hidden" data-aos="fade-up">
-                    <a href="{{ route('galeri.index') }}" class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-xl text-white text-sm font-semibold px-6 py-3 rounded-xl border border-white/20 hover:border-white/30 shadow-lg transition-all">
+                    <a href="{{ route('galeri.index') }}" class="inline-flex items-center gap-2 bg-white/15 text-white text-sm font-semibold px-6 py-3 rounded-xl border border-white/25 hover:border-white/35 shadow-lg transition-all">
                         Lihat Semua Galeri
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
@@ -648,11 +594,8 @@
     {{-- ============================================ --}}
     @php $totalAlumniBeranda = $alumniBekerja + $alumniMelanjutkanStudi; @endphp
     
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-14">
         <div class="text-center mb-12" data-aos="fade-up">
-            <span class="inline-block bg-blue-50 text-blue-700 text-xs font-bold px-4 py-2 rounded-full mb-4">
-                STATISTIK
-            </span>
             <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight">
                 Capaian Penyerapan Alumni
             </h2>
@@ -663,25 +606,24 @@
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4" data-aos="fade-up" data-aos-delay="100">
             
             {{-- Kotak Besar: Total Alumni --}}
-            <div class="col-span-2 md:col-span-2 bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 text-white rounded-2xl p-8 flex flex-col justify-center relative overflow-hidden shadow-2xl shadow-blue-600/30 group">
+            <div class="col-span-2 md:col-span-2 bg-[#024CD4] text-white rounded-2xl p-8 flex flex-col justify-center relative overflow-hidden shadow-xl group">
                 {{-- Decorative Elements --}}
                 <div class="absolute top-0 right-0 -mr-10 -mt-10 w-48 h-48 bg-white/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500"></div>
-                <div class="absolute bottom-0 left-0 -ml-10 -mb-10 w-48 h-48 bg-amber-400/20 rounded-full blur-2xl"></div>
-                <div class="absolute inset-0 bg-gradient-to-br from-transparent to-blue-900/20"></div>
+                <div class="absolute bottom-0 left-0 -ml-10 -mb-10 w-48 h-48 bg-[#024CD4]/40 rounded-full blur-2xl"></div>
                 
                 <div class="relative z-10">
                     <div class="flex items-center gap-3 mb-4">
-                        <div class="w-12 h-12 bg-white/10 backdrop-blur-xl rounded-xl flex items-center justify-center shadow-lg">
-                            <svg class="w-6 h-6 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="w-12 h-12 bg-white/15 rounded-xl flex items-center justify-center shadow-lg">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"/>
                             </svg>
                         </div>
-                        <span class="text-xs font-bold uppercase tracking-wider text-blue-100">Total Alumni</span>
+                        <span class="text-xs font-bold uppercase tracking-wider text-[#d0e3ff]">Total Alumni</span>
                     </div>
-                    <p class="text-6xl sm:text-7xl font-extrabold tracking-tight bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">
+                    <p class="text-6xl sm:text-7xl font-extrabold tracking-tight text-white">
                         {{ number_format($totalAlumniBeranda) }}
                     </p>
-                    <p class="text-blue-100 text-sm mt-3">Alumni terdata dalam sistem</p>
+                    <p class="text-[#d0e3ff] text-sm mt-3">Alumni terdata dalam sistem</p>
                 </div>
             </div>
             
@@ -690,7 +632,7 @@
                 {{-- Hover Effect --}}
                 <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-400 to-emerald-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
                 
-                <div class="w-12 h-12 bg-gradient-to-br from-emerald-400 to-emerald-600 text-white rounded-xl flex items-center justify-center mb-4 shadow-lg shadow-emerald-500/30 group-hover:scale-110 group-hover:rotate-6 transition-all">
+                <div class="w-12 h-12 bg-[#024CD4] text-white rounded-xl flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                     </svg>
@@ -711,7 +653,7 @@
                 {{-- Hover Effect --}}
                 <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-400 to-amber-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
                 
-                <div class="w-12 h-12 bg-gradient-to-br from-amber-400 to-amber-600 text-white rounded-xl flex items-center justify-center mb-4 shadow-lg shadow-amber-500/30 group-hover:scale-110 group-hover:rotate-6 transition-all">
+                <div class="w-12 h-12 bg-[#024CD4] text-white rounded-xl flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"/>
                     </svg>
@@ -728,21 +670,21 @@
             </div>
 
             {{-- Kotak Lebar: Mitra Aktif --}}
-            <div class="col-span-2 md:col-span-2 bg-gradient-to-br from-amber-50 to-white border border-amber-100 rounded-2xl p-8 flex items-center justify-between hover:shadow-2xl hover:shadow-amber-100/50 transition-all duration-300 group relative overflow-hidden">
-                <div class="absolute top-0 right-0 w-32 h-32 bg-amber-200/30 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500"></div>
+            <div class="col-span-2 md:col-span-2 bg-white border border-gray-100 rounded-2xl p-8 flex items-center justify-between hover:shadow-xl transition-all duration-300 group relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-[#024CD4]/20 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500"></div>
                 
                 <div class="flex items-center gap-5 relative z-10">
-                    <div class="w-16 h-16 bg-gradient-to-br from-amber-400 to-amber-600 text-white rounded-2xl flex items-center justify-center shadow-xl shadow-amber-400/30 group-hover:scale-110 group-hover:rotate-6 transition-all">
+                    <div class="w-16 h-16 bg-[#024CD4] text-white rounded-2xl flex items-center justify-center shadow-xl group-hover:scale-110 group-hover:rotate-6 transition-all">
                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
                         </svg>
                     </div>
                     <div>
-                        <p class="text-xs font-bold text-amber-700 uppercase tracking-wider mb-1">Mitra Aktif</p>
+                        <p class="text-xs font-bold text-[#024CD4] uppercase tracking-wider mb-1">Mitra Aktif</p>
                         <p class="text-3xl font-extrabold text-gray-900 tracking-tight">{{ $mitra->count() ?? 0 }}+ Perusahaan</p>
                     </div>
                 </div>
-                <a href="{{ route('lowongan.index') }}" class="hidden sm:inline-flex items-center gap-2 text-sm font-semibold text-amber-700 hover:text-amber-800 bg-white/50 hover:bg-white px-4 py-2 rounded-lg border border-amber-200 transition-all relative z-10">
+                <a href="{{ route('lowongan.index') }}" class="hidden sm:inline-flex items-center gap-2 text-sm font-semibold text-[#024CD4] hover:text-[#013ba8] bg-[#024CD4]/10 hover:bg-[#024CD4]/20 px-4 py-2 rounded-lg border border-[#024CD4]/30 transition-all relative z-10">
                     Lihat Semua
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
@@ -751,11 +693,11 @@
             </div>
 
             {{-- Kotak Lebar: Statistik Alumni --}}
-            <div class="col-span-2 md:col-span-2 bg-white border border-gray-100 rounded-2xl p-8 flex items-center justify-between hover:border-blue-200 hover:shadow-2xl hover:shadow-blue-100/50 transition-all duration-300 group relative overflow-hidden">
-                <div class="absolute top-0 left-0 w-32 h-32 bg-blue-100/30 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500"></div>
+            <div class="col-span-2 md:col-span-2 bg-white border border-gray-100 rounded-2xl p-8 flex items-center justify-between hover:border-[#024CD4]/40 hover:shadow-2xl hover:shadow-[#024CD4]/20 transition-all duration-300 group relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-32 h-32 bg-[#024CD4]/20 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500"></div>
                 
                 <div class="flex items-center gap-5 relative z-10">
-                    <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-700 text-white rounded-2xl flex items-center justify-center shadow-xl shadow-blue-500/30 group-hover:scale-110 group-hover:rotate-6 transition-all">
+                    <div class="w-16 h-16 bg-[#024CD4] text-white rounded-2xl flex items-center justify-center shadow-xl group-hover:scale-110 group-hover:rotate-6 transition-all">
                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
                         </svg>
@@ -765,7 +707,7 @@
                         <p class="text-3xl font-extrabold text-gray-900 tracking-tight">Lihat capaian alumni</p>
                     </div>
                 </div>
-                <a href="{{ route('statistik.index') }}" class="hidden sm:inline-flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 px-4 py-2 rounded-lg border border-blue-200 transition-all relative z-10">
+                <a href="{{ route('statistik.index') }}" class="hidden sm:inline-flex items-center gap-2 text-sm font-semibold text-[#024CD4] hover:text-[#013ba8] bg-[#024CD4]/10 hover:bg-[#024CD4]/20 px-4 py-2 rounded-lg border border-[#024CD4]/30 transition-all relative z-10">
                     Buka Statistik
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
@@ -822,11 +764,11 @@
             background: #f1f1f1;
         }
         ::-webkit-scrollbar-thumb {
-            background: linear-gradient(180deg, #3b82f6, #1d4ed8);
+            background: #024CD4;
             border-radius: 10px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(180deg, #2563eb, #1e40af);
+            background: #013ba8;
         }
 
         /* Line Clamp Utility */
