@@ -172,8 +172,8 @@
     {{-- ============================================ --}}
     @if ($lowonganUnggulan->isNotEmpty())
         <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-14">
-            <div class="grid lg:grid-cols-3 gap-8">
-                <div class="lg:col-span-2">
+            <div class="grid lg:grid-cols-3 gap-8 items-stretch">
+                <div class="lg:col-span-2 flex flex-col">
                     <div class="flex items-center justify-between mb-8" data-aos="fade-up">
                         <div>
                             <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 flex items-center gap-3">
@@ -190,9 +190,9 @@
                         </a>
                     </div>
                     
-                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 flex-1 content-start">
                         @foreach ($lowonganUnggulan as $index => $item)
-                            <div class="group bg-white border border-gray-100 rounded-2xl p-6 hover:shadow-2xl hover:border-[#024CD4]/40 hover:-translate-y-2 transition-all duration-300 flex flex-col relative overflow-hidden" data-aos="fade-up" data-aos-delay="{{ $index * 100 }}">
+                            <div class="group bg-white border border-gray-100 rounded-2xl p-6 hover:shadow-2xl hover:border-[#024CD4]/40 hover:-translate-y-2 transition-all duration-300 flex flex-col relative overflow-hidden h-full" data-aos="fade-up" data-aos-delay="{{ $index * 100 }}">
                                 {{-- Hover Effect Line --}}
                                 <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#024CD4] to-[#013ba8] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
                                 
@@ -212,7 +212,7 @@
                                     </div>
                                 </div>
                                 
-                                <h3 class="font-bold text-gray-900 mb-3 line-clamp-2 min-h-[3rem] group-hover:text-[#013ba8] transition-colors">
+                                <h3 class="font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-[#013ba8] transition-colors">
                                     {{ $item->posisi }}
                                 </h3>
                                 
@@ -241,21 +241,23 @@
                 </div>
 
                 {{-- CTA Box - Enhanced --}}
-                <div class="relative bg-[#024CD4] rounded-2xl p-8 text-white flex flex-col justify-between shadow-xl overflow-hidden" data-aos="fade-left">
+                <div class="relative bg-[#024CD4] rounded-2xl p-8 text-white flex flex-col justify-between shadow-xl overflow-hidden h-full" data-aos="fade-left">
                     {{-- Decorative Elements --}}
                     <div class="absolute top-0 right-0 -mr-16 -mt-16 w-48 h-48 bg-white/10 rounded-full blur-2xl"></div>
                     <div class="absolute bottom-0 left-0 -ml-16 -mb-16 w-48 h-48 bg-[#024CD4]/40 rounded-full blur-2xl"></div>
                     
-                    <div class="relative z-10">
-                        <div class="w-14 h-14 bg-white/15 rounded-2xl flex items-center justify-center mb-6 shadow-lg">
-                            <svg class="w-7 h-7 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                            </svg>
+                    <div class="relative z-10 flex flex-col h-full">
+                        <div>
+                            <div class="w-14 h-14 bg-white/15 rounded-2xl flex items-center justify-center mb-6 shadow-lg">
+                                <svg class="w-7 h-7 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl lg:text-3xl font-bold mb-4 leading-tight">Saatnya Raih Karier Impianmu!</h3>
+                            <p class="text-[#d0e3ff] text-sm leading-relaxed mb-6">
+                                Temukan ribuan lowongan kerja terbaik dari perusahaan terpercaya. Mulai perjalanan kariermu sekarang!
+                            </p>
                         </div>
-                        <h3 class="text-3xl font-bold mb-4 leading-tight">Saatnya Raih Karier Impianmu!</h3>
-                        <p class="text-[#d0e3ff] text-sm leading-relaxed mb-6">
-                            Temukan ribuan lowongan kerja terbaik dari perusahaan terpercaya. Mulai perjalanan kariermu sekarang!
-                        </p>
                         
                         {{-- Mini Stats --}}
                         <div class="grid grid-cols-2 gap-4 mb-8">
@@ -268,19 +270,20 @@
                                 <p class="text-xs text-[#d0e3ff] mt-1">Mitra Perusahaan</p>
                             </div>
                         </div>
+
+                        <a href="{{ route('lowongan.index') }}" class="relative z-10 group inline-flex items-center justify-center gap-2 bg-amber-400 hover:bg-amber-500 text-slate-900 text-sm font-bold px-6 py-4 rounded-xl w-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1 mt-auto">
+                            Cari Lowongan Sekarang
+                            <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                            </svg>
+                        </a>
                     </div>
-                    
-                    <a href="{{ route('lowongan.index') }}" class="relative z-10 group inline-flex items-center justify-center gap-2 bg-amber-400 hover:bg-amber-500 text-slate-900 text-sm font-bold px-6 py-4 rounded-xl w-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                        Cari Lowongan Sekarang
-                        <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                        </svg>
-                    </a>
                 </div>
             </div>
         </section>
     @endif
 
+    
     {{-- ============================================ --}}
     {{-- LOWONGAN & ARTIKEL TERBARU                   --}}
     {{-- ============================================ --}}
