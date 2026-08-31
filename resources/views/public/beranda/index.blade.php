@@ -152,7 +152,7 @@
                 ['label' => 'Mitra Perusahaan', 'desc' => 'Perusahaan terbaik yang bekerja sama dengan kami', 'icon' => 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4', 'url' => route('lowongan.index'), 'color' => 'bg-[#024CD4]'],
                 ['label' => 'Statistik Alumni', 'desc' => 'Data penyerapan alumni dan capaian BKK', 'icon' => 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z', 'url' => route('statistik.index'), 'color' => 'bg-[#024CD4]'],
             ] as $item)
-                <a href="{{ $item['url'] }}" class="group p-6 flex flex-col items-center text-center gap-4 hover:bg-gradient-to-b hover:from-gray-50 hover:to-white transition-all duration-300 relative">
+            <div class="group p-6 flex flex-col items-center text-center gap-4 hover:bg-gradient-to-b hover:from-gray-50 hover:to-white transition-all duration-300 relative">
                     <span class="w-14 h-14 rounded-2xl {{ $item['color'] }} text-white flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="{{ $item['icon'] }}"/>
@@ -162,7 +162,7 @@
                         <span class="block text-sm font-bold text-gray-800 group-hover:text-[#013ba8] transition-colors">{{ $item['label'] }}</span>
                         <span class="block text-xs text-gray-500 mt-2 leading-relaxed">{{ $item['desc'] }}</span>
                     </div>
-                </a>
+            </div>
             @endforeach
         </div>
     </section>
