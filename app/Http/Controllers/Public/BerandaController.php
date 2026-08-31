@@ -11,6 +11,7 @@ use App\Models\Lowongan;
 use App\Models\PengaturanWebsite;
 use App\Models\Mitra;
 use App\Models\ProfilBkk;
+use App\Support\GaleriStack;
 
 class BerandaController extends Controller
 {
@@ -23,7 +24,9 @@ class BerandaController extends Controller
             'lowonganUnggulan' => Lowongan::disetujui()->unggulan()->latest()->take(3)->get(),
             'lowonganTerbaru' => Lowongan::disetujui()->latest()->take(4)->get(),
             'artikelTerbaru' => Artikel::latest()->take(3)->get(),
-            'galeri' => Galeri::latest('tanggal')->take(5)->get(),
+            'galeri' => GaleriStack::group(
+                Galeri::latest('tanggal')->latest('id')->take(24)->get()
+            )->take(5)->values(),
             'kontak' => Kontak::singleton(),
             'alumniBekerja' => Alumni::bekerja()->count(),
             'alumniMelanjutkanStudi' => Alumni::melanjutkanStudi()->count() + Alumni::belumBekerja()->count(),

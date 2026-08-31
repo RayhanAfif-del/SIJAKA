@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\GaleriRequest;
 use App\Models\Galeri;
+use App\Support\GaleriStack;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 
 class GaleriController extends Controller
 {
@@ -15,7 +18,7 @@ class GaleriController extends Controller
      */
     public function index()
     {
-        $query = Galeri::latest('tanggal');
+        $query = Galeri::latest('tanggal')->latest('id');
 
         // Filter pencarian berdasarkan judul
         if (request('cari')) {
@@ -27,8 +30,10 @@ class GaleriController extends Controller
             $query->where('kategori', request('kategori'));
         }
 
+        $stackedGaleri = GaleriStack::group($query->get());
+
         return view('admin.galeri.index', [
-            'galeri' => $query->paginate(12),
+            'galeri' => GaleriStack::paginate($stackedGaleri, 12)->withQueryString(),
         ]);
     }
 
@@ -46,11 +51,27 @@ class GaleriController extends Controller
     public function store(GaleriRequest $request): RedirectResponse
     {
         $data = $request->validated();
-        $data['foto'] = $request->file('foto')->store('galeri', 'public');
+        $fotos = $request->file('foto', []);
 
-        Galeri::create($data);
+        DB::transaction(function () use ($data, $fotos) {
+            foreach ($fotos as $foto) {
+                Galeri::create([
+                    'judul' => $data['judul'],
+                    'kategori' => $data['kategori'],
+                    'tanggal' => $data['tanggal'],
+                    'foto' => $foto->store('galeri', 'public'),
+                ]);
+            }
+        });
 
-        return redirect()->route('admin.galeri.index')->with('status', 'Foto berhasil ditambahkan.');
+        $jumlah = count($fotos);
+
+        return redirect()->route('admin.galeri.index')->with(
+            'status',
+            $jumlah > 1
+                ? "Berhasil menambahkan {$jumlah} foto galeri."
+                : 'Foto berhasil ditambahkan.'
+        );
     }
 
     /**
@@ -81,8 +102,24 @@ class GaleriController extends Controller
     /**
      * Menghapus foto galeri.
      */
-    public function destroy(Galeri $galeri): RedirectResponse
+    public function destroy(Request $request, Galeri $galeri): RedirectResponse
     {
+        $scope = $request->input('scope', 'single');
+
+        if ($scope === 'group') {
+            $groupItems = Galeri::where('judul', $galeri->judul)
+                ->where('kategori', $galeri->kategori)
+                ->whereDate('tanggal', $galeri->tanggal)
+                ->get();
+
+            foreach ($groupItems as $item) {
+                Storage::disk('public')->delete($item->foto);
+                $item->delete();
+            }
+
+            return back()->with('status', 'Seluruh foto dalam grup berhasil dihapus.');
+        }
+
         Storage::disk('public')->delete($galeri->foto);
         $galeri->delete();
 

@@ -34,19 +34,6 @@
             <p class="text-blue-100 text-lg leading-relaxed max-w-2xl">
                 Dokumentasi berbagai kegiatan yang telah dilaksanakan oleh SIJAKA SMK N 1 Bangsri bersama sekolah, siswa, alumni, dan mitra.
             </p>
-
-            {{-- Info Bar --}}
-            @if (isset($galeri) && $galeri->total() > 0)
-                <div class="mt-8 inline-flex items-center gap-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl px-5 py-3">
-                    <div class="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center">
-                        <svg class="w-5 h-5 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                    </div>
-                    <div>
-                        <p class="text-xs text-blue-200 font-medium">Total Dokumentasi</p>
-                        <p class="text-lg font-bold text-white">{{ $galeri->total() }} Foto</p>
-                    </div>
-                </div>
-            @endif
         </div>
     </section>
 
@@ -83,18 +70,30 @@
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
             @forelse ($galeri as $index => $item)
                 @php
-                    $kategoriKey = strtolower($item->kategori ?? '');
+                    $kategoriKey = strtolower($item['kategori'] ?? '');
                     $kc = $kategoriColors[$kategoriKey] ?? $kategoriColors['kegiatan lain'];
+                    $cover = $item['cover'];
+                    $photos = $item['items'];
+                    $previewItems = $photos->map(function ($photo) {
+                        return [
+                            'url' => Storage::url($photo->foto),
+                            'title' => $photo->judul,
+                            'date' => $photo->tanggal?->translatedFormat('d F Y'),
+                            'kategori' => $photo->kategori,
+                        ];
+                    })->values();
+                    $stackThumbs = $previewItems->take(3);
+                    $isFirst = $index === 0;
                 @endphp
                 <div class="group bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-xl hover:border-blue-100 hover:-translate-y-1 transition-all duration-300" data-aos="fade-up" data-aos-delay="{{ ($index % 4) * 50 }}">
                     
                     {{-- Thumbnail --}}
                     <div class="relative aspect-[4/3] bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden cursor-pointer"
-                         @if ($item->foto)
-                         @click="$dispatch('open-preview', { url: '{{ Storage::url($item->foto) }}', title: '{{ addslashes($item->judul) }}', date: '{{ $item->tanggal->translatedFormat('d F Y') }}', kategori: '{{ addslashes($item->kategori) }}' })"
+                         @if ($cover?->foto)
+                         @click="$dispatch('open-stack-preview', { title: @js($item['judul']), date: @js(optional($item['tanggal'])->translatedFormat('d F Y')), kategori: @js($item['kategori']), items: @js($previewItems), startIndex: 0 })"
                          @endif>
-                        @if ($item->foto)
-                            <img src="{{ Storage::url($item->foto) }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="{{ $item->judul }}">
+                        @if ($cover?->foto)
+                            <img src="{{ Storage::url($cover->foto) }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="{{ $item['judul'] }}">
                         @else
                             <div class="absolute inset-0 flex items-center justify-center">
                                 <svg class="w-16 h-16 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
@@ -105,40 +104,54 @@
                         
                         {{-- Hover Overlay --}}
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
-                            <p class="text-white text-sm font-semibold line-clamp-2 mb-2 drop-shadow">{{ $item->judul }}</p>
-                            <div class="flex items-center justify-between">
+                            <p class="text-white text-sm font-semibold line-clamp-2 mb-2 drop-shadow">{{ $item['judul'] }}</p>
+                            <div class="flex items-center justify-between gap-3">
                                 <span class="text-white/80 text-xs flex items-center gap-1">
                                     <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                                    {{ $item->tanggal->translatedFormat('d M Y') }}
+                                    {{ optional($item['tanggal'])->translatedFormat('d M Y') }}
                                 </span>
-                                @if ($item->foto)
-                                    <span class="inline-flex items-center gap-1 text-xs text-white bg-white/20 backdrop-blur-sm px-2 py-1 rounded-md">
-                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
-                                        Lihat
-                                    </span>
-                                @endif
+                                <span class="inline-flex items-center gap-1 text-xs text-white bg-white/20 backdrop-blur-sm px-2 py-1 rounded-md">
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
+                                    {{ $item['count'] }} foto
+                                </span>
                             </div>
                         </div>
                         
-                        {{-- Kategori Badge --}}
+                        {{-- Stack / Kategori Badge --}}
                         <div class="absolute top-3 left-3">
                             <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold {{ $kc['bg'] }} {{ $kc['text'] }} border {{ $kc['border'] }} backdrop-blur-sm bg-opacity-90">
                                 <span class="w-1.5 h-1.5 rounded-full {{ $kc['dot'] }}"></span>
-                                {{ ucfirst($item->kategori) }}
+                                {{ ucfirst($item['kategori']) }}
                             </span>
                         </div>
+
+                        @if ($stackThumbs->count() > 1)
+                            <div class="absolute bottom-3 right-3 flex items-end -space-x-3">
+                                @foreach ($stackThumbs as $thumb)
+                                    <div class="w-11 h-11 rounded-xl border-2 border-white shadow-lg overflow-hidden bg-white/30 backdrop-blur-sm {{ $loop->index === 0 ? 'translate-y-0' : 'translate-y-1' }}">
+                                        <img src="{{ $thumb['url'] }}" alt="{{ $thumb['title'] }}" class="w-full h-full object-cover">
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
                     </div>
 
                     {{-- Content --}}
                     <div class="p-4">
-                        <h3 class="text-sm font-semibold text-gray-900 line-clamp-2 mb-2 min-h-[2.5rem]" title="{{ $item->judul }}">
-                            {{ $item->judul }}
+                        <h3 class="text-sm font-semibold text-gray-900 line-clamp-2 mb-2 min-h-[2.5rem]" title="{{ $item['judul'] }}">
+                            {{ $item['judul'] }}
                         </h3>
                         <div class="flex items-center gap-1.5 text-xs text-gray-500">
                             <svg class="w-3.5 h-3.5 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                             </svg>
-                            <span>{{ $item->tanggal->translatedFormat('d M Y') }}</span>
+                            <span>{{ optional($item['tanggal'])->translatedFormat('d M Y') }}</span>
+                        </div>
+                        <div class="mt-3 inline-flex items-center gap-1 text-xs font-medium text-slate-600 bg-slate-50 px-2.5 py-1.5 rounded-lg">
+                            <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 7h18M3 12h18M3 17h18"/>
+                            </svg>
+                            Klik untuk membuka {{ $item['count'] }} foto
                         </div>
                     </div>
                 </div>
@@ -180,17 +193,30 @@
         @endif
     </section>
 
-    {{-- Lightbox Preview Modal --}}
-    <div x-data="{ 
-            isOpen: false, 
-            url: '', 
-            title: '', 
-            date: '', 
-            kategori: '' 
-        }" 
-        @open-preview.window="isOpen = true; url = $event.detail.url; title = $event.detail.title; date = $event.detail.date; kategori = $event.detail.kategori"
+    {{-- Stack Preview Modal --}}
+    <div
+        x-data="{
+            isOpen: false,
+            title: '',
+            date: '',
+            kategori: '',
+            items: [],
+            selectedIndex: 0,
+            currentItem() {
+                return this.items[this.selectedIndex] || {};
+            },
+            open(detail) {
+                this.isOpen = true;
+                this.title = detail.title || '';
+                this.date = detail.date || '';
+                this.kategori = detail.kategori || '';
+                this.items = detail.items || [];
+                this.selectedIndex = detail.startIndex || 0;
+            }
+        }"
+        @open-stack-preview.window="open($event.detail)"
         @keydown.escape.window="isOpen = false"
-        x-show="isOpen" 
+        x-show="isOpen"
         x-transition:enter="transition ease-out duration-200"
         x-transition:enter-start="opacity-0"
         x-transition:enter-end="opacity-100"
@@ -200,20 +226,30 @@
         x-cloak
         class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/90 backdrop-blur-sm"
         @click.self="isOpen = false">
-        
-        <div class="relative max-w-5xl w-full bg-white rounded-2xl shadow-2xl overflow-hidden" @click.stop>
+
+        <div class="relative max-w-6xl w-full bg-white rounded-2xl shadow-2xl overflow-hidden" @click.stop>
             {{-- Header Modal --}}
-            <div class="flex items-center justify-between p-4 border-b border-slate-100 bg-slate-50/50">
-                <div class="min-w-0 flex-1 pr-4">
+            <div class="flex items-start justify-between gap-4 p-4 border-b border-slate-100 bg-slate-50/50">
+                <div class="min-w-0 flex-1">
                     <h3 class="text-sm font-bold text-slate-900 truncate" x-text="title"></h3>
-                    <div class="flex items-center gap-3 mt-1 text-xs text-slate-500">
+                    <div class="flex flex-wrap items-center gap-3 mt-1 text-xs text-slate-500">
                         <span class="flex items-center gap-1" x-show="date">
-                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
                             <span x-text="date"></span>
                         </span>
                         <span class="flex items-center gap-1" x-show="kategori">
-                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+                            </svg>
                             <span x-text="kategori"></span>
+                        </span>
+                        <span class="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2 py-0.5 text-slate-600 font-medium" x-show="items.length">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M3 12h18M3 17h18"/>
+                            </svg>
+                            <span x-text="items.length + ' foto'"></span>
                         </span>
                     </div>
                 </div>
@@ -223,10 +259,36 @@
                     </svg>
                 </button>
             </div>
-            
-            {{-- Image --}}
-            <div class="bg-slate-900 flex items-center justify-center p-4">
-                <img :src="url" :alt="title" class="max-w-full max-h-[70vh] object-contain rounded-lg">
+
+            <div class="grid lg:grid-cols-[1fr_320px] bg-slate-950">
+                <div class="flex items-center justify-center p-4 md:p-6 min-h-[420px]">
+                    <template x-if="items.length">
+                        <img :src="currentItem().url" :alt="currentItem().title || title" class="max-w-full max-h-[72vh] object-contain rounded-xl shadow-2xl bg-white/5">
+                    </template>
+                </div>
+
+                <div class="border-t lg:border-t-0 lg:border-l border-white/10 bg-slate-900 p-4 md:p-5">
+                    <div class="flex items-center justify-between mb-3">
+                        <div>
+                            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Foto Lain</p>
+                            <p class="text-xs text-slate-500 mt-1">Klik thumbnail untuk berpindah</p>
+                        </div>
+                        <span class="text-xs text-slate-300" x-show="items.length" x-text="(selectedIndex + 1) + ' / ' + items.length"></span>
+                    </div>
+
+                    <div class="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-2 gap-2 max-h-[72vh] overflow-y-auto pr-1">
+                        <template x-for="(photo, index) in items" :key="photo.url + '-' + index">
+                            <button
+                                type="button"
+                                class="relative aspect-square rounded-xl overflow-hidden border-2 transition focus:outline-none"
+                                :class="selectedIndex === index ? 'border-amber-400 ring-2 ring-amber-400/30' : 'border-white/10 hover:border-white/40'"
+                                @click="selectedIndex = index">
+                                <img :src="photo.url" :alt="photo.title || title" class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-black/0 hover:bg-black/15 transition"></div>
+                            </button>
+                        </template>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Alumni;
 use App\Models\Artikel;
+use App\Models\Galeri;
 use App\Models\Lowongan;
 use App\Models\Mitra;
+use App\Support\GaleriStack;
 
 class DashboardController extends Controller
 {
@@ -17,6 +19,9 @@ class DashboardController extends Controller
             'totalLowongan' => Lowongan::count(),
             'totalArtikel' => Artikel::count(),
             'totalAlumni' => Alumni::count(),
+            'galeriStacks' => GaleriStack::group(
+                Galeri::latest('tanggal')->latest('id')->take(24)->get()
+            )->take(6)->values(),
 
             'alumniBekerja' => Alumni::bekerja()->count(),
             'alumniMelanjutkanStudi' => Alumni::melanjutkanStudi()->count(),

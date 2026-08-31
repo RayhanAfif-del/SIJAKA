@@ -1,4 +1,7 @@
 <div class="space-y-5 max-w-4xl mx-auto">
+    @php
+        $isEdit = isset($galeri) && !empty($galeri->exists);
+    @endphp
     
     {{-- Section 1: Informasi Kegiatan --}}
     <div class="bg-white border border-slate-200/70 rounded-xl shadow-sm overflow-hidden">
@@ -135,33 +138,56 @@
         <div class="p-5 sm:p-6">
             <div class="flex flex-col sm:flex-row sm:items-start gap-5 p-4 rounded-lg border border-dashed border-slate-200 bg-slate-50/50">
                 {{-- Preview Foto --}}
-                <div class="w-full sm:w-64 aspect-[4/3] rounded-xl border border-slate-200 bg-white overflow-hidden flex items-center justify-center shrink-0 shadow-sm">
-                    @if (!empty($galeri->foto))
-                        <img src="{{ Storage::url($galeri->foto) }}" alt="Foto Kegiatan" class="w-full h-full object-cover">
+                <div class="w-full sm:w-64 rounded-xl border border-slate-200 bg-white overflow-hidden shrink-0 shadow-sm">
+                    @if ($isEdit && !empty($galeri->foto))
+                        <img src="{{ Storage::url($galeri->foto) }}" alt="Foto Kegiatan" class="w-full h-full object-cover aspect-[4/3]">
                     @else
-                        <div class="flex flex-col items-center text-center p-4">
-                            <svg class="w-10 h-10 text-slate-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
-                            </svg>
-                            <span class="text-xs font-medium text-slate-400">Belum ada foto</span>
+                        <div class="p-4">
+                            <div id="fotoPreviewEmpty" class="aspect-[4/3] rounded-lg border border-dashed border-slate-200 bg-slate-50 flex flex-col items-center justify-center text-center p-4">
+                                <svg class="w-10 h-10 text-slate-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                </svg>
+                                <span class="text-xs font-medium text-slate-400">
+                                    {{ $isEdit ? 'Belum ada foto baru' : 'Belum ada foto dipilih' }}
+                                </span>
+                            </div>
+                            @if (! $isEdit)
+                                <div id="fotoPreviewList" class="hidden mt-3 grid grid-cols-2 gap-2"></div>
+                                <p id="fotoPreviewCount" class="hidden mt-2 text-[11px] text-slate-500"></p>
+                            @endif
                         </div>
                     @endif
                 </div>
                 
                 {{-- Upload Area --}}
-                <div class="flex-1 min-w-0">
-                    <label class="block text-sm font-medium text-slate-700 mb-1.5">Unggah Foto Baru</label>
-                    <input type="file" name="foto" accept="image/*"
+                    <div class="flex-1 min-w-0">
+                    <label class="block text-sm font-medium text-slate-700 mb-1.5">
+                        {{ $isEdit ? 'Unggah Foto Baru' : 'Unggah Foto' }}
+                    </label>
+                    <input
+                        type="file"
+                        name="{{ $isEdit ? 'foto' : 'foto[]' }}"
+                        id="fotoInput"
+                        accept="image/*"
+                        {{ $isEdit ? '' : 'multiple' }}
                         class="block w-full text-sm text-slate-600 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-blue-50 file:text-blue-600 file:text-sm file:font-medium hover:file:bg-blue-100 file:cursor-pointer file:transition">
                     <p class="mt-2 text-xs text-slate-500 leading-relaxed">
-                        <span class="font-medium text-slate-700">Rekomendasi:</span> Rasio 4:3 (1200×900px) atau 16:9 (1200×675px) format JPG/PNG, ukuran maksimal 2MB. Gunakan foto yang jelas dan representatif.
+                        <span class="font-medium text-slate-700">Rekomendasi:</span>
+                        {{ $isEdit ? 'Unggah 1 foto baru untuk mengganti foto lama.' : 'Bisa pilih lebih dari 1 foto sekaligus. Setiap foto akan disimpan sebagai item galeri terpisah dalam satu event.' }}
+                        Format JPG/PNG, ukuran maksimal 2MB per foto.
                     </p>
-                    @error('foto') 
+                    @error('foto')
                         <p class="mt-1.5 text-xs text-red-600 flex items-center gap-1">
                             <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
                             {{ $message }}
-                        </p> 
+                        </p>
+                    @enderror
+                    @error('foto.*')
+                        <p class="mt-1.5 text-xs text-red-600 flex items-center gap-1">
+                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+                            {{ $message }}
+                        </p>
                     @enderror
                 </div>
             </div>
@@ -193,29 +219,67 @@
 @push('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        // Category Chips Click Handler
         const chips = document.querySelectorAll('.kategori-chip');
         const inputKategori = document.getElementById('inputKategori');
-        
+
         chips.forEach(chip => {
             chip.addEventListener('click', function () {
                 if (inputKategori) {
                     inputKategori.value = this.dataset.kategori;
                     inputKategori.focus();
-                    
-                    // Visual feedback
+
                     chips.forEach(c => c.classList.remove('bg-blue-100', 'text-blue-700', 'border-blue-200'));
                     this.classList.add('bg-blue-100', 'text-blue-700', 'border-blue-200');
                 }
             });
         });
 
-        // Highlight active category chip on load
         if (inputKategori && inputKategori.value) {
             chips.forEach(chip => {
                 if (chip.dataset.kategori === inputKategori.value) {
                     chip.classList.add('bg-blue-100', 'text-blue-700', 'border-blue-200');
                 }
+            });
+        }
+
+        const fotoInput = document.getElementById('fotoInput');
+        const fotoPreviewEmpty = document.getElementById('fotoPreviewEmpty');
+        const fotoPreviewList = document.getElementById('fotoPreviewList');
+        const fotoPreviewCount = document.getElementById('fotoPreviewCount');
+
+        if (fotoInput && fotoInput.multiple && fotoPreviewEmpty && fotoPreviewList && fotoPreviewCount) {
+            fotoInput.addEventListener('change', function () {
+                const files = Array.from(this.files || []);
+
+                if (!files.length) {
+                    fotoPreviewEmpty.classList.remove('hidden');
+                    fotoPreviewList.classList.add('hidden');
+                    fotoPreviewList.innerHTML = '';
+                    fotoPreviewCount.classList.add('hidden');
+                    fotoPreviewCount.textContent = '';
+                    const label = fotoPreviewEmpty.querySelector('span');
+                    if (label) {
+                        label.textContent = 'Belum ada foto dipilih';
+                    }
+                    return;
+                }
+
+                fotoPreviewEmpty.classList.add('hidden');
+                fotoPreviewList.classList.remove('hidden');
+                fotoPreviewCount.classList.remove('hidden');
+                fotoPreviewCount.textContent = `${files.length} foto dipilih`;
+                fotoPreviewList.innerHTML = '';
+
+                files.forEach((file) => {
+                    const reader = new FileReader();
+                    reader.onload = function (event) {
+                        const wrapper = document.createElement('div');
+                        wrapper.className = 'aspect-square rounded-lg overflow-hidden border border-slate-200 bg-slate-50';
+                        wrapper.innerHTML = `<img src="${event.target.result}" alt="${file.name}" class="w-full h-full object-cover">`;
+                        fotoPreviewList.appendChild(wrapper);
+                    };
+                    reader.readAsDataURL(file);
+                });
             });
         }
     });

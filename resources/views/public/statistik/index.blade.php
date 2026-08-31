@@ -28,19 +28,6 @@
             <p class="text-blue-100 text-lg leading-relaxed max-w-2xl">
                 Data capaian penyerapan tenaga kerja alumni SMK N 1 Bangsri dari tahun ke tahun — transparan, terukur, dan terpercaya.
             </p>
-
-            {{-- Info Bar --}}
-            @if ($totalAlumniStat > 0)
-                <div class="mt-8 inline-flex items-center gap-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl px-5 py-3">
-                    <div class="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center">
-                        <svg class="w-5 h-5 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-                    </div>
-                    <div>
-                        <p class="text-xs text-blue-200 font-medium">Total Alumni Terdata</p>
-                        <p class="text-lg font-bold text-white">{{ number_format($totalAlumniStat) }} Alumni</p>
-                    </div>
-                </div>
-            @endif
         </div>
     </section>
 

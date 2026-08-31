@@ -13,6 +13,16 @@ class GaleriRequest extends FormRequest
 
     public function rules(): array
     {
+        if ($this->isMethod('post')) {
+            return [
+                'judul' => ['required', 'string', 'max:255'],
+                'kategori' => ['required', 'string', 'max:100'],
+                'tanggal' => ['required', 'date'],
+                'foto' => ['required', 'array', 'min:1'],
+                'foto.*' => ['image', 'max:2048'],
+            ];
+        }
+
         return [
             'judul' => ['required', 'string', 'max:255'],
             'kategori' => ['required', 'string', 'max:100'],

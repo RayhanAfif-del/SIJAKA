@@ -424,20 +424,28 @@
     {{-- GALERI KEGIATAN - Homepage Section           --}}
     {{-- ============================================ --}}
     @if (isset($galeri) && $galeri->count() > 0)
+        @php
+            $kategoriColors = [
+                'workshop'           => ['bg' => 'bg-[#024CD4]/10', 'text' => 'text-[#013ba8]', 'dot' => 'bg-[#024CD4]'],
+                'seminar'            => ['bg' => 'bg-violet-50',  'text' => 'text-violet-700',  'dot' => 'bg-violet-500'],
+                'kunjungan industri' => ['bg' => 'bg-emerald-50', 'text' => 'text-emerald-700', 'dot' => 'bg-emerald-500'],
+                'job fair'           => ['bg' => 'bg-amber-50',   'text' => 'text-amber-700',   'dot' => 'bg-amber-500'],
+                'training'           => ['bg' => 'bg-rose-50',    'text' => 'text-rose-700',    'dot' => 'bg-rose-500'],
+                'sosialisasi'        => ['bg' => 'bg-cyan-50',    'text' => 'text-cyan-700',    'dot' => 'bg-cyan-500'],
+                'kegiatan lain'      => ['bg' => 'bg-slate-100',  'text' => 'text-slate-700',   'dot' => 'bg-slate-500'],
+            ];
+        @endphp
         <section class="relative bg-[#024CD4] py-10 lg:py-14 overflow-hidden">
-            {{-- Animated Background Pattern --}}
             <div class="absolute inset-0 opacity-20 pointer-events-none">
                 <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%23ffffff&quot; fill-opacity=&quot;0.05&quot;%3E%3Cpath d=&quot;M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
             </div>
 
-            {{-- Animated Gradient Orbs --}}
             <div class="absolute inset-0 overflow-hidden pointer-events-none">
                 <div class="absolute -top-40 -right-40 w-[600px] h-[600px] bg-[#024CD4]/50 rounded-full filter blur-3xl opacity-15"></div>
                 <div class="absolute -bottom-40 -left-40 w-[600px] h-[600px] bg-[#024CD4]/70 rounded-full filter blur-3xl opacity-10"></div>
             </div>
 
             <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                {{-- Section Header --}}
                 <div class="flex items-center justify-between mb-10" data-aos="fade-up">
                     <div>
                         <h2 class="text-3xl sm:text-4xl font-bold text-white flex items-center gap-3">
@@ -456,87 +464,163 @@
                     </a>
                 </div>
 
-                {{-- Gallery Grid - Bento Style --}}
-                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" data-aos="fade-up" data-aos-delay="100">
-                    @foreach ($galeri->take(8) as $index => $item)
+                @php
+                    $featuredGaleri = $galeri->take(5)->values();
+                    $featuredMain = $featuredGaleri->first();
+                    $featuredSide = $featuredGaleri->slice(1)->values();
+                @endphp
+
+                <div class="grid gap-4 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]" data-aos="fade-up" data-aos-delay="100">
+                    @if ($featuredMain)
                         @php
-                            $kategoriKey = strtolower($item->kategori ?? '');
-                            $kategoriColors = [
-                                'workshop'           => ['bg' => 'bg-[#024CD4]/10', 'text' => 'text-[#013ba8]', 'dot' => 'bg-[#024CD4]'],
-                                'seminar'            => ['bg' => 'bg-violet-50',  'text' => 'text-violet-700',  'dot' => 'bg-violet-500'],
-                                'kunjungan industri' => ['bg' => 'bg-emerald-50', 'text' => 'text-emerald-700', 'dot' => 'bg-emerald-500'],
-                                'job fair'           => ['bg' => 'bg-amber-50',   'text' => 'text-amber-700',   'dot' => 'bg-amber-500'],
-                                'training'           => ['bg' => 'bg-rose-50',    'text' => 'text-rose-700',    'dot' => 'bg-rose-500'],
-                                'sosialisasi'        => ['bg' => 'bg-cyan-50',    'text' => 'text-cyan-700',    'dot' => 'bg-cyan-500'],
-                                'kegiatan lain'      => ['bg' => 'bg-slate-100',  'text' => 'text-slate-700',   'dot' => 'bg-slate-500'],
-                            ];
+                            $kategoriKey = strtolower($featuredMain['kategori'] ?? '');
                             $kc = $kategoriColors[$kategoriKey] ?? $kategoriColors['kegiatan lain'];
-                            
-                            // Bento grid layout - first item is larger
-                            $isFirst = $index === 0;
+                            $cover = $featuredMain['cover'];
+                            $photos = $featuredMain['items'];
+                            $previewItems = $photos->map(function ($photo) {
+                                return [
+                                    'url' => Storage::url($photo->foto),
+                                    'title' => $photo->judul,
+                                    'date' => $photo->tanggal?->translatedFormat('d F Y'),
+                                    'kategori' => $photo->kategori,
+                                ];
+                            })->values();
+                            $stackThumbs = $previewItems->take(3);
                         @endphp
 
-                        <div class="group relative overflow-hidden rounded-2xl cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 {{ $isFirst ? 'col-span-2 row-span-2' : '' }}"
-                             data-aos="fade-up" 
-                             data-aos-delay="{{ ($index % 4) * 50 }}"
-                             @if ($item->foto)
-                             @click="$dispatch('open-gallery-preview', { 
-                                url: '{{ Storage::url($item->foto) }}', 
-                                title: '{{ addslashes($item->judul) }}', 
-                                date: '{{ $item->tanggal->translatedFormat('d F Y') }}', 
-                                kategori: '{{ addslashes($item->kategori) }}' 
-                             })"
+                        <div class="group relative overflow-hidden rounded-2xl cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 min-h-[320px] lg:min-h-[520px]"
+                             data-aos="fade-up"
+                             @if ($cover?->foto)
+                             @click="$dispatch('open-stack-preview', { title: @js($featuredMain['judul']), date: @js(optional($featuredMain['tanggal'])->translatedFormat('d F Y')), kategori: @js($featuredMain['kategori']), items: @js($previewItems), startIndex: 0 })"
                              @endif>
-                            
-                            {{-- Image Container --}}
-                            <div class="{{ $isFirst ? 'aspect-square md:aspect-auto md:h-full' : 'aspect-square' }} bg-gradient-to-br from-gray-100 to-gray-200">
-                                @if ($item->foto)
-                                    <img src="{{ Storage::url($item->foto) }}" 
-                                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
-                                         alt="{{ $item->judul }}"
+
+                            <div class="relative h-full min-h-[320px] lg:min-h-[520px] bg-gradient-to-br from-gray-100 to-gray-200">
+                                @if ($cover?->foto)
+                                    <img src="{{ Storage::url($cover->foto) }}"
+                                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                         alt="{{ $featuredMain['judul'] }}"
                                          loading="lazy">
                                 @else
-                                    <div class="w-full h-full flex items-center justify-center">
+                                    <div class="w-full h-full min-h-[320px] lg:min-h-[520px] flex items-center justify-center">
                                         <svg class="w-16 h-16 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                                         </svg>
                                     </div>
                                 @endif
-                                
-                                {{-- Gradient Overlay --}}
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                                
-                                {{-- Content Overlay --}}
-                                <div class="absolute inset-0 flex flex-col justify-end p-4 md:p-5 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0">
+
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+                                <div class="absolute inset-0 flex flex-col justify-end p-5 md:p-6 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0">
                                     <div class="flex items-center gap-2 mb-2">
                                         <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-[10px] font-semibold {{ $kc['bg'] }} {{ $kc['text'] }} backdrop-blur-sm bg-opacity-90">
                                             <span class="w-1.5 h-1.5 rounded-full {{ $kc['dot'] }}"></span>
-                                            {{ ucfirst($item->kategori) }}
+                                            {{ ucfirst($featuredMain['kategori']) }}
                                         </span>
                                     </div>
-                                    <h3 class="text-white font-bold {{ $isFirst ? 'text-lg md:text-xl' : 'text-sm' }} line-clamp-2 drop-shadow-lg">
-                                        {{ $item->judul }}
+                                    <h3 class="text-white font-bold text-lg md:text-2xl line-clamp-2 drop-shadow-lg max-w-xl">
+                                        {{ $featuredMain['judul'] }}
                                     </h3>
                                     <p class="text-white/80 text-xs mt-2 flex items-center gap-1.5">
                                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                                         </svg>
-                                        {{ $item->tanggal->translatedFormat('d M Y') }}
+                                        {{ optional($featuredMain['tanggal'])->translatedFormat('d M Y') }}
                                     </p>
                                 </div>
-                                
-                                {{-- Zoom Icon --}}
-                                <div class="absolute top-3 right-3 w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 scale-50 group-hover:scale-100">
-                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+                                <div class="absolute top-4 right-4 inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-sm rounded-full px-2.5 py-1 text-[10px] font-semibold text-white">
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/>
                                     </svg>
+                                    {{ $featuredMain['count'] }} foto
                                 </div>
+
+                                @if ($stackThumbs->count() > 1)
+                                    <div class="absolute bottom-4 right-4 flex items-end -space-x-3">
+                                        @foreach ($stackThumbs as $thumb)
+                                            <div class="w-12 h-12 rounded-xl border-2 border-white shadow-lg overflow-hidden bg-white/30 backdrop-blur-sm {{ $loop->index === 0 ? 'translate-y-0' : 'translate-y-1' }}">
+                                                <img src="{{ $thumb['url'] }}" alt="{{ $thumb['title'] }}" class="w-full h-full object-cover">
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @endif
                             </div>
                         </div>
-                    @endforeach
+                    @endif
+
+                    <div class="grid grid-cols-2 gap-4">
+                        @foreach ($featuredSide as $index => $item)
+                            @php
+                                $kategoriKey = strtolower($item['kategori'] ?? '');
+                                $kc = $kategoriColors[$kategoriKey] ?? $kategoriColors['kegiatan lain'];
+                                $cover = $item['cover'];
+                                $photos = $item['items'];
+                                $previewItems = $photos->map(function ($photo) {
+                                    return [
+                                        'url' => Storage::url($photo->foto),
+                                        'title' => $photo->judul,
+                                        'date' => $photo->tanggal?->translatedFormat('d F Y'),
+                                        'kategori' => $photo->kategori,
+                                    ];
+                                })->values();
+                                $stackThumbs = $previewItems->take(2);
+                            @endphp
+
+                            <div class="group relative overflow-hidden rounded-2xl cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 aspect-square"
+                                 data-aos="fade-up"
+                                 data-aos-delay="{{ $index * 50 }}"
+                                 @if ($cover?->foto)
+                                 @click="$dispatch('open-stack-preview', { title: @js($item['judul']), date: @js(optional($item['tanggal'])->translatedFormat('d F Y')), kategori: @js($item['kategori']), items: @js($previewItems), startIndex: 0 })"
+                                 @endif>
+                                @if ($cover?->foto)
+                                    <img src="{{ Storage::url($cover->foto) }}"
+                                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                         alt="{{ $item['judul'] }}"
+                                         loading="lazy">
+                                @else
+                                    <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
+                                        <svg class="w-12 h-12 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                        </svg>
+                                    </div>
+                                @endif
+
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+                                <div class="absolute inset-0 flex flex-col justify-end p-4 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0">
+                                    <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-[10px] font-semibold {{ $kc['bg'] }} {{ $kc['text'] }} backdrop-blur-sm bg-opacity-90 w-fit mb-2">
+                                        <span class="w-1.5 h-1.5 rounded-full {{ $kc['dot'] }}"></span>
+                                        {{ ucfirst($item['kategori']) }}
+                                    </span>
+                                    <h3 class="text-white font-bold text-sm line-clamp-2 drop-shadow-lg">
+                                        {{ $item['judul'] }}
+                                    </h3>
+                                    <p class="text-white/80 text-[11px] mt-1">
+                                        {{ optional($item['tanggal'])->translatedFormat('d M Y') }}
+                                    </p>
+                                </div>
+
+                                <div class="absolute top-3 right-3 inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-sm rounded-full px-2 py-1 text-[10px] font-semibold text-white">
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/>
+                                    </svg>
+                                    {{ $item['count'] }}
+                                </div>
+
+                                @if ($stackThumbs->count() > 1)
+                                    <div class="absolute bottom-3 right-3 flex items-end -space-x-2">
+                                        @foreach ($stackThumbs as $thumb)
+                                            <div class="w-9 h-9 rounded-lg border-2 border-white shadow-lg overflow-hidden bg-white/30 backdrop-blur-sm {{ $loop->index === 0 ? 'translate-y-0' : 'translate-y-1' }}">
+                                                <img src="{{ $thumb['url'] }}" alt="{{ $thumb['title'] }}" class="w-full h-full object-cover">
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @endif
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
 
-                {{-- Mobile View All Button --}}
                 <div class="mt-8 text-center sm:hidden" data-aos="fade-up">
                     <a href="{{ route('galeri.index') }}" class="inline-flex items-center gap-2 bg-white/15 text-white text-sm font-semibold px-6 py-3 rounded-xl border border-white/25 hover:border-white/35 shadow-lg transition-all">
                         Lihat Semua Galeri
@@ -549,16 +633,29 @@
         </section>
 
         {{-- Gallery Lightbox Modal --}}
-        <div x-data="{ 
-                isOpen: false, 
-                url: '', 
-                title: '', 
-                date: '', 
-                kategori: '' 
-            }" 
-            @open-gallery-preview.window="isOpen = true; url = $event.detail.url; title = $event.detail.title; date = $event.detail.date; kategori = $event.detail.kategori"
+        <div
+            x-data="{
+                isOpen: false,
+                title: '',
+                date: '',
+                kategori: '',
+                items: [],
+                selectedIndex: 0,
+                currentItem() {
+                    return this.items[this.selectedIndex] || {};
+                },
+                open(detail) {
+                    this.isOpen = true;
+                    this.title = detail.title || '';
+                    this.date = detail.date || '';
+                    this.kategori = detail.kategori || '';
+                    this.items = detail.items || [];
+                    this.selectedIndex = detail.startIndex || 0;
+                }
+            }"
+            @open-stack-preview.window="open($event.detail)"
             @keydown.escape.window="isOpen = false"
-            x-show="isOpen" 
+            x-show="isOpen"
             x-transition:enter="transition ease-out duration-200"
             x-transition:enter-start="opacity-0"
             x-transition:enter-end="opacity-100"
@@ -568,13 +665,12 @@
             x-cloak
             class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/90 backdrop-blur-sm"
             @click.self="isOpen = false">
-            
-            <div class="relative max-w-5xl w-full bg-white rounded-2xl shadow-2xl overflow-hidden" @click.stop>
-                {{-- Header Modal --}}
-                <div class="flex items-center justify-between p-4 border-b border-slate-100 bg-slate-50/50">
+
+            <div class="relative max-w-6xl w-full bg-white rounded-2xl shadow-2xl overflow-hidden" @click.stop>
+                <div class="flex items-start justify-between gap-4 p-4 border-b border-slate-100 bg-slate-50/50">
                     <div class="min-w-0 flex-1 pr-4">
                         <h3 class="text-sm font-bold text-slate-900 truncate" x-text="title"></h3>
-                        <div class="flex items-center gap-3 mt-1 text-xs text-slate-500">
+                        <div class="flex flex-wrap items-center gap-3 mt-1 text-xs text-slate-500">
                             <span class="flex items-center gap-1" x-show="date">
                                 <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
@@ -587,6 +683,12 @@
                                 </svg>
                                 <span x-text="kategori"></span>
                             </span>
+                            <span class="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2 py-0.5 text-slate-600 font-medium" x-show="items.length">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M3 12h18M3 17h18"/>
+                                </svg>
+                                <span x-text="items.length + ' foto'"></span>
+                            </span>
                         </div>
                     </div>
                     <button type="button" @click="isOpen = false" class="p-2 rounded-lg hover:bg-slate-200 text-slate-500 hover:text-slate-700 transition shrink-0">
@@ -595,10 +697,36 @@
                         </svg>
                     </button>
                 </div>
-                
-                {{-- Image --}}
-                <div class="bg-slate-900 flex items-center justify-center p-4">
-                    <img :src="url" :alt="title" class="max-w-full max-h-[70vh] object-contain rounded-lg">
+
+                <div class="grid lg:grid-cols-[1fr_320px] bg-slate-950">
+                    <div class="flex items-center justify-center p-4 md:p-6 min-h-[420px]">
+                        <template x-if="items.length">
+                            <img :src="currentItem().url" :alt="currentItem().title || title" class="max-w-full max-h-[72vh] object-contain rounded-xl shadow-2xl bg-white/5">
+                        </template>
+                    </div>
+
+                    <div class="border-t lg:border-t-0 lg:border-l border-white/10 bg-slate-900 p-4 md:p-5">
+                        <div class="flex items-center justify-between mb-3">
+                            <div>
+                                <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Foto Lain</p>
+                                <p class="text-xs text-slate-500 mt-1">Klik thumbnail untuk berpindah</p>
+                            </div>
+                            <span class="text-xs text-slate-300" x-show="items.length" x-text="(selectedIndex + 1) + ' / ' + items.length"></span>
+                        </div>
+
+                        <div class="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-2 gap-2 max-h-[72vh] overflow-y-auto pr-1">
+                            <template x-for="(photo, index) in items" :key="photo.url + '-' + index">
+                                <button
+                                    type="button"
+                                    class="relative aspect-square rounded-xl overflow-hidden border-2 transition focus:outline-none"
+                                    :class="selectedIndex === index ? 'border-amber-400 ring-2 ring-amber-400/30' : 'border-white/10 hover:border-white/40'"
+                                    @click="selectedIndex = index">
+                                    <img :src="photo.url" :alt="photo.title || title" class="w-full h-full object-cover">
+                                    <div class="absolute inset-0 bg-black/0 hover:bg-black/15 transition"></div>
+                                </button>
+                            </template>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
