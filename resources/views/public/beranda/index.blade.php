@@ -240,43 +240,55 @@
                     </div>
                 </div>
 
-                {{-- CTA Box - Enhanced --}}
-                <div class="relative bg-[#024CD4] rounded-2xl p-8 text-white flex flex-col justify-between shadow-xl overflow-hidden h-full" data-aos="fade-left">
-                    {{-- Decorative Elements --}}
-                    <div class="absolute top-0 right-0 -mr-16 -mt-16 w-48 h-48 bg-white/10 rounded-full blur-2xl"></div>
-                    <div class="absolute bottom-0 left-0 -ml-16 -mb-16 w-48 h-48 bg-[#024CD4]/40 rounded-full blur-2xl"></div>
-                    
+                {{-- CTA Box - Enhanced (Matching Image Design) --}}
+                <div class="relative bg-[#024CD4] rounded-2xl p-8 lg:p-10 text-white flex flex-col justify-between shadow-xl overflow-hidden h-full" data-aos="fade-left">
+
+                    {{-- Decorative Curved Shapes (Right Side) --}}
+                    <div class="absolute top-0 right-0 w-64 h-64 lg:w-80 lg:h-80">
+                        <svg viewBox="0 0 300 300" class="w-full h-full" fill="none">
+                            <path d="M300 0 C200 50, 150 100, 100 200 C80 240, 60 270, 0 300 L300 300 Z" fill="rgba(255,255,255,0.08)"/>
+                            <path d="M300 0 C220 60, 170 120, 120 220 C100 260, 80 280, 0 300 L300 300 Z" fill="rgba(255,255,255,0.05)"/>
+                            <path d="M300 0 C240 70, 190 140, 140 240 C120 270, 100 290, 0 300 L300 300 Z" fill="rgba(255,255,255,0.03)"/>
+                        </svg>
+                    </div>
+
+                    {{-- Paper Airplane Icon (Top Right) --}}
+                    <div class="absolute top-6 right-8 lg:top-8 lg:right-12">
+                        <svg class="w-10 h-10 lg:w-12 lg:h-12 text-amber-400 transform rotate-[-15deg]" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                        </svg>
+                    </div>
+
+                    {{-- Dot Pattern (Bottom Left) --}}
+                    <div class="absolute bottom-4 left-4 lg:bottom-6 lg:left-6 grid grid-cols-4 gap-2 opacity-30">
+                        @for ($i = 0; $i < 16; $i++)
+                            <div class="w-1.5 h-1.5 bg-white rounded-full"></div>
+                        @endfor
+                    </div>
+
+                    {{-- Glow Effect --}}
+                    <div class="absolute top-0 right-0 -mr-16 -mt-16 w-48 h-48 bg-white/10 rounded-full blur-3xl"></div>
+                    <div class="absolute bottom-0 left-0 -ml-16 -mb-16 w-48 h-48 bg-[#024CD4]/40 rounded-full blur-3xl"></div>
+
+                    {{-- Content --}}
                     <div class="relative z-10 flex flex-col h-full">
-                        <div>
-                            <div class="w-14 h-14 bg-white/15 rounded-2xl flex items-center justify-center mb-6 shadow-lg">
-                                <svg class="w-7 h-7 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                                </svg>
-                            </div>
-                            <h3 class="text-2xl lg:text-3xl font-bold mb-4 leading-tight">Saatnya Raih Karier Impianmu!</h3>
-                            <p class="text-[#d0e3ff] text-sm leading-relaxed mb-6">
-                                Temukan ribuan lowongan kerja terbaik dari perusahaan terpercaya. Mulai perjalanan kariermu sekarang!
+                        <div class="flex-1">
+                            <h3 class="text-2xl lg:text-3xl xl:text-4xl font-bold mb-3 leading-tight">
+                                Saatnya<br>Raih Karier Impianmu!
+                            </h3>
+                            <p class="text-[#d0e3ff] text-sm lg:text-base leading-relaxed mb-8 max-w-md">
+                                Temukan ribuan lowongan kerja terbaik dari perusahaan terpercaya.
                             </p>
                         </div>
-                        
-                        {{-- Mini Stats --}}
-                        <div class="grid grid-cols-2 gap-4 mb-8">
-                            <div class="bg-white/15 rounded-xl p-4 text-center">
-                                <p class="text-2xl font-bold text-white">{{ $lowonganUnggulan->count() }}+</p>
-                                <p class="text-xs text-[#d0e3ff] mt-1">Lowongan Aktif</p>
-                            </div>
-                            <div class="bg-white/15 rounded-xl p-4 text-center">
-                                <p class="text-2xl font-bold text-white">{{ $mitra->count() ?? 0 }}+</p>
-                                <p class="text-xs text-[#d0e3ff] mt-1">Mitra Perusahaan</p>
-                            </div>
-                        </div>
 
-                        <a href="{{ route('lowongan.index') }}" class="relative z-10 group inline-flex items-center justify-center gap-2 bg-amber-400 hover:bg-amber-500 text-slate-900 text-sm font-bold px-6 py-4 rounded-xl w-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1 mt-auto">
-                            Cari Lowongan Sekarang
-                            <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                            </svg>
-                        </a>
+                        <div>
+                            <a href="{{ route('lowongan.index') }}" class="group inline-flex items-center gap-2 bg-amber-400 hover:bg-amber-500 text-slate-900 text-sm font-bold px-6 py-3.5 rounded-xl transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
+                                Cari Lowongan Sekarang
+                                <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                                </svg>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
