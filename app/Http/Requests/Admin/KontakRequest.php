@@ -18,7 +18,7 @@ class KontakRequest extends FormRequest
             'email' => ['required', 'email'],
             'telepon' => ['required', 'string', 'max:30'],
             'jam_operasional' => ['nullable', 'string', 'max:100'],
-            'map_link' => ['nullable', 'string', 'max:255'],
+            'map_link' => ['nullable', 'string', 'max:1000'],
             'instagram' => ['nullable', 'url'],
             'facebook' => ['nullable', 'url'],
             'youtube' => ['nullable', 'url'],

@@ -117,62 +117,95 @@
             {{-- Right Column: Map --}}
             <div class="lg:col-span-3" data-aos="fade-up" data-aos-delay="100">
                 @php
-                    $mapSource = trim((string) ($kontak->map_link ?: $kontak->alamat));
+                    $defaultMapEmbedUrl = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d965.8710418016612!2d110.75064000062164!3d-6.527702792470654!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e71224fcb07076b%3A0xd0eadbcc365f1b0d!2sSMK%20Negeri%201%20Bangsri!5e0!3m2!1sid!2sid!4v1788238362926!5m2!1sid!2sid';
+                    $customMapSource = trim((string) $kontak->map_link);
+                    $mapSource = $customMapSource ?: $defaultMapEmbedUrl;
                     $isMapUrl = filter_var($mapSource, FILTER_VALIDATE_URL);
+                    $isEmbedUrl = $isMapUrl && str_contains((string) parse_url($mapSource, PHP_URL_PATH), '/maps/embed');
                     $mapQuery = $mapSource;
 
-                    if ($isMapUrl) {
-                        $parsed = parse_url($mapSource);
-                        $mapQuery = $parsed['query'] ?? $parsed['path'] ?? $kontak->alamat;
-                        $mapQuery = trim((string) $mapQuery);
+                    if ($isEmbedUrl) {
+                        $mapEmbedUrl = $mapSource;
+                        $mapQuery = 'SMK Negeri 1 Bangsri';
+                    } elseif ($isMapUrl) {
+                        // Short Maps links cannot be embedded reliably; use the saved address for the iframe.
+                        $mapQuery = trim((string) ($kontak->alamat ?: 'SMK Negeri 1 Bangsri'));
+                        $mapEmbedUrl = 'https://www.google.com/maps?q=' . urlencode($mapQuery) . '&output=embed';
+                    } else {
+                        $mapEmbedUrl = 'https://www.google.com/maps?q=' . urlencode($mapQuery) . '&output=embed';
                     }
 
-                    $mapEmbedUrl = 'https://www.google.com/maps?q=' . urlencode($mapQuery) . '&output=embed';
-                    $mapOpenUrl = $isMapUrl
+                    $mapOpenUrl = $isEmbedUrl
+                        ? 'https://www.google.com/maps/search/?api=1&query=' . urlencode($mapQuery)
+                        : ($isMapUrl
                         ? $mapSource
-                        : 'https://www.google.com/maps/search/?api=1&query=' . urlencode($mapSource);
+                        : 'https://www.google.com/maps/search/?api=1&query=' . urlencode($mapSource));
                 @endphp
 
-                <div class="rounded-2xl overflow-hidden bg-white border border-gray-100 shadow-sm h-full min-h-[400px] lg:min-h-0 relative group">
+                <div class="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-[0_18px_50px_rgba(15,23,42,0.10)] h-full">
+                    <div class="flex items-center justify-between gap-4 border-b border-slate-100 bg-gradient-to-r from-slate-50 via-white to-blue-50/60 px-5 py-4">
+                        <div class="min-w-0">
+                            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-blue-600">Lokasi Kami</p>
+                            <h2 class="mt-1 text-lg font-bold text-slate-900">Temukan kantor BKK SIJAKA</h2>
+                            <p class="mt-1 text-sm text-slate-500">Lihat peta, buka navigasi, atau akses lokasi di tab baru.</p>
+                        </div>
+                        <div class="hidden sm:flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-lg shadow-blue-600/20">
+                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                        </div>
+                    </div>
+
                     @if ($mapSource !== '')
-                        <div class="absolute inset-0 z-10">
+                        <div class="relative isolate min-h-[360px] lg:min-h-[560px] bg-slate-100">
                             <iframe
                                 title="Peta Lokasi BKK SMK N 1 Bangsri"
                                 src="{{ $mapEmbedUrl }}"
-                                class="w-full h-full pointer-events-none grayscale-[20%] group-hover:grayscale-0 transition-all duration-500"
+                                class="absolute inset-0 h-full w-full grayscale-[10%] transition-all duration-500 hover:grayscale-0"
                                 style="border: 0;"
                                 loading="lazy"
                                 referrerpolicy="no-referrer-when-downgrade"
                             ></iframe>
-                            
-                            {{-- Click Overlay --}}
-                            <a href="{{ $mapOpenUrl }}" target="_blank" rel="noopener noreferrer" class="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/10 transition-all duration-300" aria-label="Buka lokasi di Google Maps">
-                                <span class="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-gray-800 shadow-lg opacity-0 group-hover:opacity-100 group-hover:translate-y-0 translate-y-2 transition-all duration-300">
-                                    <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
-                                    </svg>
-                                    Buka di Google Maps
-                                </span>
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/10 via-transparent to-transparent pointer-events-none"></div>
+                            <a href="{{ $mapOpenUrl }}" target="_blank" rel="noopener noreferrer" class="absolute right-4 top-4 inline-flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 text-sm font-semibold text-slate-800 shadow-lg shadow-slate-900/10 ring-1 ring-black/5 backdrop-blur transition hover:-translate-y-0.5 hover:bg-white" aria-label="Buka lokasi di Google Maps">
+                                <svg class="h-4 w-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                                </svg>
+                                Buka Maps
                             </a>
-                        </div>
-                        
-                        {{-- Map Footer Info --}}
-                        <div class="absolute bottom-0 left-0 right-0 bg-white/90 backdrop-blur-sm border-t border-gray-100 px-5 py-3 flex items-center justify-between gap-3 z-20">
-                            <div class="flex items-center gap-2 min-w-0">
-                                <svg class="w-4 h-4 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"/></svg>
-                                <span class="text-xs text-gray-600 truncate">{{ $kontak->map_link ? 'Link Peta Kustom' : $kontak->alamat }}</span>
+
+                            <div class="absolute inset-x-0 bottom-0 p-4 sm:p-5">
+                                <div class="rounded-2xl border border-white/60 bg-white/90 p-4 shadow-xl shadow-slate-900/10 backdrop-blur">
+                                    <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                                        <div class="min-w-0">
+                                            <div class="flex items-center gap-2">
+                                                <span class="inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-xl bg-blue-600 text-white">
+                                                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"/>
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                                    </svg>
+                                                </span>
+                                                <div class="min-w-0">
+                                                    <p class="text-sm font-semibold text-slate-900">Lokasi kantor</p>
+                                                    <p class="truncate text-xs text-slate-500">{{ $customMapSource ? 'Link Peta Kustom' : 'SMK Negeri 1 Bangsri' }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <a href="{{ $mapOpenUrl }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-800">
+                                            Buka tab baru
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
-                            <a href="{{ $mapOpenUrl }}" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-blue-600 hover:text-blue-700 whitespace-nowrap flex-shrink-0">
-                                Tab Baru &nearr;
-                            </a>
                         </div>
                     @else
-                        <div class="h-full min-h-[400px] flex flex-col items-center justify-center text-center p-8 bg-slate-50">
-                            <div class="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mb-4">
-                                <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        <div class="flex min-h-[360px] lg:min-h-[560px] flex-col items-center justify-center bg-gradient-to-br from-slate-50 via-white to-blue-50/50 p-8 text-center">
+                            <div class="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-lg shadow-blue-600/20">
+                                <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                             </div>
-                            <p class="text-gray-900 font-semibold mb-1">Peta Belum Tersedia</p>
-                            <p class="text-sm text-gray-500">Silakan gunakan alamat di samping untuk menemukan lokasi kami.</p>
+                            <p class="mb-1 font-semibold text-slate-900">Peta belum tersedia</p>
+                            <p class="max-w-md text-sm text-slate-500">Silakan gunakan alamat di sebelah kiri untuk menemukan lokasi kami, atau lengkapi data peta pada halaman admin agar tampil di sini.</p>
                         </div>
                     @endif
                 </div>

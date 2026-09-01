@@ -139,7 +139,7 @@
                                 </svg>
                                 Link / Embed Google Maps
                             </label>
-                            <textarea name="map_link" rows="3"
+                            <textarea name="map_link" rows="3" maxlength="1000"
                                 class="w-full rounded-lg border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 text-sm transition resize-none font-mono text-xs"
                                 placeholder="https://www.google.com/maps/embed?pb=... atau FQC2+X9 Bangsri, Kabupaten Jepara">{{ old('map_link', $kontak->map_link) }}</textarea>
                             
