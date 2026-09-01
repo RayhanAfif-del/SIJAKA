@@ -20,7 +20,6 @@
     {{-- AOS Animation Library --}}
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     
-    {{-- TAMBAHKAN BARIS INI AGAR CSS DARI BERANDA BISA DIBACA --}}
     @stack('styles')
     
 </head>
@@ -88,7 +87,7 @@
                     </div>
                     <div class="leading-tight hidden sm:block">
                         <p class="font-bold text-slate-900 text-base tracking-tight">{{ $pengaturanLayout->site_name ?? 'SIJAKA' }}</p>
-                        <p class="text-[11px] text-slate-500 font-medium">{{ $pengaturanLayout->site_tagline ?? 'Sistem Informasi Jejaring Karier' }}</p>
+                        <p class="text-[11px] text-blue-600 font-medium">{{ $pengaturanLayout->site_tagline ?? 'Sistem Informasi Jejaring Karier' }}</p>
                     </div>
                 </a>
 
@@ -106,9 +105,15 @@
                         ];
                     @endphp
                     @foreach ($navLinks as $link)
+                        @php
+                            $isActive = request()->routeIs($link['route'] . '*');
+                        @endphp
                         <a href="{{ route($link['route']) }}" 
-                           class="px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs($link['route'] . '*') ? 'text-blue-600 bg-blue-50' : 'text-slate-600 hover:text-blue-600 hover:bg-slate-50' }}">
+                        class="relative px-3 py-2 text-sm font-medium transition-all duration-300 group {{ $isActive ? 'text-blue-600' : 'text-slate-600 hover:text-blue-600' }}">
                             {{ $link['label'] }}
+                            
+                            {{-- Animated Underline --}}
+                            <span class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600 transform scale-x-0 origin-left transition-transform duration-300 ease-out group-hover:scale-x-100 {{ $isActive ? 'scale-x-100' : '' }}"></span>
                         </a>
                     @endforeach
                 </nav>
@@ -143,9 +148,12 @@
              class="lg:hidden border-t border-slate-100 bg-white absolute w-full left-0 shadow-lg">
             <div class="px-4 py-3 space-y-1">
                 @foreach ($navLinks as $link)
+                    @php
+                        $isActive = request()->routeIs($link['route'] . '*');
+                    @endphp
                     <a href="{{ route($link['route']) }}" 
                        @click="mobileMenu = false"
-                       class="block px-3 py-2.5 rounded-lg text-sm font-medium transition {{ request()->routeIs($link['route'] . '*') ? 'text-blue-600 bg-blue-50' : 'text-slate-600 hover:bg-slate-50' }}">
+                       class="block px-3 py-2.5 rounded-r-lg text-sm font-medium transition border-l-4 {{ $isActive ? 'text-blue-600 bg-blue-50 border-blue-600' : 'text-slate-600 hover:bg-slate-50 border-transparent' }}">
                         {{ $link['label'] }}
                     </a>
                 @endforeach
