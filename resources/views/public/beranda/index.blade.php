@@ -192,14 +192,23 @@
                     
                     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 flex-1 content-start">
                         @foreach ($lowonganUnggulan as $index => $item)
-                            <div class="group bg-white border border-gray-100 rounded-2xl p-6 hover:shadow-2xl hover:border-[#024CD4]/40 hover:-translate-y-2 transition-all duration-300 flex flex-col relative overflow-hidden h-full" data-aos="fade-up" data-aos-delay="{{ $index * 100 }}">
+                            <div class="group bg-white border border-gray-100 rounded-2xl p-6 hover:shadow-2xl hover:border-[#024CD4]/40 hover:-translate-y-2 transition-all duration-300 flex flex-col relative overflow-hidden h-full"
+                                data-aos="fade-up"
+                                data-aos-delay="{{ $index * 100 }}">
+
                                 {{-- Hover Effect Line --}}
                                 <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#024CD4] to-[#013ba8] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
-                                
+
+                                {{-- Membuat seluruh kartu bisa diklik (Stretched Link) --}}
+                                <a href="{{ route('lowongan.show', $item) }}" class="absolute inset-0 z-10" aria-label="Lihat detail {{ $item->posisi }}"></a>
+
                                 <div class="flex items-center gap-3 mb-4">
                                     <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-[#024CD4]/10 to-[#024CD4]/20 flex items-center justify-center text-[#024CD4] text-sm font-bold overflow-hidden flex-shrink-0 ring-2 ring-[#024CD4]/20 group-hover:ring-[#024CD4]/40 transition-all">
                                         @if ($item->mitra->logo)
-                                            <img src="{{ Storage::url($item->mitra->logo) }}" class="w-full h-full object-cover" alt="{{ $item->mitra->nama_perusahaan }}">
+                                            <img src="{{ Storage::url($item->mitra->logo) }}"
+                                                class="w-full h-full object-cover"
+                                                alt="{{ $item->mitra->nama_perusahaan }}"
+                                                loading="lazy">
                                         @else
                                             {{ strtoupper(substr($item->mitra->nama_perusahaan, 0, 2)) }}
                                         @endif
@@ -211,11 +220,11 @@
                                         <p class="text-xs text-gray-400">Perusahaan</p>
                                     </div>
                                 </div>
-                                
+
                                 <h3 class="font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-[#013ba8] transition-colors">
                                     {{ $item->posisi }}
                                 </h3>
-                                
+
                                 <div class="flex items-center gap-1.5 text-xs text-gray-500 mb-4">
                                     <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
@@ -223,17 +232,17 @@
                                     </svg>
                                     {{ $item->lokasi }}
                                 </div>
-                                
+
                                 <div class="mt-auto pt-4 border-t border-gray-100 flex items-center justify-between">
                                     <span class="inline-block text-xs font-semibold bg-[#024CD4]/10 text-[#013ba8] px-3 py-1.5 rounded-lg group-hover:bg-[#024CD4]/20 transition-colors">
                                         {{ $item->jenis_pekerjaan }}
                                     </span>
-                                    <a href="{{ route('lowongan.show', $item) }}" class="inline-flex items-center gap-1 text-xs font-semibold text-[#024CD4] hover:text-[#013ba8] group-hover:gap-2 transition-all">
-                                        Detail 
+                                    <span class="inline-flex items-center gap-1 text-xs font-semibold text-[#024CD4] group-hover:text-[#013ba8] group-hover:gap-2 transition-all">
+                                        Detail
                                         <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                                         </svg>
-                                    </a>
+                                    </span>
                                 </div>
                             </div>
                         @endforeach
@@ -813,7 +822,7 @@
             </div>
 
             {{-- Kotak Lebar: Mitra Aktif --}}
-            <div class="col-span-2 md:col-span-2 bg-white border border-gray-100 rounded-2xl p-8 flex items-center justify-between hover:shadow-xl transition-all duration-300 group relative overflow-hidden">
+            <div class="col-span-2 md:col-span-2 bg-white border border-gray-100 rounded-2xl p-8 flex items-center justify-between hover:border-[#024CD4]/40 hover:shadow-2xl hover:shadow-[#024CD4]/20 transition-all duration-300 group relative overflow-hidden">
                 <div class="absolute top-0 right-0 w-32 h-32 bg-[#024CD4]/20 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500"></div>
                 
                 <div class="flex items-center gap-5 relative z-10">
@@ -827,12 +836,6 @@
                         <p class="text-3xl font-extrabold text-gray-900 tracking-tight">{{ $mitra->count() ?? 0 }}+ Perusahaan</p>
                     </div>
                 </div>
-                <a href="{{ route('lowongan.index') }}" class="hidden sm:inline-flex items-center gap-2 text-sm font-semibold text-[#024CD4] hover:text-[#013ba8] bg-[#024CD4]/10 hover:bg-[#024CD4]/20 px-4 py-2 rounded-lg border border-[#024CD4]/30 transition-all relative z-10">
-                    Lihat Semua
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                    </svg>
-                </a>
             </div>
 
             {{-- Kotak Lebar: Statistik Alumni --}}
