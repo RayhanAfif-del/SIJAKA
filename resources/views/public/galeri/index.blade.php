@@ -46,7 +46,7 @@
             </div>
             <div class="flex flex-wrap gap-2">
                 <a href="{{ route('galeri.index') }}" 
-                   class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 {{ !request('kategori') ? 'bg-slate-900 text-white shadow-md shadow-slate-900/20' : 'bg-gray-50 text-gray-600 hover:bg-gray-100 border border-gray-200' }}">
+                   class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 {{ !request('kategori') ? 'bg-blue-600 text-white shadow-md shadow-slate-900/20' : 'bg-gray-50 text-gray-600 hover:bg-gray-100 border border-gray-200' }}">
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
                     Semua Kegiatan
                 </a>
@@ -56,7 +56,7 @@
                         $kc = $kategoriColors[$kategoriKey] ?? $kategoriColors['kegiatan lain'];
                     @endphp
                     <a href="{{ route('galeri.index', ['kategori' => $kategori]) }}" 
-                       class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 {{ request('kategori') === $kategori ? 'bg-slate-900 text-white shadow-md shadow-slate-900/20' : 'bg-gray-50 text-gray-600 hover:bg-gray-100 border border-gray-200' }}">
+                       class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 {{ request('kategori') === $kategori ? 'bg-blue-600 text-white shadow-md shadow-slate-900/20' : 'bg-gray-50 text-gray-600 hover:bg-gray-100 border border-gray-200' }}">
                         <span class="w-1.5 h-1.5 rounded-full {{ $kc['dot'] }}"></span>
                         {{ $kategori }}
                     </a>
