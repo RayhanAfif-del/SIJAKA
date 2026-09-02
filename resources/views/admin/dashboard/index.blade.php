@@ -171,7 +171,7 @@
                 </a>
             </div>
 
-            @php $alumniTotalDashboard = $alumniBekerja + $alumniMelanjutkanStudi + $alumniBelumBekerja; @endphp
+            @php $alumniTotalDashboard = $alumniBekerja + $alumniBerwirausaha + $alumniMelanjutkanStudi + $alumniBelumBekerja; @endphp
 
             @if ($alumniTotalDashboard > 0)
                 <div class="flex flex-col sm:flex-row items-center gap-6">
@@ -187,10 +187,11 @@
                         @php
                             $alumniItems = [
                                 ['label' => 'Bekerja', 'value' => $alumniBekerja, 'color' => 'blue', 'bg' => 'bg-blue-50'],
+                                ['label' => 'Berwirausaha', 'value' => $alumniBerwirausaha, 'color' => 'violet', 'bg' => 'bg-violet-50'],
                                 ['label' => 'Melanjutkan Studi', 'value' => $alumniMelanjutkanStudi, 'color' => 'amber', 'bg' => 'bg-amber-50'],
                                 ['label' => 'Belum Bekerja', 'value' => $alumniBelumBekerja, 'color' => 'slate', 'bg' => 'bg-slate-100'],
                             ];
-                            $dotColor = ['blue' => 'bg-blue-600', 'amber' => 'bg-amber-500', 'slate' => 'bg-slate-400'];
+                            $dotColor = ['blue' => 'bg-blue-600', 'violet' => 'bg-violet-500', 'amber' => 'bg-amber-500', 'slate' => 'bg-slate-400'];
                         @endphp
                         @foreach ($alumniItems as $item)
                             @php $pct = $alumniTotalDashboard > 0 ? round($item['value'] / $alumniTotalDashboard * 100) : 0; @endphp
@@ -488,6 +489,7 @@
         @php
             $tahunLabelsData = $alumniPerTahun->keys()->map(fn ($t) => (string) $t)->values();
             $tahunBekerjaData = $alumniPerTahun->map(fn ($g) => $g->where('status', 'Bekerja')->sum('total'))->values();
+            $tahunWirausahaData = $alumniPerTahun->map(fn ($g) => $g->where('status', 'Berwirausaha')->sum('total'))->values();
             $tahunStudiData = $alumniPerTahun->map(fn ($g) => $g->where('status', 'Melanjutkan Studi')->sum('total'))->values();
             $tahunBelumData = $alumniPerTahun->map(fn ($g) => $g->where('status', 'Belum Bekerja')->sum('total'))->values();
         @endphp
@@ -498,15 +500,15 @@
                 Chart.defaults.color = '#64748b';
 
                 const alumniEl = document.getElementById('chartAlumniDonut');
-                const alumniTotal = {{ $alumniBekerja }} + {{ $alumniMelanjutkanStudi }} + {{ $alumniBelumBekerja }};
+                const alumniTotal = {{ $alumniBekerja }} + {{ $alumniBerwirausaha }} + {{ $alumniMelanjutkanStudi }} + {{ $alumniBelumBekerja }};
                 if (alumniEl && alumniTotal > 0) {
                     new Chart(alumniEl, {
                         type: 'doughnut',
                         data: {
-                            labels: ['Bekerja', 'Melanjutkan Studi', 'Belum Bekerja'],
+                            labels: ['Bekerja', 'Berwirausaha', 'Melanjutkan Studi', 'Belum Bekerja'],
                             datasets: [{
-                                data: [{{ $alumniBekerja }}, {{ $alumniMelanjutkanStudi }}, {{ $alumniBelumBekerja }}],
-                                backgroundColor: ['#2563eb', '#f59e0b', '#cbd5e1'],
+                                data: [{{ $alumniBekerja }}, {{ $alumniBerwirausaha }}, {{ $alumniMelanjutkanStudi }}, {{ $alumniBelumBekerja }}],
+                                backgroundColor: ['#2563eb', '#8b5cf6', '#f59e0b', '#cbd5e1'],
                                 borderWidth: 0,
                                 hoverOffset: 8,
                                 spacing: 2
@@ -545,6 +547,7 @@
                     const tahunData = {
                         labels: {!! json_encode($tahunLabelsData) !!},
                         bekerja: {!! json_encode($tahunBekerjaData) !!},
+                        wirausaha: {!! json_encode($tahunWirausahaData) !!},
                         studi: {!! json_encode($tahunStudiData) !!},
                         belum: {!! json_encode($tahunBelumData) !!}
                     };
@@ -554,6 +557,7 @@
                             labels: tahunData.labels,
                             datasets: [
                                 { label: 'Bekerja', data: tahunData.bekerja, backgroundColor: '#2563eb', borderRadius: 6, borderSkipped: false, maxBarThickness: 28 },
+                                { label: 'Berwirausaha', data: tahunData.wirausaha, backgroundColor: '#8b5cf6', borderRadius: 6, borderSkipped: false, maxBarThickness: 28 },
                                 { label: 'Melanjutkan Studi', data: tahunData.studi, backgroundColor: '#f59e0b', borderRadius: 6, borderSkipped: false, maxBarThickness: 28 },
                                 { label: 'Belum Bekerja', data: tahunData.belum, backgroundColor: '#cbd5e1', borderRadius: 6, borderSkipped: false, maxBarThickness: 28 },
                             ]

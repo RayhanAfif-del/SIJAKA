@@ -24,6 +24,7 @@ class DashboardController extends Controller
             )->take(6)->values(),
 
             'alumniBekerja' => Alumni::bekerja()->count(),
+            'alumniBerwirausaha' => Alumni::berwirausaha()->count(),
             'alumniMelanjutkanStudi' => Alumni::melanjutkanStudi()->count(),
             'alumniBelumBekerja' => Alumni::belumBekerja()->count(),
 

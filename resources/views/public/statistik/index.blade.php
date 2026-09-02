@@ -3,8 +3,9 @@
     @php
         $pengaturanWebsite = $pengaturanWebsite ?? \App\Models\PengaturanWebsite::singleton();
         $heroImageUrl = $pengaturanWebsite->hero_image ? \Illuminate\Support\Facades\Storage::url($pengaturanWebsite->hero_image) : null;
-        $totalAlumniStat = $bekerja + $melanjutkanStudi;
+        $totalAlumniStat = $bekerja + $berwirausaha + $melanjutkanStudi;
         $persenBekerja = $totalAlumniStat ? round($bekerja / $totalAlumniStat * 100) : 0;
+        $persenWirausaha = $totalAlumniStat ? round($berwirausaha / $totalAlumniStat * 100) : 0;
         $persenStudi = $totalAlumniStat ? round($melanjutkanStudi / $totalAlumniStat * 100) : 0;
     @endphp
 
@@ -75,6 +76,18 @@
                     </div>
                 </div>
 
+                {{-- Berwirausaha --}}
+                <div class="bg-white border border-gray-100 rounded-2xl p-5 sm:p-6 flex flex-col justify-between hover:border-violet-200 hover:shadow-lg transition-all duration-300 group">
+                    <div class="w-10 h-10 bg-violet-100 text-violet-600 rounded-lg flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m-6 4h6m-6 4h6M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    </div>
+                    <div>
+                        <p class="text-3xl font-extrabold text-gray-900 tracking-tight">{{ number_format($berwirausaha) }}</p>
+                        <p class="text-xs font-semibold text-gray-500 mt-1 uppercase tracking-wide">Berwirausaha</p>
+                        <p class="text-xs text-violet-600 font-bold mt-1">{{ $persenWirausaha }}%</p>
+                    </div>
+                </div>
+
                 {{-- Melanjutkan Studi --}}
                 <div class="bg-white border border-gray-100 rounded-2xl p-5 sm:p-6 flex flex-col justify-between hover:border-amber-200 hover:shadow-lg transition-all duration-300 group">
                     <div class="w-10 h-10 bg-amber-100 text-amber-600 rounded-lg flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
@@ -113,6 +126,16 @@
                             <div class="flex items-baseline gap-1.5">
                                 <span class="text-sm font-bold text-gray-900">{{ number_format($bekerja) }}</span>
                                 <span class="text-xs text-gray-500 font-medium">{{ $persenBekerja }}%</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between py-2 px-3 rounded-lg bg-violet-50">
+                            <span class="flex items-center gap-2 text-sm text-gray-700 font-medium">
+                                <span class="w-2.5 h-2.5 rounded-full bg-violet-500"></span>
+                                Berwirausaha
+                            </span>
+                            <div class="flex items-baseline gap-1.5">
+                                <span class="text-sm font-bold text-gray-900">{{ number_format($berwirausaha) }}</span>
+                                <span class="text-xs text-gray-500 font-medium">{{ $persenWirausaha }}%</span>
                             </div>
                         </div>
                         <div class="flex items-center justify-between py-2 px-3 rounded-lg bg-amber-50">
@@ -158,9 +181,11 @@
                     @forelse ($perTahun as $tahun => $rows)
                         @php
                             $tBekerja = $rows->firstWhere('status', 'Bekerja')->total ?? 0;
+                            $tWirausaha = $rows->firstWhere('status', 'Berwirausaha')->total ?? 0;
                             $tStudi = $rows->firstWhere('status', 'Melanjutkan Studi')->total ?? 0;
-                            $tTotal = $tBekerja + $tStudi;
+                            $tTotal = $tBekerja + $tWirausaha + $tStudi;
                             $persenBekerjaTahun = $tTotal ? round($tBekerja / $tTotal * 100) : 0;
+                            $persenWirausahaTahun = $tTotal ? round($tWirausaha / $tTotal * 100) : 0;
                             $persenStudiTahun = $tTotal ? round($tStudi / $tTotal * 100) : 0;
                         @endphp
                         <div class="p-5 hover:bg-slate-50/50 transition-colors">
@@ -179,6 +204,10 @@
                                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                                         {{ $tBekerja }} Bekerja
                                     </span>
+                                    <span class="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-violet-50 text-violet-700 font-semibold">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-violet-500"></span>
+                                        {{ $tWirausaha }} Wirausaha
+                                    </span>
                                     <span class="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-amber-50 text-amber-700 font-semibold">
                                         <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
                                         {{ $tStudi }} Studi
@@ -191,6 +220,9 @@
                                 @if ($tBekerja > 0)
                                     <div class="h-full bg-emerald-500 transition-all duration-500" style="width: {{ $persenBekerjaTahun }}%" title="Bekerja: {{ $persenBekerjaTahun }}%"></div>
                                 @endif
+                                @if ($tWirausaha > 0)
+                                    <div class="h-full bg-violet-500 transition-all duration-500" style="width: {{ $persenWirausahaTahun }}%" title="Berwirausaha: {{ $persenWirausahaTahun }}%"></div>
+                                @endif
                                 @if ($tStudi > 0)
                                     <div class="h-full bg-amber-500 transition-all duration-500" style="width: {{ $persenStudiTahun }}%" title="Studi: {{ $persenStudiTahun }}%"></div>
                                 @endif
@@ -201,6 +233,10 @@
                                 <span class="flex items-center gap-1">
                                     <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
                                     Bekerja: <strong class="text-gray-700">{{ $persenBekerjaTahun }}%</strong>
+                                </span>
+                                <span class="flex items-center gap-1">
+                                    <span class="w-2 h-2 rounded-full bg-violet-500"></span>
+                                    Wirausaha: <strong class="text-gray-700">{{ $persenWirausahaTahun }}%</strong>
                                 </span>
                                 <span class="flex items-center gap-1">
                                     <span class="w-2 h-2 rounded-full bg-amber-500"></span>
@@ -250,10 +286,10 @@
                     new Chart(donutEl, {
                         type: 'doughnut',
                         data: {
-                            labels: ['Bekerja', 'Melanjutkan Studi'],
+                            labels: ['Bekerja', 'Berwirausaha', 'Melanjutkan Studi'],
                             datasets: [{
-                                data: [{{ $bekerja }}, {{ $melanjutkanStudi }}],
-                                backgroundColor: ['#10b981', '#f59e0b'],
+                                data: [{{ $bekerja }}, {{ $berwirausaha }}, {{ $melanjutkanStudi }}],
+                                backgroundColor: ['#10b981', '#8b5cf6', '#f59e0b'],
                                 borderWidth: 0,
                                 hoverOffset: 8,
                                 spacing: 2
@@ -290,6 +326,7 @@
                 if (perTahunEl) {
                     const tahunLabels = {!! json_encode($perTahun->keys()->map(fn ($t) => (string) $t)->values()) !!};
                     const bekerjaData = {!! json_encode($perTahun->map(fn ($g) => $g->firstWhere('status', 'Bekerja')->total ?? 0)->values()) !!};
+                    const wirausahaData = {!! json_encode($perTahun->map(fn ($g) => $g->firstWhere('status', 'Berwirausaha')->total ?? 0)->values()) !!};
                     const studiData = {!! json_encode($perTahun->map(fn ($g) => $g->firstWhere('status', 'Melanjutkan Studi')->total ?? 0)->values()) !!};
 
                     new Chart(perTahunEl, {
@@ -301,6 +338,14 @@
                                     label: 'Bekerja', 
                                     data: bekerjaData, 
                                     backgroundColor: '#10b981', 
+                                    borderRadius: 6, 
+                                    borderSkipped: false, 
+                                    maxBarThickness: 32 
+                                },
+                                { 
+                                    label: 'Berwirausaha', 
+                                    data: wirausahaData, 
+                                    backgroundColor: '#8b5cf6', 
                                     borderRadius: 6, 
                                     borderSkipped: false, 
                                     maxBarThickness: 32 

@@ -130,7 +130,7 @@
                     </label>
                     <select name="status" id="selectStatus" required
                         class="w-full rounded-lg border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 text-sm transition bg-white">
-                        @foreach (['Bekerja', 'Melanjutkan Studi', 'Belum Bekerja'] as $status)
+                        @foreach (['Bekerja', 'Berwirausaha', 'Melanjutkan Studi', 'Belum Bekerja'] as $status)
                             <option value="{{ $status }}" @selected(old('status', $alumni->status ?? '') === $status)>{{ $status }}</option>
                         @endforeach
                     </select>
@@ -162,13 +162,20 @@
             </div>
 
             {{-- Status Description --}}
-            <div class="mt-5 grid sm:grid-cols-3 gap-2.5">
+            <div class="mt-5 grid sm:grid-cols-2 xl:grid-cols-4 gap-2.5">
                 <div class="p-3 rounded-lg bg-emerald-50/50 border border-emerald-100">
                     <div class="flex items-center gap-1.5 mb-1">
                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                         <span class="text-xs font-semibold text-emerald-900">Bekerja</span>
                     </div>
                     <p class="text-[11px] text-emerald-700/80 leading-relaxed">Alumni yang saat ini bekerja di perusahaan/instansi.</p>
+                </div>
+                <div class="p-3 rounded-lg bg-violet-50/50 border border-violet-100">
+                    <div class="flex items-center gap-1.5 mb-1">
+                        <span class="w-1.5 h-1.5 rounded-full bg-violet-500"></span>
+                        <span class="text-xs font-semibold text-violet-900">Berwirausaha</span>
+                    </div>
+                    <p class="text-[11px] text-violet-700/80 leading-relaxed">Alumni yang menjalankan usaha sendiri atau berwirausaha.</p>
                 </div>
                 <div class="p-3 rounded-lg bg-blue-50/50 border border-blue-100">
                     <div class="flex items-center gap-1.5 mb-1">
@@ -224,6 +231,12 @@
                 text: 'text-emerald-700',
                 border: 'border-emerald-200',
                 dot: 'bg-emerald-500'
+            },
+            'Berwirausaha': {
+                bg: 'bg-violet-50',
+                text: 'text-violet-700',
+                border: 'border-violet-200',
+                dot: 'bg-violet-500'
             },
             'Melanjutkan Studi': {
                 bg: 'bg-blue-50',

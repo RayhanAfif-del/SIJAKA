@@ -725,45 +725,49 @@
     {{-- ============================================ --}}
     {{-- STATISTIK BENTO GRID - Premium Design        --}}
     {{-- ============================================ --}}
-    @php $totalAlumniBeranda = $alumniBekerja + $alumniMelanjutkanStudi; @endphp
+    @php $totalAlumniBeranda = $alumniBekerja + $alumniBerwirausaha + $alumniMelanjutkanStudi; @endphp
     
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-14">
-        <div class="text-center mb-12" data-aos="fade-up">
-            <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight">
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+        <div class="text-center mb-12 lg:mb-16" data-aos="fade-up">
+            <span class="inline-block px-4 py-1.5 rounded-full bg-[#024CD4]/10 text-[#024CD4] text-xs font-bold uppercase tracking-wider mb-4">Statistik Kami</span>
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 tracking-tight">
                 Capaian Penyerapan Alumni
             </h2>
-            <p class="text-gray-500 mt-3">Data real-time dari tracer study BKK SMKN 1 Bangsri</p>
+            <p class="text-gray-500 mt-4 text-base lg:text-lg max-w-2xl mx-auto">Data real-time dari tracer study BKK SMKN 1 Bangsri</p>
         </div>
 
         {{-- Bento Grid Layout --}}
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4" data-aos="fade-up" data-aos-delay="100">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6" data-aos="fade-up" data-aos-delay="100">
             
-            {{-- Kotak Besar: Total Alumni --}}
-            <div class="col-span-2 md:col-span-2 bg-[#024CD4] text-white rounded-2xl p-8 flex flex-col justify-center relative overflow-hidden shadow-xl group">
+            {{-- Kotak Besar: Total Alumni (Mengambil 2 kolom & 2 baris di desktop) --}}
+            <div class="sm:col-span-2 lg:col-span-2 lg:row-span-2 bg-[#024CD4] text-white rounded-3xl p-8 lg:p-10 flex flex-col justify-center relative overflow-hidden shadow-xl shadow-blue-600/20 group min-h-[280px] lg:min-h-[400px]">
                 {{-- Decorative Elements --}}
-                <div class="absolute top-0 right-0 -mr-10 -mt-10 w-48 h-48 bg-white/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500"></div>
-                <div class="absolute bottom-0 left-0 -ml-10 -mb-10 w-48 h-48 bg-[#024CD4]/40 rounded-full blur-2xl"></div>
+                <div class="absolute top-0 right-0 -mr-16 -mt-16 w-56 h-56 bg-white/10 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
+                <div class="absolute bottom-0 left-0 -ml-16 -mb-16 w-56 h-56 bg-[#024CD4]/60 rounded-full blur-3xl"></div>
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-white/5 rounded-full blur-3xl"></div>
                 
-                <div class="relative z-10">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="w-12 h-12 bg-white/15 rounded-xl flex items-center justify-center shadow-lg">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"/>
-                            </svg>
+                <div class="relative z-10 flex flex-col h-full justify-between">
+                    <div>
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-14 h-14 bg-white/15 backdrop-blur-sm rounded-2xl flex items-center justify-center shadow-lg border border-white/20">
+                                <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"/>
+                                </svg>
+                            </div>
+                            <span class="text-sm font-bold uppercase tracking-wider text-[#d0e3ff]">Total Alumni</span>
                         </div>
-                        <span class="text-xs font-bold uppercase tracking-wider text-[#d0e3ff]">Total Alumni</span>
+                        <p class="text-6xl sm:text-7xl lg:text-8xl font-extrabold tracking-tight text-white leading-none">
+                            {{ number_format($totalAlumniBeranda) }}
+                        </p>
                     </div>
-                    <p class="text-6xl sm:text-7xl font-extrabold tracking-tight text-white">
-                        {{ number_format($totalAlumniBeranda) }}
-                    </p>
-                    <p class="text-[#d0e3ff] text-sm mt-3">Alumni terdata dalam sistem</p>
+                    <p class="text-[#d0e3ff] text-base mt-6 pt-6 border-t border-white/20">Alumni terdata dalam sistem BKK SMKN 1 Bangsri</p>
                 </div>
             </div>
             
             {{-- Kotak Kecil: Bekerja --}}
             <div class="bg-white border border-gray-100 rounded-2xl p-6 flex flex-col justify-between hover:border-emerald-200 hover:shadow-2xl hover:shadow-emerald-100/50 transition-all duration-300 group relative overflow-hidden">
                 {{-- Hover Effect --}}
-                <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-400 to-emerald-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
+                <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-400 to-emerald-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
                 
                 <div class="w-12 h-12 bg-[#024CD4] text-white rounded-xl flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -771,20 +775,39 @@
                     </svg>
                 </div>
                 <div>
-                    <p class="text-4xl font-extrabold text-gray-900 tracking-tight">{{ number_format($alumniBekerja) }}</p>
+                    <p class="text-4xl font-extrabold text-gray-900 tracking-tight leading-none">{{ number_format($alumniBekerja) }}</p>
                     <p class="text-xs font-semibold text-gray-500 mt-2 uppercase tracking-wide">Sudah Bekerja</p>
                     @if ($totalAlumniBeranda > 0)
-                        <div class="mt-3 bg-emerald-50 rounded-full px-3 py-1 inline-block">
+                        <div class="mt-3 bg-emerald-50 rounded-full px-3 py-1 inline-block border border-emerald-100">
                             <p class="text-xs text-emerald-600 font-bold">{{ round($alumniBekerja / $totalAlumniBeranda * 100) }}%</p>
                         </div>
                     @endif
                 </div>
             </div>
 
-            {{-- Kotak Kecil: Melanjutkan Studi --}}
-            <div class="bg-white border border-gray-100 rounded-2xl p-6 flex flex-col justify-between hover:border-amber-200 hover:shadow-2xl hover:shadow-amber-100/50 transition-all duration-300 group relative overflow-hidden">
-                {{-- Hover Effect --}}
-                <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-400 to-amber-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
+            {{-- Kotak Kecil: Berwirausaha --}}
+            <div class="bg-white border border-gray-100 rounded-2xl p-6 flex flex-col justify-between hover:border-violet-200 hover:shadow-2xl hover:shadow-violet-100/50 transition-all duration-300 group relative overflow-hidden">
+                <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-violet-400 to-violet-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
+                
+                <div class="w-12 h-12 bg-[#024CD4] text-white rounded-xl flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m-6 4h6m-6 4h6M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                    </svg>
+                </div>
+                <div>
+                    <p class="text-4xl font-extrabold text-gray-900 tracking-tight leading-none">{{ number_format($alumniBerwirausaha) }}</p>
+                    <p class="text-xs font-semibold text-gray-500 mt-2 uppercase tracking-wide">Berwirausaha</p>
+                    @if ($totalAlumniBeranda > 0)
+                        <div class="mt-3 bg-violet-50 rounded-full px-3 py-1 inline-block border border-violet-100">
+                            <p class="text-xs text-violet-600 font-bold">{{ round($alumniBerwirausaha / $totalAlumniBeranda * 100) }}%</p>
+                        </div>
+                    @endif
+                </div>
+            </div>
+
+            {{-- Kotak Lebar: Melanjutkan Studi --}}
+            <div class="sm:col-span-2 lg:col-span-2 bg-white border border-gray-100 rounded-2xl p-6 flex flex-col justify-between hover:border-amber-200 hover:shadow-2xl hover:shadow-amber-100/50 transition-all duration-300 group relative overflow-hidden">
+                <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-400 to-amber-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
                 
                 <div class="w-12 h-12 bg-[#024CD4] text-white rounded-xl flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -792,18 +815,18 @@
                     </svg>
                 </div>
                 <div>
-                    <p class="text-4xl font-extrabold text-gray-900 tracking-tight">{{ number_format($alumniMelanjutkanStudi) }}</p>
+                    <p class="text-4xl font-extrabold text-gray-900 tracking-tight leading-none">{{ number_format($alumniMelanjutkanStudi) }}</p>
                     <p class="text-xs font-semibold text-gray-500 mt-2 uppercase tracking-wide">Melanjutkan Studi</p>
                     @if ($totalAlumniBeranda > 0)
-                        <div class="mt-3 bg-amber-50 rounded-full px-3 py-1 inline-block">
+                        <div class="mt-3 bg-amber-50 rounded-full px-3 py-1 inline-block border border-amber-100">
                             <p class="text-xs text-amber-600 font-bold">{{ round($alumniMelanjutkanStudi / $totalAlumniBeranda * 100) }}%</p>
                         </div>
                     @endif
                 </div>
             </div>
-
+            
             {{-- Kotak Lebar: Mitra Aktif --}}
-            <div class="col-span-2 md:col-span-2 bg-white border border-gray-100 rounded-2xl p-8 flex items-center justify-between hover:border-[#024CD4]/40 hover:shadow-2xl hover:shadow-[#024CD4]/20 transition-all duration-300 group relative overflow-hidden">
+            <div class="sm:col-span-2 bg-white border border-gray-100 rounded-3xl p-6 sm:p-8 flex items-center justify-between hover:border-[#024CD4]/40 hover:shadow-2xl hover:shadow-[#024CD4]/20 transition-all duration-300 group relative overflow-hidden min-h-[150px]">
                 <div class="absolute top-0 right-0 w-32 h-32 bg-[#024CD4]/20 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500"></div>
                 
                 <div class="flex items-center gap-5 relative z-10">
@@ -814,29 +837,29 @@
                     </div>
                     <div>
                         <p class="text-xs font-bold text-[#024CD4] uppercase tracking-wider mb-1">Mitra Aktif</p>
-                        <p class="text-3xl font-extrabold text-gray-900 tracking-tight">{{ $mitra->count() ?? 0 }}+ Perusahaan</p>
+                        <p class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">{{ $mitra->count() ?? 0 }}+ Perusahaan</p>
                     </div>
                 </div>
             </div>
 
             {{-- Kotak Lebar: Statistik Alumni --}}
-            <div class="col-span-2 md:col-span-2 bg-white border border-gray-100 rounded-2xl p-8 flex items-center justify-between hover:border-[#024CD4]/40 hover:shadow-2xl hover:shadow-[#024CD4]/20 transition-all duration-300 group relative overflow-hidden">
-                <div class="absolute top-0 left-0 w-32 h-32 bg-[#024CD4]/20 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500"></div>
+            <div class="sm:col-span-2 lg:col-span-2 bg-gradient-to-br from-slate-50 to-white border border-gray-100 rounded-3xl p-6 lg:p-8 flex items-center justify-between hover:border-[#024CD4]/40 hover:shadow-2xl hover:shadow-[#024CD4]/20 transition-all duration-300 group relative overflow-hidden min-h-[140px]">
+                <div class="absolute top-0 left-0 -ml-10 -mt-10 w-40 h-40 bg-[#024CD4]/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
                 
                 <div class="flex items-center gap-5 relative z-10">
-                    <div class="w-16 h-16 bg-[#024CD4] text-white rounded-2xl flex items-center justify-center shadow-xl group-hover:scale-110 group-hover:rotate-6 transition-all">
+                    <div class="w-16 h-16 bg-[#024CD4] text-white rounded-2xl flex items-center justify-center shadow-xl shadow-blue-600/30 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
                         </svg>
                     </div>
                     <div>
-                        <p class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Detail Statistik</p>
-                        <p class="text-3xl font-extrabold text-gray-900 tracking-tight">Lihat capaian alumni</p>
+                        <p class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Analisis Lengkap</p>
+                        <p class="text-xl lg:text-2xl font-extrabold text-gray-900 tracking-tight">Lihat Capaian Alumni</p>
                     </div>
                 </div>
-                <a href="{{ route('statistik.index') }}" class="hidden sm:inline-flex items-center gap-2 text-sm font-semibold text-[#024CD4] hover:text-[#013ba8] bg-[#024CD4]/10 hover:bg-[#024CD4]/20 px-4 py-2 rounded-lg border border-[#024CD4]/30 transition-all relative z-10">
+                <a href="{{ route('statistik.index') }}" class="hidden sm:inline-flex items-center gap-2 text-sm font-semibold text-[#024CD4] hover:text-[#013ba8] bg-[#024CD4]/10 hover:bg-[#024CD4]/20 px-5 py-2.5 rounded-xl border border-[#024CD4]/30 transition-all relative z-10 group/btn">
                     Buka Statistik
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                     </svg>
                 </a>

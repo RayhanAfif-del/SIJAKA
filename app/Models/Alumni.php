@@ -25,7 +25,12 @@ class Alumni extends Model
         return $query->where('status', 'Bekerja');
     }
 
-public function scopeBelumBekerja(Builder $query): Builder
+    public function scopeBerwirausaha(Builder $query): Builder
+    {
+        return $query->where('status', 'Berwirausaha');
+    }
+
+    public function scopeBelumBekerja(Builder $query): Builder
     {
         return $query->where('status', 'Belum Bekerja');
     }
