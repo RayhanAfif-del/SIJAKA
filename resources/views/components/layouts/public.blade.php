@@ -284,9 +284,8 @@
         
         {{-- Copyright --}}
         <div class="border-t border-slate-800">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-                <p>&copy; {{ now()->year }} {{ $pengaturanLayout->site_name ?? 'SIJAKA' }}. All rights reserved.</p>
-                <p>Dikembangkan dengan ❤️ untuk SMK N 1 Bangsri</p>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col items-center justify-center gap-4 text-xs text-slate-500">
+                <p class="text-center">&copy; {{ now()->year }} {{ $pengaturanLayout->site_name ?? 'SIJAKA' }}. All rights reserved.</p>
             </div>
         </div>
     </footer>
