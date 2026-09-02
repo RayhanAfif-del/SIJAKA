@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
 use App\Models\Alumni;
+use App\Models\PengaturanWebsite;
 use Illuminate\Support\Facades\DB;
 
 class StatistikController extends Controller
@@ -24,6 +25,11 @@ class StatistikController extends Controller
             ->get()
             ->groupBy('tahun_lulus');
 
-        return view('public.statistik.index', compact('bekerja', 'melanjutkanStudi', 'perTahun'));
+        return view('public.statistik.index', [
+            'bekerja' => $bekerja,
+            'melanjutkanStudi' => $melanjutkanStudi,
+            'perTahun' => $perTahun,
+            'pengaturanWebsite' => PengaturanWebsite::singleton(),
+        ]);
     }
 }

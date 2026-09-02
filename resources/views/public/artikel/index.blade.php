@@ -1,6 +1,8 @@
 <x-layouts.public title="Artikel Dunia Kerja">
 
     @php
+        $pengaturanWebsite = $pengaturanWebsite ?? \App\Models\PengaturanWebsite::singleton();
+        $heroImageUrl = $pengaturanWebsite->hero_image ? \Illuminate\Support\Facades\Storage::url($pengaturanWebsite->hero_image) : null;
         $kategoriColors = [
             'tips'        => ['bg' => 'bg-blue-50',    'text' => 'text-blue-700',    'border' => 'border-blue-200'],
             'karir'       => ['bg' => 'bg-emerald-50', 'text' => 'text-emerald-700', 'border' => 'border-emerald-200'],
@@ -13,7 +15,14 @@
 
     {{-- Hero Section --}}
     <section class="relative bg-slate-900 text-white overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-br from-blue-900 via-slate-900 to-slate-900"></div>
+        @if ($heroImageUrl)
+            <div class="absolute inset-0">
+                <img src="{{ $heroImageUrl }}" alt="Background" class="w-full h-full object-cover opacity-40">
+                <div class="absolute inset-0 bg-gradient-to-br from-blue-900/90 via-slate-900/90 to-slate-900/90"></div>
+            </div>
+        @else
+            <div class="absolute inset-0 bg-gradient-to-br from-blue-900 via-slate-900 to-slate-900"></div>
+        @endif
         <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0); background-size: 32px 32px;"></div>
         
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20" data-aos="fade-up">

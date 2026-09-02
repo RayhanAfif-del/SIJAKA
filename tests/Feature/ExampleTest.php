@@ -16,4 +16,11 @@ class ExampleTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    public function test_public_struktur_organisasi_page_loads_without_error(): void
+    {
+        $response = $this->get('/struktur-organisasi');
+
+        $response->assertStatus(200);
+    }
 }

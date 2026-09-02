@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
 use App\Models\Lowongan;
+use App\Models\PengaturanWebsite;
 use Illuminate\Http\Request;
 
 class LowonganController extends Controller
@@ -37,7 +38,11 @@ class LowonganController extends Controller
             ->orderBy('lokasi')
             ->pluck('lokasi');
 
-        return view('public.lowongan.index', compact('lowongan', 'daftarLokasi'));
+        return view('public.lowongan.index', [
+            'lowongan' => $lowongan,
+            'daftarLokasi' => $daftarLokasi,
+            'pengaturanWebsite' => PengaturanWebsite::singleton(),
+        ]);
     }
 
     public function show(Lowongan $lowongan)
@@ -53,6 +58,10 @@ class LowonganController extends Controller
             ->take(3)
             ->get();
 
-        return view('public.lowongan.show', compact('lowongan', 'lowonganLainnya'));
+        return view('public.lowongan.show', [
+            'lowongan' => $lowongan,
+            'lowonganLainnya' => $lowonganLainnya,
+            'pengaturanWebsite' => PengaturanWebsite::singleton(),
+        ]);
     }
 }

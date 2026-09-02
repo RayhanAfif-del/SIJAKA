@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
 use App\Models\Artikel;
+use App\Models\PengaturanWebsite;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
 
@@ -43,11 +44,18 @@ class ArtikelController extends Controller
             ]
         );
 
-        return view('public.artikel.index', compact('artikel', 'totalArtikel'));
+        return view('public.artikel.index', [
+            'artikel' => $artikel,
+            'totalArtikel' => $totalArtikel,
+            'pengaturanWebsite' => PengaturanWebsite::singleton(),
+        ]);
     }
 
     public function show(Artikel $artikel)
     {
-        return view('public.artikel.show', compact('artikel'));
+        return view('public.artikel.show', [
+            'artikel' => $artikel,
+            'pengaturanWebsite' => PengaturanWebsite::singleton(),
+        ]);
     }
 }

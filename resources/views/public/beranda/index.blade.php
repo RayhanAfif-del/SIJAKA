@@ -15,68 +15,49 @@
     {{-- ============================================ --}}
     {{-- HERO SECTION - Premium Design               --}}
     {{-- ============================================ --}}
-    <section class="relative min-h-screen bg-[#024CD4] overflow-hidden">
-        
+    <section class="relative min-h-screen bg-slate-900 text-white overflow-hidden flex items-center">
         {{-- Hero Background Image --}}
         @if ($heroImageUrl)
             <div class="absolute inset-0">
-                <img src="{{ $heroImageUrl }}" alt="Foto beranda utama" class="w-full h-full object-cover">
-                <div class="absolute inset-0 bg-[#024CD4]/75"></div>
+                <img src="{{ $heroImageUrl }}" alt="Foto beranda utama" class="w-full h-full object-cover opacity-40">
+                <div class="absolute inset-0 bg-gradient-to-br from-blue-900/90 via-slate-900/90 to-slate-900/90"></div>
             </div>
+        @else
+            <div class="absolute inset-0 bg-gradient-to-br from-blue-900 via-slate-900 to-slate-900"></div>
         @endif
-
-        {{-- Animated Background Pattern --}}
-        <div class="absolute inset-0 opacity-10">
-            <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=%2260%22 height=%2260%22 viewBox=%220 0 60 60%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cg fill=%22none%22 fill-rule=%22evenodd%22%3E%3Cg fill=%22%23ffffff%22 fill-opacity=%220.05%22%3E%3Cpath d=%22M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
-        </div>
-
-        {{-- Subtle Gradient Orbs --}}
-        <div class="absolute inset-0 overflow-hidden">
-            <div class="absolute -top-40 -right-40 w-[600px] h-[600px] bg-[#024CD4]/50 rounded-full filter blur-3xl opacity-15"></div>
-            <div class="absolute -bottom-40 -left-40 w-[600px] h-[600px] bg-[#024CD4]/70 rounded-full filter blur-3xl opacity-10"></div>
-        </div>
-
-        {{-- Floating Particles --}}
-        <div class="absolute inset-0 pointer-events-none">
-            @for ($i = 0; $i < 20; $i++)
-                <div class="absolute w-1 h-1 bg-white/30 rounded-full animate-float" 
-                     style="left: {{ rand(0, 100) }}%; top: {{ rand(0, 100) }}%; animation-delay: {{ rand(0, 5) }}s; animation-duration: {{ rand(5, 15) }}s;">
-                </div>
-            @endfor
-        </div>
-
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 flex items-center min-h-screen">
+        
+        {{-- Dot Pattern --}}
+        <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0); background-size: 32px 32px;"></div>
+        
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 w-full" data-aos="fade-up">
             
             {{-- Hero Content --}}
-            <div class="max-w-3xl" data-aos="fade-up" data-aos-duration="1000">
+            <div class="max-w-3xl">
 
                 <h1 class="text-4xl sm:text-5xl lg:text-7xl font-extrabold text-white leading-[1.1] tracking-tight mb-6">
                     {{ $heroTitlePrefix }} 
                     <span class="relative inline-block">
-                        <span class="text-amber-300">
+                        <span class="text-blue-400">
                             {{ $heroTitleHighlight }}
                         </span>
-                        <svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 200 8" fill="none">
-                            <path d="M0 4 Q50 0 100 4 T200 4" stroke="#fbbf24" stroke-width="3" stroke-linecap="round"/>
-                        </svg>
                     </span> 
                     <br>{{ $heroTitleSuffix }}
                 </h1>
                 
-                <p class="text-[#d0e3ff] text-lg sm:text-xl leading-relaxed mb-10 max-w-2xl">
+                <p class="text-blue-100 text-lg sm:text-xl leading-relaxed mb-10 max-w-2xl">
                     {{ $heroDescription }}
                 </p>
                 
                 <div class="flex flex-wrap gap-4 mb-12">
                     <a href="{{ $heroPrimaryUrl }}" 
-                       class="group relative inline-flex items-center gap-2 bg-amber-400 hover:bg-amber-500 text-slate-900 text-sm font-bold px-8 py-4 rounded-xl shadow-lg transition-all duration-300 hover:-translate-y-1">
+                       class="group relative inline-flex items-center gap-2 bg-blue-400 hover:bg-blue-500 text-slate-900 text-sm font-bold px-8 py-4 rounded-xl shadow-lg transition-all duration-300 hover:-translate-y-1">
                         <span class="relative">{{ $heroPrimaryLabel }}</span>
                         <svg class="w-4 h-4 relative group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                         </svg>
                     </a>
                     <a href="{{ $heroSecondaryUrl }}" 
-                       class="inline-flex items-center gap-2 bg-white/15 border border-white/30 hover:bg-white/25 text-white text-sm font-semibold px-8 py-4 rounded-xl transition-all duration-300 hover:-translate-y-1">
+                       class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white text-sm font-semibold px-8 py-4 rounded-xl transition-all duration-300 hover:-translate-y-1">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
@@ -88,14 +69,14 @@
                 <div class="flex flex-wrap gap-3">
                     @php
                         $features = [
-                            ['icon' => 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z', 'text' => 'Terpercaya', 'desc' => 'Informasi valid dan update'],
-                            ['icon' => 'M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z', 'text' => 'Peluang Kerja', 'desc' => 'Ribuan lowongan dari perusahaan terbaik'],
-                            ['icon' => 'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6', 'text' => 'Karier Sukses', 'desc' => 'Wujudkan masa depan karier Anda'],
+                            ['icon' => 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z', 'text' => 'Terpercaya'],
+                            ['icon' => 'M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z', 'text' => 'Peluang Kerja'],
+                            ['icon' => 'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6', 'text' => 'Karier Sukses'],
                         ];
                     @endphp
                     @foreach ($features as $feature)
-                        <span class="inline-flex items-center gap-2 bg-white/15 border border-white/25 px-4 py-2 rounded-full text-xs font-medium text-white shadow-lg">
-                            <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <span class="inline-flex items-center gap-2 bg-white/10 border border-white/20 px-4 py-2 rounded-full text-xs font-medium text-blue-100 shadow-lg">
+                            <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="{{ $feature['icon'] }}"/>
                             </svg>
                             {{ $feature['text'] }}

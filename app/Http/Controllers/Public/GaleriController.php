@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
 use App\Models\Galeri;
+use App\Models\PengaturanWebsite;
 use App\Support\GaleriStack;
 use Illuminate\Http\Request;
 
@@ -26,6 +27,11 @@ class GaleriController extends Controller
 
         $kategoriList = Galeri::distinct()->pluck('kategori');
 
-        return view('public.galeri.index', compact('galeri', 'kategoriList', 'totalFoto'));
+        return view('public.galeri.index', [
+            'galeri' => $galeri,
+            'kategoriList' => $kategoriList,
+            'totalFoto' => $totalFoto,
+            'pengaturanWebsite' => PengaturanWebsite::singleton(),
+        ]);
     }
 }

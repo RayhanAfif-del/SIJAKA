@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
+use App\Models\PengaturanWebsite;
 use App\Models\StrukturOrganisasi;
 
 class StrukturOrganisasiController extends Controller
@@ -12,6 +13,7 @@ class StrukturOrganisasiController extends Controller
         return view('public.struktur-organisasi.index', [
             // Global scope di model sudah orderBy('urutan')
             'struktur' => StrukturOrganisasi::all(),
+            'pengaturanWebsite' => PengaturanWebsite::singleton(),
         ]);
     }
 }
