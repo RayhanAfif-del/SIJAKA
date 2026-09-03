@@ -739,31 +739,55 @@
         {{-- Bento Grid Layout --}}
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6" data-aos="fade-up" data-aos-delay="100">
             
-            {{-- Kotak Besar: Total Alumni (Mengambil 2 kolom & 2 baris di desktop) --}}
-            <div class="sm:col-span-2 lg:col-span-2 lg:row-span-2 bg-[#024CD4] text-white rounded-3xl p-8 lg:p-10 flex flex-col justify-center relative overflow-hidden shadow-xl shadow-blue-600/20 group min-h-[280px] lg:min-h-[400px]">
-                {{-- Decorative Elements --}}
-                <div class="absolute top-0 right-0 -mr-16 -mt-16 w-56 h-56 bg-white/10 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
-                <div class="absolute bottom-0 left-0 -ml-16 -mb-16 w-56 h-56 bg-[#024CD4]/60 rounded-full blur-3xl"></div>
-                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-white/5 rounded-full blur-3xl"></div>
-                
-                <div class="relative z-10 flex flex-col h-full justify-between">
-                    <div>
-                        <div class="flex items-center gap-3 mb-6">
-                            <div class="w-14 h-14 bg-white/15 backdrop-blur-sm rounded-2xl flex items-center justify-center shadow-lg border border-white/20">
-                                <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"/>
-                                </svg>
-                            </div>
-                            <span class="text-sm font-bold uppercase tracking-wider text-[#d0e3ff]">Total Alumni</span>
-                        </div>
-                        <p class="text-6xl sm:text-7xl lg:text-8xl font-extrabold tracking-tight text-white leading-none">
-                            {{ number_format($totalAlumniBeranda) }}
-                        </p>
-                    </div>
-                    <p class="text-[#d0e3ff] text-base mt-6 pt-6 border-t border-white/20">Alumni terdata dalam sistem BKK SMKN 1 Bangsri</p>
+{{-- Kotak Besar: Total Alumni (Mengambil 2 kolom & 2 baris di desktop) --}}
+<div class="sm:col-span-2 lg:col-span-2 lg:row-span-2 bg-[#024CD4] text-white rounded-3xl p-8 lg:p-10 flex flex-col justify-center relative overflow-hidden shadow-xl shadow-blue-600/20 group min-h-[280px] lg:min-h-[400px]">
+    
+    {{-- Decorative Curve/Diagonal Background --}}
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <svg class="absolute top-0 right-0 w-[120%] h-[120%] -translate-y-1/4 translate-x-1/4 opacity-10" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 400C100 300 200 200 400 0V400H0Z" fill="white"/>
+        </svg>
+        <svg class="absolute top-0 right-0 w-[100%] h-[100%] -translate-y-1/4 translate-x-1/4 opacity-5" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 400C150 280 250 180 400 0V400H0Z" fill="white"/>
+        </svg>
+    </div>
+
+    {{-- Paper Plane Icon (Top Right) --}}
+    <div class="absolute top-6 right-6 sm:top-8 sm:right-8 opacity-90 group-hover:opacity-100 transition-opacity">
+        <svg class="w-12 h-12 sm:w-16 sm:h-16 text-amber-400 transform -rotate-12 group-hover:rotate-0 transition-transform duration-500" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+        </svg>
+    </div>
+
+    {{-- Dot Pattern (Bottom Left) --}}
+    <div class="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 grid grid-cols-5 gap-1.5 opacity-30 group-hover:opacity-50 transition-opacity pointer-events-none">
+        @for ($i = 0; $i < 20; $i++)
+            <div class="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-white rounded-full"></div>
+        @endfor
+    </div>
+
+    {{-- Glow Effects --}}
+    <div class="absolute top-0 right-0 -mr-16 -mt-16 w-56 h-56 bg-white/10 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
+    <div class="absolute bottom-0 left-0 -ml-16 -mb-16 w-56 h-56 bg-[#024CD4]/60 rounded-full blur-3xl"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-white/5 rounded-full blur-3xl"></div>
+    
+    <div class="relative z-10 flex flex-col h-full justify-between">
+        <div>
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-14 h-14 bg-white/15 backdrop-blur-sm rounded-2xl flex items-center justify-center shadow-lg border border-white/20">
+                    <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"/>
+                    </svg>
                 </div>
+                <span class="text-sm font-bold uppercase tracking-wider text-[#d0e3ff]">Total Alumni</span>
             </div>
-            
+            <p class="text-6xl sm:text-7xl lg:text-8xl font-extrabold tracking-tight text-white leading-none">
+                {{ number_format($totalAlumniBeranda) }}
+            </p>
+        </div>
+        <p class="text-[#d0e3ff] text-base mt-6 pt-6 border-t border-white/20">Alumni terdata dalam sistem BKK SMKN 1 Bangsri</p>
+    </div>
+</div>            
             {{-- Kotak Kecil: Bekerja --}}
             <div class="bg-white border border-gray-100 rounded-2xl p-6 flex flex-col justify-between hover:border-emerald-200 hover:shadow-2xl hover:shadow-emerald-100/50 transition-all duration-300 group relative overflow-hidden">
                 {{-- Hover Effect --}}
@@ -824,7 +848,7 @@
                     @endif
                 </div>
             </div>
-            
+
             {{-- Kotak Lebar: Mitra Aktif --}}
             <div class="sm:col-span-2 bg-white border border-gray-100 rounded-3xl p-6 sm:p-8 flex items-center justify-between hover:border-[#024CD4]/40 hover:shadow-2xl hover:shadow-[#024CD4]/20 transition-all duration-300 group relative overflow-hidden min-h-[150px]">
                 <div class="absolute top-0 right-0 w-32 h-32 bg-[#024CD4]/20 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500"></div>

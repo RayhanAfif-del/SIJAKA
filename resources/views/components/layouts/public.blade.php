@@ -78,9 +78,9 @@
             <div class="flex items-center justify-between h-16">
                 {{-- Logo --}}
                 <a href="{{ route('home') }}" class="flex items-center gap-3 group">
-                    <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 overflow-hidden bg-transparent">
+                    <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden bg-transparent">
                         @if ($pengaturanLayout->site_icon)
-                            <img src="{{ $siteIconUrl }}" alt="Icon SIJAKA" class="w-full h-full object-contain bg-transparent">
+                            <img src="{{ $siteIconUrl }}" alt="Icon SIJAKA" class="w-full h-full rounded-full object-cover bg-transparent">
                         @else
                             <x-application-logo class="w-full h-full object-contain" />
                         @endif
@@ -199,9 +199,9 @@
                 {{-- Brand --}}
                 <div class="lg:col-span-1">
                     <div class="flex items-center gap-3 mb-4">
-                        <div class="w-10 h-10 rounded-xl flex items-center justify-center overflow-hidden bg-transparent">
+                        <div class="w-10 h-10 rounded-full flex items-center justify-center overflow-hidden bg-transparent">
                             @if ($pengaturanLayout->site_icon)
-                                <img src="{{ $siteIconUrl }}" alt="Icon SIJAKA" class="w-full h-full object-contain bg-transparent">
+                                <img src="{{ $siteIconUrl }}" alt="Icon SIJAKA" class="w-full h-full rounded-full object-cover bg-transparent">
                             @else
                                 <x-application-logo class="w-full h-full object-contain" />
                             @endif

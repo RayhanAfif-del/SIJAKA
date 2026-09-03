@@ -85,15 +85,15 @@
                                 Icon SIJAKA / Favicon
                             </label>
                             <div class="flex flex-col sm:flex-row sm:items-start gap-4 p-4 rounded-lg border border-dashed border-slate-200 bg-slate-50/50">
-                                <div class="w-16 h-16 rounded-xl border border-slate-200 bg-white flex items-center justify-center overflow-hidden shrink-0 shadow-sm">
+                                <div class="w-16 h-16 rounded-full border border-slate-200 bg-white flex items-center justify-center overflow-hidden shrink-0 shadow-sm">
                                     @if ($pengaturanWebsite->site_icon)
-                                        <img src="{{ \Illuminate\Support\Facades\Storage::url($pengaturanWebsite->site_icon) }}" alt="Icon SIJAKA" class="w-full h-full object-cover">
+                                        <img src="{{ \Illuminate\Support\Facades\Storage::url($pengaturanWebsite->site_icon) }}" alt="Icon SIJAKA" class="w-full h-full rounded-full object-cover">
                                     @else
                                         <span class="text-sm font-bold text-slate-400">SI</span>
                                     @endif
                                 </div>
                                 <div class="flex-1 min-w-0">
-                                    <input type="file" name="site_icon" accept="image/*" class="block w-full text-sm text-slate-600 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-blue-50 file:text-blue-600 file:text-sm file:font-medium hover:file:bg-blue-100 file:cursor-pointer file:transition">
+                                    <input type="file" name="site_icon" accept=".png,.jpg,.jpeg,.ico,.webp,.svg,image/png,image/jpeg,image/x-icon,image/webp,image/svg+xml" class="block w-full text-sm text-slate-600 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-blue-50 file:text-blue-600 file:text-sm file:font-medium hover:file:bg-blue-100 file:cursor-pointer file:transition">
                                     <p class="mt-2 text-xs text-slate-500 leading-relaxed">
                                         <span class="font-medium text-slate-700">Rekomendasi:</span> Gambar persegi (512×512px) format PNG/SVG. Kosongkan jika tidak ingin mengganti.
                                     </p>
