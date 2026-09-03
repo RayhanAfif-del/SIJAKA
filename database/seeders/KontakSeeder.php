@@ -15,8 +15,7 @@ class KontakSeeder extends Seeder
             'telepon' => '+62 857 1259 5555',
             'jam_operasional' => 'Senin - Jumat (08.00 - 16.00)',
             'instagram' => 'https://instagram.com/smkn1bangsri',
-            'facebook' => 'https://facebook.com/smkn1bangsri',
-            'youtube' => 'https://youtube.com/@smkn1bangsri',
+            'tiktok' => 'https://tiktok.com/@smkn1bangsri',
         ]);
     }
 }

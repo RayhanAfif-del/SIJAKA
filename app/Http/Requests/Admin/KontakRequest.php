@@ -20,8 +20,7 @@ class KontakRequest extends FormRequest
             'jam_operasional' => ['nullable', 'string', 'max:100'],
             'map_link' => ['nullable', 'string', 'max:1000'],
             'instagram' => ['nullable', 'url'],
-            'facebook' => ['nullable', 'url'],
-            'youtube' => ['nullable', 'url'],
+            'tiktok' => ['nullable', 'url'],
         ];
     }
 }
