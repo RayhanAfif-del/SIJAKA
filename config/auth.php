@@ -22,6 +22,11 @@ return [
             'driver' => 'session',
             'provider' => 'mitra',
         ],
+
+        'alumni' => [
+            'driver' => 'session',
+            'provider' => 'alumni',
+        ],
     ],
 
     'providers' => [
@@ -33,6 +38,11 @@ return [
         'mitra' => [
             'driver' => 'eloquent',
             'model' => App\Models\Mitra::class,
+        ],
+
+        'alumni' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Alumni::class,
         ],
     ],
 

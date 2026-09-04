@@ -12,11 +12,24 @@
             </p>
         </div>
         <div class="flex items-center gap-2">
+            <form method="POST" action="{{ route('admin.dashboard.sync-sipintu') }}">
+                @csrf
+                <button type="submit" class="inline-flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-lg shadow-sm transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h5M20 20v-5h-5M5.5 15a7 7 0 0011.9 1.9L20 15M4 9l2.6-1.9A7 7 0 0118.5 9"/>
+                    </svg>
+                    Sinkronkan SiPintu
+                </button>
+            </form>
             <a href="{{ route('admin.lowongan.index') }}" class="inline-flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium text-white bg-slate-900 hover:bg-slate-800 rounded-lg shadow-sm transition">
                 Kelola Lowongan
             </a>
         </div>
     </div>
+
+    @if ($sipintuLastSync)
+        <p class="mb-6 text-xs text-slate-500">Sinkronisasi terakhir: {{ \Carbon\Carbon::parse($sipintuLastSync)->translatedFormat('d F Y, H:i') }}</p>
+    @endif
 
     {{-- Stat Cards --}}
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">

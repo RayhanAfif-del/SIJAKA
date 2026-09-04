@@ -28,5 +28,6 @@ Route::get('/statistik', [StatistikController::class, 'index'])->name('statistik
 Route::get('/kontak', [KontakController::class, 'index'])->name('kontak.index');
 
 require __DIR__.'/auth.php';
+require __DIR__.'/alumni.php';
 require __DIR__.'/admin.php';
 require __DIR__.'/mitra.php';

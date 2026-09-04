@@ -195,6 +195,25 @@
         </div>
     </div>
 
+    <div class="bg-white border border-slate-200/70 rounded-xl shadow-sm overflow-hidden">
+        <div class="px-5 sm:px-6 py-4 border-b border-slate-100 bg-slate-50/50">
+            <h2 class="text-sm font-semibold text-slate-900">Akun Direktori Talenta</h2>
+            <p class="text-xs text-slate-500 mt-0.5">Kredensial ini digunakan alumni untuk mengelola profil dan dokumen.</p>
+        </div>
+        <div class="p-5 sm:p-6 grid sm:grid-cols-2 gap-5">
+            <div>
+                <label class="text-sm font-medium text-slate-700">Email Alumni</label>
+                <input type="email" name="email" value="{{ old('email', $alumni->email ?? '') }}" class="mt-1.5 w-full rounded-lg border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 text-sm" placeholder="alumni@email.com">
+                @error('email')<p class="mt-1.5 text-xs text-red-600">{{ $message }}</p>@enderror
+            </div>
+            <div>
+                <label class="text-sm font-medium text-slate-700">Password {{ isset($alumni) ? '(kosongkan jika tidak diubah)' : '' }}</label>
+                <input type="password" name="password" minlength="8" class="mt-1.5 w-full rounded-lg border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 text-sm" placeholder="Minimal 8 karakter">
+                @error('password')<p class="mt-1.5 text-xs text-red-600">{{ $message }}</p>@enderror
+            </div>
+        </div>
+    </div>
+
     {{-- Section 4: Aksi --}}
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-5 bg-white border border-slate-200/70 rounded-xl shadow-sm">
         <p class="text-xs text-slate-500 flex items-start gap-1.5">

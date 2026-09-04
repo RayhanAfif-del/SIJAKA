@@ -81,6 +81,20 @@
                     Lowongan Saya
                 </x-admin.nav-link>
 
+                <x-admin.nav-link href="{{ route('mitra.talent-pool.index') }}" :active="request()->routeIs('mitra.talent-pool.*')">
+                    <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5V4H2v16h5m10 0v-4H7v4m10 0H7m2-8h6m-6-4h6"/>
+                    </svg>
+                    Direktori Talenta
+                </x-admin.nav-link>
+
+                <x-admin.nav-link href="{{ route('mitra.interview-requests.index') }}" :active="request()->routeIs('mitra.interview-requests.*')">
+                    <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h8m-8 4h5m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    Permintaan Wawancara
+                </x-admin.nav-link>
+
                 <div class="pt-4 pb-1 mt-auto">
                     <p class="px-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500">Lainnya</p>
                 </div>

@@ -2,8 +2,6 @@
 
 namespace App\Http\Requests\Auth;
 
-use App\Models\Admin;
-use App\Models\Mitra;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +19,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'role' => ['required', 'in:admin,mitra'],
+            'role' => ['required', 'in:admin,mitra,alumni'],
             'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
         ];
@@ -32,7 +30,7 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        $guard = $this->string('role')->value(); // 'admin' | 'mitra'
+        $guard = $this->string('role')->value(); // 'admin' | 'mitra' | 'alumni'
 
         if (! Auth::guard($guard)->attempt(
             $this->only('email', 'password'),

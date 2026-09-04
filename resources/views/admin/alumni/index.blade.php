@@ -50,7 +50,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                     </svg>
                     <input type="text" name="cari" id="searchInput" value="{{ request('cari') }}" 
-                           placeholder="Cari nama alumni..." 
+                           placeholder="Cari nama atau NIS alumni..." 
                            class="w-full pl-9 pr-8 py-2 rounded-lg border-0 focus:ring-0 text-sm placeholder:text-slate-400 bg-transparent">
                     @if (request('cari'))
                         <a href="{{ route('admin.alumni.index') }}" class="absolute right-2 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition" title="Hapus pencarian">
@@ -124,7 +124,7 @@
                                             {{ $item->nama }}
                                         </p>
                                         <p class="text-xs text-slate-500 line-clamp-1 mt-0.5">
-                                            ID: #{{ $item->id }}
+                                            NIS: {{ $item->nis ?? '-' }}
                                         </p>
                                     </div>
                                 </div>

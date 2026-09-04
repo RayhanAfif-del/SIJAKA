@@ -39,6 +39,14 @@
                                     Keluar
                                 </button>
                             </form>
+                        @elseauth('alumni')
+                            <a href="{{ route('home') }}" class="text-sm font-medium text-slate-600 hover:text-blue-600 transition">
+                                Kembali ke Beranda
+                            </a>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="text-sm font-medium text-red-600 hover:text-red-700 transition">Keluar</button>
+                            </form>
                         @endauth
                     </div>
                 </div>

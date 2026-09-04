@@ -35,4 +35,17 @@ return [
         ],
     ],
 
+    'sipintu' => [
+        'base_url' => env('SIPINTU_BASE_URL', 'http://localhost:8000'),
+        'client_id' => env('SIPINTU_CLIENT_ID'),
+        'client_secret' => env('SIPINTU_CLIENT_SECRET'),
+        'default_graduation_year' => env('SIPINTU_DEFAULT_GRADUATION_YEAR', date('Y')),
+        'redirect_uri' => env('SIPINTU_REDIRECT_URI', env('APP_URL', 'http://localhost').'/oauth/callback'),
+        'authorize_path' => env('SIPINTU_AUTHORIZE_PATH', '/oauth/authorize'),
+        'token_path' => env('SIPINTU_TOKEN_PATH', '/oauth/token'),
+        'user_path' => env('SIPINTU_USER_PATH', '/api/v1/user'),
+        'students_path' => env('SIPINTU_STUDENTS_PATH', '/api/v1/sijuna/students'),
+        'teachers_path' => env('SIPINTU_TEACHERS_PATH', '/api/v1/sijuna/teachers'),
+    ],
+
 ];

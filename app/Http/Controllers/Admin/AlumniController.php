@@ -12,8 +12,12 @@ class AlumniController extends Controller
 {
     public function index(Request $request)
     {
-        $alumni = Alumni::when($request->filled('cari'), fn ($q) => $q->where('nama', 'like', '%'.$request->input('cari').'%'))
-            ->latest()
+        $alumni = Alumni::when($request->filled('cari'), fn ($q) => $q->where(function ($query) use ($request) {
+            $query->where('nama', 'like', '%'.$request->input('cari').'%')
+                ->orWhere('nis', 'like', '%'.$request->input('cari').'%');
+        }))
+            ->orderByRaw('nis IS NULL, nis ASC')
+            ->orderBy('id')
             ->paginate(15)
             ->withQueryString();
 
@@ -39,7 +43,11 @@ public function edit(Alumni $alumnus)
 
     public function update(AlumniRequest $request, Alumni $alumnus): RedirectResponse
     {
-        $alumnus->update($request->validated());
+        $data = $request->validated();
+        if (blank($data['password'] ?? null)) {
+            unset($data['password']);
+        }
+        $alumnus->update($data);
 
         return redirect()->route('admin.alumni.index')->with('status', 'Data alumni berhasil diperbarui.');
     }

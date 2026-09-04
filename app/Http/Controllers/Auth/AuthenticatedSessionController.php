@@ -22,17 +22,22 @@ class AuthenticatedSessionController extends Controller
 
         $role = $request->string('role')->value();
 
-        return $role === 'admin'
-            ? redirect()->route('admin.dashboard')
-            : redirect()->route('mitra.dashboard');
+        return match ($role) {
+            'admin' => redirect()->route('admin.dashboard'),
+            'mitra' => redirect()->route('mitra.dashboard'),
+            'alumni' => redirect()->route('alumni.profile.edit'),
+            default => redirect()->route('login'),
+        };
     }
 
     public function destroy(Request $request): RedirectResponse
     {
-        // Logout dari guard mana pun yang sedang aktif (admin atau mitra)
-        $guard = Auth::guard('admin')->check() ? 'admin' : 'mitra';
+        $guard = collect(['admin', 'mitra', 'alumni'])
+            ->first(fn (string $guard) => Auth::guard($guard)->check());
 
-        Auth::guard($guard)->logout();
+        if ($guard) {
+            Auth::guard($guard)->logout();
+        }
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();

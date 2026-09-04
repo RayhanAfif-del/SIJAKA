@@ -104,7 +104,7 @@
 
                         {{-- Role Toggle --}}
                         <div class="rounded-xl border border-slate-200 bg-slate-50 p-1">
-                            <div class="grid grid-cols-2 gap-1">
+                            <div class="grid grid-cols-3 gap-1">
                                 <button type="button" @click="role = 'admin'"
                                     :class="role === 'admin' ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200' : 'text-slate-500 hover:text-slate-700 hover:bg-slate-100'"
                                     class="rounded-lg px-4 py-2.5 text-sm font-semibold transition-all duration-200">
@@ -114,6 +114,11 @@
                                     :class="role === 'mitra' ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200' : 'text-slate-500 hover:text-slate-700 hover:bg-slate-100'"
                                     class="rounded-lg px-4 py-2.5 text-sm font-semibold transition-all duration-200">
                                     Mitra Perusahaan
+                                </button>
+                                <button type="button" @click="role = 'alumni'"
+                                    :class="role === 'alumni' ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200' : 'text-slate-500 hover:text-slate-700 hover:bg-slate-100'"
+                                    class="rounded-lg px-2 py-2.5 text-sm font-semibold transition-all duration-200">
+                                    Alumni
                                 </button>
                             </div>
                         </div>
@@ -157,7 +162,7 @@
                                 <input id="remember_me" type="checkbox" name="remember" class="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-2 focus:ring-blue-500/20 transition cursor-pointer">
                                 Ingat saya
                             </label>
-                            <span class="text-xs font-medium text-slate-400 bg-slate-100 px-2 py-1 rounded-md" x-text="role === 'admin' ? 'Mode: Admin' : 'Mode: Mitra'"></span>
+                            <span class="text-xs font-medium text-slate-400 bg-slate-100 px-2 py-1 rounded-md" x-text="role === 'admin' ? 'Mode: Admin' : (role === 'mitra' ? 'Mode: Mitra' : 'Mode: Alumni')"></span>
                         </div>
 
                         {{-- Submit Button --}}
@@ -165,6 +170,7 @@
                             Masuk
                         </button>
                     </form>
+
 
                     <div class="mt-8 flex items-center justify-between text-sm pt-6 border-t border-slate-100">
                         <a href="{{ route('home') }}" class="text-slate-500 hover:text-blue-600 transition flex items-center gap-1">
