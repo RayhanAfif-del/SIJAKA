@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\AdminLoginRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,6 +31,19 @@ class AuthenticatedSessionController extends Controller
         };
     }
 
+    public function createAdmin(): \Illuminate\View\View
+    {
+        return view('auth.admin-login');
+    }
+
+    public function storeAdmin(AdminLoginRequest $request): RedirectResponse
+    {
+        $request->authenticate();
+        $request->session()->regenerate();
+
+        return redirect()->route('admin.dashboard');
+    }
+
     public function destroy(Request $request): RedirectResponse
     {
         $guard = collect(['admin', 'mitra', 'alumni'])
@@ -42,6 +56,6 @@ class AuthenticatedSessionController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('login');
+        return redirect()->route($guard === 'admin' ? 'admin.login' : 'login');
     }
 }

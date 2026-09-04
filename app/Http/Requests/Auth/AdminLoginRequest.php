@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
-class LoginRequest extends FormRequest
+class AdminLoginRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -19,23 +19,16 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'role' => ['required', 'in:mitra,alumni'],
             'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
         ];
     }
 
-    // Coba autentikasi ke guard sesuai role yang dipilih pada tab
     public function authenticate(): void
     {
         $this->ensureIsNotRateLimited();
 
-        $guard = $this->string('role')->value(); // 'mitra' | 'alumni'
-
-        if (! Auth::guard($guard)->attempt(
-            $this->only('email', 'password'),
-            $this->boolean('remember')
-        )) {
+        if (! Auth::guard('admin')->attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
@@ -53,7 +46,6 @@ class LoginRequest extends FormRequest
         }
 
         event(new Lockout($this));
-
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
         throw ValidationException::withMessages([
@@ -66,6 +58,6 @@ class LoginRequest extends FormRequest
 
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->string('email')).'|'.$this->ip());
+        return Str::transliterate(Str::lower($this->string('email')).'|'.$this->ip().'|admin');
     }
 }

@@ -65,4 +65,6 @@ return [
 
     'admin_login_path' => env('ADMIN_LOGIN_PATH', 'panel-sijaka'),
 
+    'admin_panel_login_path' => env('ADMIN_PANEL_LOGIN_PATH', 'panel-admin-sijaka'),
+
 ];

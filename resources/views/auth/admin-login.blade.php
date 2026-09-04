@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="id">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Login - SIJAKA</title>
+    <title>Panel Admin - SIJAKA</title>
 
     @php
         $pengaturanLogin = \App\Models\PengaturanWebsite::singleton();
@@ -25,10 +25,10 @@
         <section class="relative overflow-hidden bg-[radial-gradient(circle_at_top_left,_rgba(14,165,233,0.35),_transparent_32%),radial-gradient(circle_at_bottom_right,_rgba(59,130,246,0.28),_transparent_28%),linear-gradient(135deg,_#020617_0%,_#0f172a_48%,_#1e3a8a_100%)] px-6 py-8 sm:px-10 lg:px-12 lg:py-10 flex flex-col justify-between">
             <div class="relative z-10 max-w-xl pt-10 lg:pt-0">
                 <h1 class="mt-6 text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight text-white tracking-tight">
-                    Kelola layanan karier dengan tampilan yang lebih nyaman.
+                    Kelola sistem SIJAKA dengan aman dan terpusat.
                 </h1>
                 <p class="mt-5 max-w-lg text-sm sm:text-base leading-7 text-slate-300">
-                    Masuk untuk mengelola lowongan, profil mitra, artikel, galeri, dan pengaturan web utama dari satu dashboard yang rapi.
+                    Akses dashboard administrator untuk mengelola data alumni, mitra, lowongan, galeri, dan konfigurasi website utama dari satu panel yang rapi.
                 </p>
             </div>
 
@@ -74,7 +74,7 @@
             </div>
         </section>
 
-        {{-- Right Side: Login Form --}}
+        {{-- Right Side: Admin Login Form --}}
         <section class="relative flex items-center justify-center px-4 py-10 sm:px-6 lg:px-10 bg-slate-50">
             <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(59,130,246,0.08),_transparent_40%)]"></div>
 
@@ -86,8 +86,8 @@
                             <x-application-logo class="w-full h-full object-contain" />
                         </div>
                         <div>
-                            <p class="text-xs uppercase tracking-[0.2em] text-slate-400 font-semibold">Masuk ke aplikasi</p>
-                            <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Login SIJAKA</h2>
+                            <p class="text-xs uppercase tracking-[0.2em] text-slate-400 font-semibold">Akses Terbatas</p>
+                            <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Panel Admin</h2>
                         </div>
                     </div>
 
@@ -98,30 +98,13 @@
                         </div>
                     @endif
 
-                    <form method="POST" action="{{ route('login') }}" x-data="{ role: 'mitra' }" class="space-y-5">
+                    <form method="POST" action="{{ route('admin.login') }}" class="space-y-5">
                         @csrf
-                        <input type="hidden" name="role" x-model="role">
-
-                        {{-- Role Toggle --}}
-                        <div class="rounded-xl border border-slate-200 bg-slate-50 p-1">
-                            <div class="grid grid-cols-2 gap-1">
-                                <button type="button" @click="role = 'mitra'"
-                                    :class="role === 'mitra' ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200' : 'text-slate-500 hover:text-slate-700 hover:bg-slate-100'"
-                                    class="rounded-lg px-4 py-2.5 text-sm font-semibold transition-all duration-200">
-                                    Mitra Perusahaan
-                                </button>
-                                <button type="button" @click="role = 'alumni'"
-                                    :class="role === 'alumni' ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200' : 'text-slate-500 hover:text-slate-700 hover:bg-slate-100'"
-                                    class="rounded-lg px-2 py-2.5 text-sm font-semibold transition-all duration-200">
-                                    Alumni
-                                </button>
-                            </div>
-                        </div>
 
                         {{-- Email Input --}}
                         <div>
-                            <label for="email" class="mb-1.5 block text-sm font-medium text-slate-700">Email</label>
-                            <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus placeholder="Ini adalah email Anda""
+                            <label for="email" class="mb-1.5 block text-sm font-medium text-slate-700">Email Admin</label>
+                            <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="username" placeholder="Ini adalah email admin"
                                 class="w-full rounded-lg border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 text-sm transition placeholder:text-slate-400">
                             @error('email')
                                 <p class="mt-1.5 text-xs text-red-600 flex items-center gap-1">
@@ -133,15 +116,8 @@
 
                         {{-- Password Input --}}
                         <div>
-                            <div class="mb-1.5 flex items-center justify-between gap-3">
-                                <label for="password" class="block text-sm font-medium text-slate-700">Password</label>
-                                @if (Route::has('password.request'))
-                                    <a href="{{ route('password.request') }}" class="text-xs font-medium text-blue-600 hover:text-blue-700 hover:underline transition">
-                                        Lupa password?
-                                    </a>
-                                @endif
-                            </div>
-                            <input id="password" type="password" name="password" required placeholder="••••••••"
+                            <label for="password" class="mb-1.5 block text-sm font-medium text-slate-700">Password</label>
+                            <input id="password" type="password" name="password" required autocomplete="current-password" placeholder="••••••••"
                                 class="w-full rounded-lg border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 text-sm transition placeholder:text-slate-400">
                             @error('password')
                                 <p class="mt-1.5 text-xs text-red-600 flex items-center gap-1">
@@ -151,28 +127,28 @@
                             @enderror
                         </div>
 
-                        {{-- Remember Me & Mode Indicator --}}
+                        {{-- Remember Me --}}
                         <div class="flex items-center justify-between gap-4">
                             <label for="remember_me" class="flex items-center gap-2 text-sm text-slate-600 cursor-pointer">
                                 <input id="remember_me" type="checkbox" name="remember" class="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-2 focus:ring-blue-500/20 transition cursor-pointer">
                                 Ingat saya
                             </label>
-                            <span class="text-xs font-medium text-slate-400 bg-slate-100 px-2 py-1 rounded-md" x-text="role === 'mitra' ? 'Mode: Mitra' : 'Mode: Alumni'"></span>
                         </div>
 
                         {{-- Submit Button --}}
                         <button type="submit" class="w-full rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-slate-900/20 transition-all duration-200 hover:bg-slate-800 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-slate-900/20 active:scale-[0.98]">
-                            Masuk
+                            Masuk ke Panel Admin
                         </button>
                     </form>
 
-
-                    <div class="mt-8 flex items-center justify-between text-sm pt-6 border-t border-slate-100">
+                    <div class="mt-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-sm pt-6 border-t border-slate-100">
                         <a href="{{ route('home') }}" class="text-slate-500 hover:text-blue-600 transition flex items-center gap-1">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
                             Kembali ke beranda
                         </a>
-                        <span class="text-slate-400 font-medium">SIJAKA</span>
+                        <span class="text-xs text-slate-400 font-medium text-center sm:text-right">
+                            Halaman ini tidak ditautkan dari website publik.
+                        </span>
                     </div>
                 </div>
             </div>
