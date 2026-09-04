@@ -39,10 +39,6 @@
                                     Keluar
                                 </button>
                             </form>
-                        @else
-                            <a href="{{ route('login') }}" class="text-sm font-medium text-slate-600 hover:text-blue-600 transition">
-                                Masuk
-                            </a>
                         @endauth
                     </div>
                 </div>

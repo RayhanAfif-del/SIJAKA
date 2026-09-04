@@ -1,6 +1,6 @@
 @php
     $logoFiles = [
-        public_path('logo.svg'),
+        public_path('logo.png'),
         public_path('logo.png'),
         public_path('logo.webp'),
         public_path('logo.jpg'),

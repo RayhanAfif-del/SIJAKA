@@ -53,4 +53,6 @@ return [
 
     'password_timeout' => 10800,
 
+    'admin_login_path' => env('ADMIN_LOGIN_PATH', 'panel-sijaka'),
+
 ];
