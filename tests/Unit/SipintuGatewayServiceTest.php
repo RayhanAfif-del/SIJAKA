@@ -49,4 +49,32 @@ class SipintuGatewayServiceTest extends TestCase
                 && $request->data()['code'] === 'temporary-code';
         });
     }
+
+    public function test_ping_and_validate_client_requests(): void
+    {
+        config()->set([
+            'services.sipintu.base_url' => 'http://sipintu.test',
+            'services.sipintu.client_id' => 'app_06odsq2jqoh9',
+            'services.sipintu.client_secret' => 'sec_BGKzuDUeikzR6aDzWOCIw85lnqvGWn9K',
+        ]);
+
+        Http::fake([
+            'http://sipintu.test/api/v1/ping*' => Http::response(['status' => 'online']),
+            'http://sipintu.test/api/v1/validate-client' => Http::response(['status' => 'connected']),
+        ]);
+
+        app(SipintuGatewayService::class)->ping();
+        Http::assertSent(function ($request): bool {
+            return str_contains($request->url(), 'http://sipintu.test/api/v1/ping')
+                && $request->header('X-Client-ID')[0] === 'app_06odsq2jqoh9';
+        });
+
+        app(SipintuGatewayService::class)->validateClient();
+        Http::assertSent(function ($request): bool {
+            return $request->url() === 'http://sipintu.test/api/v1/validate-client'
+                && $request->method() === 'POST'
+                && $request->data()['client_id'] === 'app_06odsq2jqoh9'
+                && $request->data()['client_secret'] === 'sec_BGKzuDUeikzR6aDzWOCIw85lnqvGWn9K';
+        });
+    }
 }

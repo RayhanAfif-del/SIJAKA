@@ -46,6 +46,8 @@ return [
         'user_path' => env('SIPINTU_USER_PATH', '/api/v1/user'),
         'students_path' => env('SIPINTU_STUDENTS_PATH', '/api/v1/sijuna/students'),
         'teachers_path' => env('SIPINTU_TEACHERS_PATH', '/api/v1/sijuna/teachers'),
+        'ping_path' => env('SIPINTU_PING_PATH', '/api/v1/ping'),
+        'validate_client_path' => env('SIPINTU_VALIDATE_CLIENT_PATH', '/api/v1/validate-client'),
     ],
 
 ];

@@ -9,6 +9,7 @@ use App\Models\Galeri;
 use App\Models\Lowongan;
 use App\Models\Mitra;
 use App\Support\GaleriStack;
+use App\Services\SipintuAlumniSyncService;
 use App\Services\SipintuGatewayService;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Http\RedirectResponse;
@@ -17,26 +18,16 @@ use Illuminate\Support\Facades\Log;
 
 class DashboardController extends Controller
 {
-    public function syncSipintu(SipintuGatewayService $gateway): RedirectResponse
+    public function syncSipintu(SipintuAlumniSyncService $syncService): RedirectResponse
     {
         try {
-            $students = $gateway->students(['role' => 'alumni']);
-
-            if (! $students->successful()) {
-                throw new \RuntimeException('Gateway SiPintu mengembalikan respons gagal.');
-            }
-
-            $studentPayload = $students->json();
-            Cache::put('sipintu.students', $studentPayload, now()->addHour());
-
-            $studentRecords = $this->records($studentPayload, 'students');
-            $syncedAlumni = $this->syncAlumni($studentRecords);
-            $studentCount = count($studentRecords);
-            Cache::forever('sipintu.last_sync_at', now()->toIso8601String());
+            $result = $syncService->sync(deleteDummy: true);
+            $syncedAlumni = $result['synced'];
+            $totalReceived = $result['total_received'];
 
             return redirect()->route('admin.dashboard')->with(
                 'status',
-                "Sinkronisasi SiPintu berhasil. {$syncedAlumni} data alumni dari {$studentCount} siswa diterima."
+                "Sinkronisasi SiPintu berhasil. {$syncedAlumni} data alumni (classroom = null) dari {$totalReceived} data yang diterima berhasil disinkronkan."
             );
         } catch (\Throwable $exception) {
             Log::warning('SiPintu dashboard synchronization failed', [

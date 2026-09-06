@@ -33,6 +33,7 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
 
     Route::resource('artikel', ArtikelController::class);
     Route::resource('galeri', GaleriController::class);
+    Route::post('/alumni/sync-sipintu', [AlumniController::class, 'syncSipintu'])->name('alumni.sync-sipintu');
     Route::resource('alumni', AlumniController::class);
 
     Route::get('/pengaturan/beranda', [PengaturanBerandaController::class, 'edit'])->name('pengaturan-beranda.edit');

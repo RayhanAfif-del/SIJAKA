@@ -27,6 +27,21 @@ class SipintuGatewayService
         return $this->gatewayClient()->timeout(180)->get(config('services.sipintu.teachers_path'), $filters);
     }
 
+    public function ping(): Response
+    {
+        return $this->gatewayClient()->get(config('services.sipintu.ping_path', '/api/v1/ping'), [
+            'client_id' => config('services.sipintu.client_id'),
+        ]);
+    }
+
+    public function validateClient(): Response
+    {
+        return $this->client()->post(config('services.sipintu.validate_client_path', '/api/v1/validate-client'), [
+            'client_id' => config('services.sipintu.client_id'),
+            'client_secret' => config('services.sipintu.client_secret'),
+        ]);
+    }
+
     public function authorizationUrl(string $state): string
     {
         return rtrim((string) config('services.sipintu.base_url'), '/')

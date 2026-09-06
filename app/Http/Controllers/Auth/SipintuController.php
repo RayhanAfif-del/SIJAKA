@@ -53,26 +53,68 @@ class SipintuController extends Controller
             $email = (string) data_get($profile, 'email');
             abort_unless($email, 422, 'Profil SiPintu tidak memiliki email.');
 
-            foreach ([
-                'admin' => Admin::class,
-                'mitra' => Mitra::class,
-                'alumni' => Alumni::class,
-            ] as $guard => $model) {
-                $user = $model::where('email', $email)->first();
+            $nis = (string) (data_get($profile, 'nis')
+                ?? (is_numeric(data_get($profile, 'name')) ? data_get($profile, 'name') : ''));
 
-                if ($user) {
-                    Auth::guard($guard)->login($user, true);
-                    $request->session()->regenerate();
+            $matchedUser = null;
+            $matchedGuard = null;
 
-                    return redirect()->route(match ($guard) {
-                        'admin' => 'admin.dashboard',
-                        'mitra' => 'mitra.dashboard',
-                        default => 'alumni.profile.edit',
-                    });
+            if ($admin = Admin::where('email', $email)->first()) {
+                $matchedUser = $admin;
+                $matchedGuard = 'admin';
+            } elseif ($mitra = Mitra::where('email', $email)->first()) {
+                $matchedUser = $mitra;
+                $matchedGuard = 'mitra';
+            } else {
+                $alumniQuery = Alumni::where('email', $email);
+                if ($nis !== '') {
+                    $alumniQuery->orWhere('nis', $nis);
+                }
+                $alumnus = $alumniQuery->first();
+
+                if ($alumnus) {
+                    $matchedUser = $alumnus;
+                    $matchedGuard = 'alumni';
+
+                    // Update data profil alumni secara otomatis dari SiPintu
+                    $updates = [];
+                    $incomingName = data_get($profile, 'nama', data_get($profile, 'name'));
+                    if ($incomingName && ! is_numeric($incomingName)) {
+                        $updates['nama'] = $incomingName;
+                    }
+                    if ($email && $alumnus->email !== $email) {
+                        $updates['email'] = $email;
+                    }
+                    if (! empty($updates)) {
+                        $alumnus->update($updates);
+                    }
+                } else {
+                    // Auto-register alumni dari data SiPintu jika belum ada
+                    $matchedUser = Alumni::create([
+                        'nama' => data_get($profile, 'nama', data_get($profile, 'name', 'Alumni SiPintu')),
+                        'nis' => $nis !== '' ? $nis : Str::before($email, '@'),
+                        'email' => $email,
+                        'password' => 'password',
+                        'jurusan' => 'Belum ditentukan',
+                        'tahun_lulus' => (string) config('services.sipintu.default_graduation_year', date('Y')),
+                        'status' => 'Belum Bekerja',
+                    ]);
+                    $matchedGuard = 'alumni';
                 }
             }
 
-            return redirect()->route('login')->withErrors(['email' => 'Email SiPintu belum terdaftar sebagai akun SIJAKA.']);
+            if ($matchedUser && $matchedGuard) {
+                Auth::guard($matchedGuard)->login($matchedUser, true);
+                $request->session()->regenerate();
+
+                return redirect()->route(match ($matchedGuard) {
+                    'admin' => 'admin.dashboard',
+                    'mitra' => 'mitra.dashboard',
+                    default => 'alumni.profile.edit',
+                });
+            }
+
+            return redirect()->route('login')->withErrors(['email' => 'Akun SiPintu tidak dapat diproses di SIJAKA.']);
         } catch (\Throwable $exception) {
             Log::error('SiPintu SSO callback failed', ['exception' => $exception]);
 

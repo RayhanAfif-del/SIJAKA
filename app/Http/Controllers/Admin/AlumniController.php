@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AlumniRequest;
 use App\Models\Alumni;
+use App\Services\SipintuAlumniSyncService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class AlumniController extends Controller
 {
@@ -22,6 +24,27 @@ class AlumniController extends Controller
             ->withQueryString();
 
         return view('admin.alumni.index', compact('alumni'));
+    }
+
+    public function syncSipintu(SipintuAlumniSyncService $syncService): RedirectResponse
+    {
+        try {
+            $result = $syncService->sync(deleteDummy: true);
+            $syncedAlumni = $result['synced'];
+            $totalReceived = $result['total_received'];
+
+            return redirect()->route('admin.alumni.index')->with(
+                'status',
+                "Sinkronisasi SiPintu berhasil. {$syncedAlumni} data alumni (classroom = null) dari {$totalReceived} data yang diterima berhasil disinkronkan."
+            );
+        } catch (\Throwable $exception) {
+            Log::warning('SiPintu alumni synchronization failed', [
+                'message' => $exception->getMessage(),
+                'exception' => $exception,
+            ]);
+
+            return redirect()->route('admin.alumni.index')->with('error', 'Sinkronisasi SiPintu gagal. Periksa konfigurasi dan koneksi gateway.');
+        }
     }
 
     public function create()

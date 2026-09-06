@@ -98,7 +98,25 @@
                         </div>
                     @endif
 
-                    <form method="POST" action="{{ route('login') }}" x-data="{ role: 'mitra' }" class="space-y-5">
+                    {{-- SiPintu SSO Quick Access --}}
+                    <div class="mb-6">
+                        <a href="{{ route('sipintu.redirect') }}" class="group relative w-full flex items-center justify-center gap-3 px-5 py-3.5 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-700 hover:to-indigo-800 text-white rounded-xl font-semibold text-sm shadow-md hover:shadow-lg transition-all duration-200 active:scale-[0.98]">
+                            <svg class="w-5 h-5 text-white transition group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
+                            </svg>
+                            <span>Masuk dengan Akun SiPintu (SSO)</span>
+                        </a>
+                        <p class="mt-2 text-center text-xs text-slate-500">
+                            Password & data akun otomatis tersinkronisasi langsung dari aplikasi SiPintu.
+                        </p>
+                    </div>
+
+                    <div class="relative my-6 text-center">
+                        <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-slate-200"></div></div>
+                        <div class="relative"><span class="bg-white px-3 text-xs uppercase tracking-wider text-slate-400 font-medium">atau masuk dengan email / nis</span></div>
+                    </div>
+
+                    <form method="POST" action="{{ route('login') }}" x-data="{ role: '{{ old('role', 'mitra') }}' }" class="space-y-5">
                         @csrf
                         <input type="hidden" name="role" x-model="role">
 
@@ -118,10 +136,11 @@
                             </div>
                         </div>
 
-                        {{-- Email Input --}}
+                        {{-- Email / NIS Input --}}
                         <div>
-                            <label for="email" class="mb-1.5 block text-sm font-medium text-slate-700">Email</label>
-                            <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus placeholder="Ini adalah email Anda""
+                            <label for="email" class="mb-1.5 block text-sm font-medium text-slate-700" x-text="role === 'mitra' ? 'Email Perusahaan' : 'Email atau NIS Alumni'">Email</label>
+                            <input id="email" type="text" name="email" value="{{ old('email') }}" required autofocus
+                                :placeholder="role === 'mitra' ? 'nama@perusahaan.com' : 'NIS (contoh: 4439) atau email alumni'"
                                 class="w-full rounded-lg border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 text-sm transition placeholder:text-slate-400">
                             @error('email')
                                 <p class="mt-1.5 text-xs text-red-600 flex items-center gap-1">
@@ -141,8 +160,12 @@
                                     </a>
                                 @endif
                             </div>
-                            <input id="password" type="password" name="password" required placeholder="••••••••"
+                            <input id="password" type="password" name="password" required
+                                placeholder="••••••••"
                                 class="w-full rounded-lg border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 text-sm transition placeholder:text-slate-400">
+                            <p x-show="role === 'alumni'" class="mt-1.5 text-xs text-slate-400">
+                                Password default akun dari SiPintu adalah: <span class="font-mono font-medium text-slate-600">password</span>
+                            </p>
                             @error('password')
                                 <p class="mt-1.5 text-xs text-red-600 flex items-center gap-1">
                                     <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
