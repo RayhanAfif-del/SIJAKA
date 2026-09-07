@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\MitraController;
 use App\Http\Controllers\Admin\PengaturanBerandaController;
 use App\Http\Controllers\Admin\ProfilBkkController;
 use App\Http\Controllers\Admin\StrukturOrganisasiController;
+use App\Http\Controllers\Admin\TalentPoolController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function () {
@@ -30,6 +31,12 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
     Route::resource('lowongan', LowonganController::class)->only(['index', 'edit', 'update', 'destroy']);
     Route::patch('/lowongan/{lowongan}/approve', [LowonganController::class, 'approve'])->name('lowongan.approve');
     Route::patch('/lowongan/{lowongan}/reject', [LowonganController::class, 'reject'])->name('lowongan.reject');
+
+    Route::get('/talenta-alumni', [TalentPoolController::class, 'index'])->name('talent-pool.index');
+    Route::get('/talenta-alumni/{alumni}', [TalentPoolController::class, 'show'])->name('talent-pool.show');
+    Route::get('/talenta-alumni/{alumni}/dokumen/{document}', [TalentPoolController::class, 'download'])->name('talent-pool.document');
+    Route::patch('/talenta-alumni/{alumni}/approve', [TalentPoolController::class, 'approve'])->name('talent-pool.approve');
+    Route::patch('/talenta-alumni/{alumni}/reject', [TalentPoolController::class, 'reject'])->name('talent-pool.reject');
 
     Route::resource('artikel', ArtikelController::class);
     Route::resource('galeri', GaleriController::class);

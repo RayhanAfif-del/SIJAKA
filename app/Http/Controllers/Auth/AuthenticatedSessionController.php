@@ -26,7 +26,7 @@ class AuthenticatedSessionController extends Controller
         return match ($role) {
             'admin' => redirect()->route('admin.dashboard'),
             'mitra' => redirect()->route('mitra.dashboard'),
-            'alumni' => redirect()->route('alumni.profile.edit'),
+            'alumni' => redirect()->route('alumni.dashboard'),
             default => redirect()->route('login'),
         };
     }
@@ -57,5 +57,14 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerateToken();
 
         return redirect()->route($guard === 'admin' ? 'admin.login' : 'login');
+    }
+
+    public function destroyAlumni(Request $request): RedirectResponse
+    {
+        Auth::guard('alumni')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('login');
     }
 }

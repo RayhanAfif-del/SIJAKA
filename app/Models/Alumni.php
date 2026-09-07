@@ -22,6 +22,7 @@ class Alumni extends Authenticatable
         'status',
         'email',
         'password',
+        'foto_path',
         'headline',
         'ringkasan',
         'keahlian',
@@ -29,6 +30,7 @@ class Alumni extends Authenticatable
         'cv_path',
         'portfolio_path',
         'is_visible',
+        'talent_approval_status',
     ];
 
     protected $hidden = ['password', 'remember_token'];

@@ -21,6 +21,7 @@ class ProfileRequest extends FormRequest
             'cv' => ['nullable', 'file', 'mimes:pdf,doc,docx', 'max:5120'],
             'portfolio' => ['nullable', 'file', 'mimes:pdf,zip', 'max:10240'],
             'is_visible' => ['nullable', 'boolean'],
+            'foto' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ];
     }
 }

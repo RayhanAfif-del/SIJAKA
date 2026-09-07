@@ -147,7 +147,7 @@
                             Kembali ke beranda
                         </a>
                         <span class="text-xs text-slate-400 font-medium text-center sm:text-right">
-                            Halaman ini tidak ditautkan dari website publik.
+                            SIJAKA
                         </span>
                     </div>
                 </div>

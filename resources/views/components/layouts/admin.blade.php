@@ -122,6 +122,10 @@
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"/></svg>
                     Alumni
                 </x-admin.nav-link>
+                <x-admin.nav-link href="{{ route('admin.talent-pool.index') }}" :active="request()->routeIs('admin.talent-pool.*')">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2m9-10a4 4 0 100-8 4 4 0 000 8zm7 4v-2a4 4 0 00-3-3.87m-1-4.13a4 4 0 010-7.75"/></svg>
+                    Talenta Alumni
+                </x-admin.nav-link>
 
                 <div class="pt-4 pb-1">
                     <p class="px-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500">Lainnya</p>

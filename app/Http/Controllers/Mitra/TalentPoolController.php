@@ -16,6 +16,7 @@ class TalentPoolController extends Controller
     {
         $alumni = Alumni::query()
             ->where('is_visible', true)
+            ->where('talent_approval_status', 'disetujui')
             ->whereNotNull('email')
             ->when($request->filled('cari'), function ($query) use ($request) {
                 $term = '%'.$request->string('cari')->trim().'%';
@@ -37,7 +38,7 @@ class TalentPoolController extends Controller
 
     public function requestInterview(Request $request, Alumni $alumni): RedirectResponse
     {
-        abort_unless($alumni->is_visible, 404);
+        abort_unless($alumni->is_visible && $alumni->talent_approval_status === 'disetujui', 404);
 
         $data = $request->validate([
             'message' => ['nullable', 'string', 'max:2000'],

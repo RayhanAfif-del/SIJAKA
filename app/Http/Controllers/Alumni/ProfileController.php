@@ -4,27 +4,33 @@ namespace App\Http\Controllers\Alumni;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Alumni\ProfileRequest;
-use App\Models\InterviewRequest;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ProfileController extends Controller
 {
     public function edit()
     {
         $alumni = Auth::guard('alumni')->user();
-        $requests = $alumni->interviewRequests()->with('mitra', 'lowongan')->latest()->get();
-
-        return view('alumni.profile.edit', compact('alumni', 'requests'));
+        return view('alumni.profile.edit', compact('alumni'));
     }
 
     public function update(ProfileRequest $request): RedirectResponse
     {
         $alumni = Auth::guard('alumni')->user();
-        $data = $request->safe()->except(['cv', 'portfolio']);
-        $data['is_visible'] = $request->boolean('is_visible');
+        $data = $request->safe()->except(['cv', 'portfolio', 'foto']);
+        $wantsPublication = $request->boolean('is_visible');
+        $data['is_visible'] = false;
+        $data['talent_approval_status'] = $wantsPublication ? 'menunggu' : 'ditolak';
+
+        if ($request->hasFile('foto')) {
+            if ($alumni->foto_path) {
+                Storage::disk('public')->delete($alumni->foto_path);
+            }
+            $data['foto_path'] = $request->file('foto')->store('alumni/'.$alumni->id, 'public');
+        }
 
         foreach (['cv', 'portfolio'] as $document) {
             if (! $request->hasFile($document)) {
@@ -40,7 +46,11 @@ class ProfileController extends Controller
 
         $alumni->update($data);
 
-        return back()->with('status', 'Profil dan dokumen berhasil diperbarui.');
+        $message = $wantsPublication
+            ? 'Profil berhasil diperbarui dan menunggu persetujuan admin sebelum dipublikasikan.'
+            : 'Profil berhasil diperbarui dan tidak ditampilkan di Talent Pool.';
+
+        return back()->with('status', $message);
     }
 
     public function respond(InterviewRequest $interviewRequest, string $status): RedirectResponse
@@ -53,7 +63,7 @@ class ProfileController extends Controller
         return back()->with('status', 'Permintaan wawancara berhasil diperbarui.');
     }
 
-    public function download(string $document): Response
+    public function download(string $document): StreamedResponse
     {
         abort_unless(in_array($document, ['cv', 'portfolio'], true), 404);
         $alumni = Auth::guard('alumni')->user();

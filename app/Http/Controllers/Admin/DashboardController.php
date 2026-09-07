@@ -46,6 +46,15 @@ class DashboardController extends Controller
             'totalLowongan' => Lowongan::count(),
             'totalArtikel' => Artikel::count(),
             'totalAlumni' => Alumni::count(),
+            'talentaMenunggu' => Alumni::where('talent_approval_status', 'menunggu')
+                ->where(function ($query) {
+                    $query->whereNotNull('headline')
+                        ->orWhereNotNull('ringkasan')
+                        ->orWhereNotNull('keahlian')
+                        ->orWhereNotNull('cv_path')
+                        ->orWhereNotNull('portfolio_path');
+                })
+                ->count(),
             'galeriStacks' => GaleriStack::group(
                 Galeri::latest('tanggal')->latest('id')->take(24)->get()
             )->take(6)->values(),

@@ -24,7 +24,7 @@
                     Beranda
                 </a>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                <a href="{{ route('artikel.index') }}" class="hover:text-white transition">Artikel</a>
+                <a href="{{ route('artikel.index') }}" class="hover:text-white transition">Artikel Dunia Kerja</a>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                 <span class="text-white font-medium truncate max-w-[220px] sm:max-w-md">{{ $artikel->judul }}</span>
             </nav>

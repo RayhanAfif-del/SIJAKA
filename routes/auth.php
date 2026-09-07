@@ -21,4 +21,5 @@ Route::middleware('guest:admin,mitra,alumni')->group(function () {
 
 Route::middleware('auth:admin,mitra,alumni')->group(function () {
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+    Route::post('alumni/logout', [AuthenticatedSessionController::class, 'destroyAlumni'])->name('alumni.logout');
 });

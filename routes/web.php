@@ -8,6 +8,7 @@ use App\Http\Controllers\Public\LowonganController;
 use App\Http\Controllers\Public\ProfilController;
 use App\Http\Controllers\Public\StatistikController;
 use App\Http\Controllers\Public\StrukturOrganisasiController;
+use App\Http\Controllers\Public\TalentaController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [BerandaController::class, 'index'])->name('home');
@@ -24,6 +25,9 @@ Route::get('/artikel/{artikel}', [ArtikelController::class, 'show'])->name('arti
 Route::get('/galeri', [GaleriController::class, 'index'])->name('galeri.index');
 
 Route::get('/statistik', [StatistikController::class, 'index'])->name('statistik.index');
+Route::get('/talenta', [TalentaController::class, 'index'])->name('talenta.index');
+Route::get('/talenta/{alumni}/dokumen/{document}', [TalentaController::class, 'download'])->name('talenta.document');
+Route::get('/talenta/{alumni}', [TalentaController::class, 'show'])->name('talenta.show');
 
 Route::get('/kontak', [KontakController::class, 'index'])->name('kontak.index');
 
