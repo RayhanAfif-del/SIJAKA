@@ -127,7 +127,7 @@
                     @endif
 
                     {{-- Action Button --}}
-                    <a href="{{ route('talenta.show', $item) }}" class="mt-5 w-full inline-flex items-center justify-center gap-2 rounded-xl bg-slate-50 hover:bg-[#024CD4] hover:text-white text-slate-700 text-sm font-semibold py-2.5 transition-all duration-200 group/btn">
+                    <a href="{{ route('talenta.show', $item) }}" class="mt-5 w-full inline-flex items-center justify-center gap-2 hover:bg-blue-700 bg-blue-600 text-white text-sm font-semibold py-3 rounded-xl transition-all duration-200 shadow-lg shadow-slate-900/10 hover:shadow-blue-600/20">
                         Lihat Profil Lengkap
                         <svg class="w-4 h-4 transition-transform group-hover/btn:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
                     </a>

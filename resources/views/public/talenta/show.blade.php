@@ -209,7 +209,7 @@
                 </div>
 
                 {{-- Back Link --}}
-                <a href="{{ route('talenta.index') }}" class="flex items-center justify-center gap-2 w-full py-3 text-sm font-semibold text-slate-600 hover:text-[#024CD4] transition-colors">
+                <a href="{{ route('talenta.index') }}" class="w-full inline-flex items-center justify-center gap-2 hover:bg-blue-700 bg-blue-600 text-white text-sm font-semibold py-3 rounded-xl transition-all duration-200 shadow-lg shadow-slate-900/10 hover:shadow-blue-600/20">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
                     Kembali ke Direktori Talenta
                 </a>

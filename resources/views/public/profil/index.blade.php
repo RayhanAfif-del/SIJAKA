@@ -129,34 +129,79 @@
             <p class="text-gray-500 mt-3 max-w-2xl mx-auto">Dipimpin oleh tenaga profesional yang berdedikasi untuk menjembatani siswa dan alumni dengan dunia industri.</p>
         </div>
         
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6" data-aos="fade-up" data-aos-delay="100">
-            @forelse ($struktur as $item)
-                <div class="group bg-white rounded-2xl border border-gray-100 p-6 text-center hover:shadow-xl hover:border-blue-100 hover:-translate-y-1 transition-all duration-300">
+        <div
+            class="flex flex-wrap justify-center gap-6 max-w-5xl mx-auto"
+            data-aos="fade-up"
+            data-aos-delay="100"
+        >
+            @forelse ($struktur as $index => $item)
+
+                <div class="group bg-white rounded-2xl border border-gray-100 p-6 text-center hover:shadow-xl hover:border-blue-100 hover:-translate-y-1 transition-all duration-300 w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]">
+
                     <div class="relative w-24 h-24 mx-auto mb-5">
                         <div class="absolute inset-0 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-full transform group-hover:scale-105 transition-transform duration-300"></div>
+
                         <div class="relative w-full h-full rounded-full overflow-hidden ring-4 ring-white shadow-sm">
+
                             @if ($item->foto)
-                                <img src="{{ Storage::url($item->foto) }}" class="w-full h-full object-cover" alt="{{ $item->nama }}">
+
+                                <img
+                                    src="{{ Storage::url($item->foto) }}"
+                                    class="w-full h-full object-cover"
+                                    alt="{{ $item->nama }}"
+                                >
+
                             @else
+
                                 <div class="w-full h-full flex items-center justify-center text-blue-600 font-bold text-xl bg-blue-50">
-                                    {{ collect(explode(' ', $item->nama))->map(fn ($w) => strtoupper($w[0] ?? ''))->take(2)->implode('') }}
+                                    {{ collect(explode(' ', $item->nama))
+                                        ->map(fn ($w) => strtoupper($w[0] ?? ''))
+                                        ->take(2)
+                                        ->implode('') }}
                                 </div>
+
                             @endif
+
                         </div>
                     </div>
-                    <h3 class="font-bold text-gray-900 text-lg mb-2 group-hover:text-blue-700 transition-colors">{{ $item->nama }}</h3>
+
+                    <h3 class="font-bold text-gray-900 text-lg mb-2 group-hover:text-blue-700 transition-colors">
+                        {{ $item->nama }}
+                    </h3>
+
                     <span class="text-xs font-semibold text-blue-700 bg-blue-50 inline-block px-3 py-1.5 rounded-full">
                         {{ $item->jabatan }}
                     </span>
+
                 </div>
+
             @empty
-                <div class="col-span-full py-12 text-center bg-gray-50 rounded-2xl border border-dashed border-gray-200">
-                    <svg class="w-12 h-12 text-gray-300 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-                    <p class="text-gray-500 font-medium">Data struktur organisasi belum tersedia.</p>
+
+                <div class="w-full py-12 text-center bg-gray-50 rounded-2xl border border-dashed border-gray-200">
+
+                    <svg
+                        class="w-12 h-12 text-gray-300 mx-auto mb-3"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="1.5"
+                            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                        />
+                    </svg>
+
+                    <p class="text-gray-500 font-medium">
+                        Data struktur organisasi belum tersedia.
+                    </p>
+
                 </div>
+
             @endforelse
         </div>
-        
+
         {{-- Tombol Lihat Halaman Penuh (Diperbaiki) --}}
         @if (isset($struktur) && $struktur->count() > 0)
             <div class="text-center mt-10" data-aos="fade-up">

@@ -12,7 +12,7 @@ class ProfilController extends Controller
     {
         return view('public.profil.index', [
             'profilBkk' => ProfilBkk::singleton(),
-            'struktur' => StrukturOrganisasi::all(),
+            'struktur' => StrukturOrganisasi::take(3)->get(),
         ]);
     }
 }
