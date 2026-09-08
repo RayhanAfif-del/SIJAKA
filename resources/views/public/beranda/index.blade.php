@@ -88,35 +88,37 @@
     </section>
 
     {{-- ============================================ --}}
-    {{-- INFINITE MARQUEE - LOGO MITRA                --}}
+    {{-- LOGO MITRA PERUSAHAAN (STATIC GRID)          --}}
     {{-- ============================================ --}}
-    <section class="bg-white border-b border-gray-100 py-10 lg:py-14 overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 text-center">
-            <p class="text-xs font-bold text-gray-400 uppercase tracking-[0.2em]" data-aos="fade-up">
-                Dipercaya oleh perusahaan terkemuka
-            </p>
-        </div>
-        
-        <div class="relative">
-            {{-- Fade edges --}}
-            <div class="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
-            <div class="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
+    <section class="bg-white border-b border-gray-100 py-12 lg:py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mx-auto mb-10 text-center" data-aos="fade-up">
+                <p class="text-xs font-bold text-gray-400 uppercase tracking-[0.2em] mb-2">
+                    Dipercaya oleh perusahaan terkemuka
+                </p>
+                <h3 class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
+                    Mitra Industri & Perusahaan Terpercaya
+                </h3>
+            </div>
             
-            <div class="marquee flex gap-16 items-center">
-                {{-- Duplikasi logo untuk seamless loop --}}
-                @foreach ([$mitra, $mitra] as $group)
-                    @foreach ($group as $item)
-                        <div class="flex-shrink-0 w-40 h-20 flex items-center justify-center transition-transform duration-300 hover:scale-110">
-                            @if ($item->logo)
-                                <img src="{{ Storage::url($item->logo) }}" class="max-w-full max-h-full object-contain" alt="{{ $item->nama_perusahaan }}">
-                            @else
-                                <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
-                                    <span class="text-lg font-bold text-gray-400">{{ strtoupper(substr($item->nama_perusahaan, 0, 2)) }}</span>
-                                </div>
-                            @endif
-                        </div>
-                    @endforeach
-                @endforeach
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 sm:gap-8 lg:gap-10 items-center justify-items-center" data-aos="fade-up">
+                @forelse ($mitra as $item)
+                    <div class="w-full h-20 sm:h-24 flex items-center justify-center p-3 rounded-xl transition-all duration-300 hover:scale-105" title="{{ $item->nama_perusahaan }}">
+                        @if ($item->logo)
+                            <img src="{{ Storage::url($item->logo) }}" 
+                                 class="max-h-12 sm:max-h-14 max-w-full object-contain" 
+                                 alt="{{ $item->nama_perusahaan }}">
+                        @else
+                            <div class="w-14 h-14 rounded-xl bg-gray-100 flex items-center justify-center text-gray-400 font-bold text-base">
+                                {{ strtoupper(substr($item->nama_perusahaan, 0, 2)) }}
+                            </div>
+                        @endif
+                    </div>
+                @empty
+                    <div class="col-span-full py-8 text-center text-gray-400 text-sm">
+                        Belum ada data mitra perusahaan.
+                    </div>
+                @endforelse
             </div>
         </div>
     </section>
@@ -896,16 +898,6 @@
     {{-- ============================================ --}}
     @push('styles')
     <style>
-        /* Infinite Marquee Animation */
-        @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-        .marquee {
-            animation: marquee 30s linear infinite;
-            width: max-content;
-            will-change: transform;
-        }
 
         /* Floating Animation */
         @keyframes float {

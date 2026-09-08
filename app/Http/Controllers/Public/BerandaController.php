@@ -20,7 +20,7 @@ class BerandaController extends Controller
         return view('public.beranda.index', [
             'profilBkk' => ProfilBkk::singleton(),
             'pengaturanWebsite' => PengaturanWebsite::singleton(),
-            'mitra' => Mitra::latest()->take(8)->get(),
+            'mitra' => Mitra::latest()->get(),
             'lowonganUnggulan' => Lowongan::disetujui()->unggulan()->latest()->take(3)->get(),
             'lowonganTerbaru' => Lowongan::disetujui()->latest()->take(4)->get(),
             'artikelTerbaru' => Artikel::latest()->take(3)->get(),
