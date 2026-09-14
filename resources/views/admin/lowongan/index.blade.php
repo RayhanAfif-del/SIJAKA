@@ -43,7 +43,7 @@
                     };
                 @endphp
                 <a href="{{ is_null($value) ? route('admin.lowongan.index') : route('admin.lowongan.index', ['status' => $value]) }}"
-                   class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition
+                   class="inline-flex min-h-10 items-center gap-1.5 px-3 py-2 text-sm font-medium rounded-lg transition sm:min-h-9 sm:py-1.5 sm:text-xs
                           {{ $isActive 
                               ? 'bg-slate-900 text-white shadow-sm' 
                               : 'text-slate-600 hover:bg-slate-100' }}">
@@ -139,14 +139,14 @@
 
                             {{-- Aksi --}}
                             <td class="px-5 py-4">
-                                <div class="flex items-center justify-end gap-1.5">
+                                <div class="flex flex-wrap items-center justify-end gap-1.5">
                                     {{-- Setujui (hanya jika menunggu) --}}
                                     @if ($item->status === 'menunggu')
                                         <form method="POST" action="{{ route('admin.lowongan.approve', $item) }}" onsubmit="return confirm('Setujui lowongan ini?')" class="inline">
                                             @csrf
                                             @method('PATCH')
                                             <button type="submit" 
-                                                    class="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs font-medium text-emerald-600 bg-emerald-50 border border-emerald-200 rounded-lg hover:bg-emerald-100 hover:border-emerald-300 transition"
+                                                    class="table-action text-emerald-600 bg-emerald-50 border-emerald-200 hover:bg-emerald-100 hover:border-emerald-300"
                                                     title="Setujui lowongan">
                                                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
@@ -160,7 +160,7 @@
                                             @csrf
                                             @method('PATCH')
                                             <button type="submit" 
-                                                    class="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs font-medium text-orange-600 bg-orange-50 border border-orange-200 rounded-lg hover:bg-orange-100 hover:border-orange-300 transition"
+                                                    class="table-action text-orange-600 bg-orange-50 border-orange-200 hover:bg-orange-100 hover:border-orange-300"
                                                     title="Tolak lowongan">
                                                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
@@ -172,7 +172,7 @@
 
                                     {{-- Edit --}}
                                     <a href="{{ route('admin.lowongan.edit', $item) }}" 
-                                       class="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs font-medium text-blue-600 bg-blue-50 border border-blue-200 rounded-lg hover:bg-blue-100 hover:border-blue-300 transition"
+                                       class="table-action text-blue-600 bg-blue-50 border-blue-200 hover:bg-blue-100 hover:border-blue-300"
                                        title="Edit lowongan">
                                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
@@ -185,7 +185,7 @@
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" 
-                                                class="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs font-medium text-red-600 bg-red-50 border border-red-200 rounded-lg hover:bg-red-100 hover:border-red-300 transition"
+                                                class="table-action text-red-600 bg-red-50 border-red-200 hover:bg-red-100 hover:border-red-300"
                                                 title="Hapus lowongan">
                                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>

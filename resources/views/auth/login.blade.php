@@ -22,12 +22,12 @@
     <div class="min-h-screen grid lg:grid-cols-[1.15fr_0.85fr]">
         
         {{-- Left Side: Branding & Illustration --}}
-        <section class="relative overflow-hidden bg-[radial-gradient(circle_at_top_left,_rgba(14,165,233,0.35),_transparent_32%),radial-gradient(circle_at_bottom_right,_rgba(59,130,246,0.28),_transparent_28%),linear-gradient(135deg,_#020617_0%,_#0f172a_48%,_#1e3a8a_100%)] px-6 py-8 sm:px-10 lg:px-12 lg:py-10 flex flex-col justify-between">
-            <div class="relative z-10 max-w-xl pt-10 lg:pt-0">
-                <h1 class="mt-6 text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight text-white tracking-tight">
+        <section class="relative hidden overflow-hidden bg-[radial-gradient(circle_at_top_left,_rgba(14,165,233,0.35),_transparent_32%),radial-gradient(circle_at_bottom_right,_rgba(59,130,246,0.28),_transparent_28%),linear-gradient(135deg,_#020617_0%,_#0f172a_48%,_#1e3a8a_100%)] px-5 py-7 sm:px-10 sm:py-8 lg:flex lg:flex-col lg:justify-between lg:px-12 lg:py-10">
+            <div class="relative z-10 max-w-xl pt-2 sm:pt-6 lg:pt-0">
+                <h1 class="mt-4 text-3xl sm:text-5xl lg:text-6xl font-bold leading-tight text-white tracking-tight">
                     Kelola layanan karier dengan tampilan yang lebih nyaman.
                 </h1>
-                <p class="mt-5 max-w-lg text-sm sm:text-base leading-7 text-slate-300">
+                <p class="mt-4 max-w-lg text-sm sm:text-base leading-6 sm:leading-7 text-slate-300">
                     Masuk untuk mengelola lowongan, profil mitra, artikel, galeri, dan pengaturan web utama dari satu dashboard yang rapi.
                 </p>
             </div>
@@ -75,12 +75,12 @@
         </section>
 
         {{-- Right Side: Login Form --}}
-        <section class="relative flex items-center justify-center px-4 py-10 sm:px-6 lg:px-10 bg-slate-50">
+        <section class="relative flex items-center justify-center px-4 py-6 sm:px-6 sm:py-10 lg:px-10 bg-slate-50">
             <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(59,130,246,0.08),_transparent_40%)]"></div>
 
             <div class="relative z-10 w-full max-w-md">
                 {{-- Card Form --}}
-                <div class="bg-white rounded-2xl shadow-xl border border-slate-200/60 p-6 sm:p-8 lg:p-10">
+                <div class="bg-white rounded-2xl shadow-xl border border-slate-200/60 p-5 sm:p-8 lg:p-10">
                     <div class="flex items-center gap-3 mb-8">
                         <div class="w-12 h-12 rounded-xl flex items-center justify-center overflow-hidden bg-transparent">
                             <x-application-logo class="w-full h-full object-contain" />
@@ -100,7 +100,7 @@
 
                     {{-- SiPintu SSO Quick Access --}}
                     <div class="mb-6">
-                        <a href="{{ route('sipintu.redirect') }}" class="group relative w-full flex items-center justify-center gap-3 px-5 py-3.5 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-700 hover:to-indigo-800 text-white rounded-xl font-semibold text-sm shadow-md hover:shadow-lg transition-all duration-200 active:scale-[0.98]">
+                        <a href="{{ route('sipintu.redirect') }}" class="group relative flex min-h-12 w-full items-center justify-center gap-3 px-5 py-3 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-700 hover:to-indigo-800 text-white rounded-xl font-semibold text-sm shadow-md hover:shadow-lg transition-all duration-200 active:scale-[0.98] text-center">
                             <svg class="w-5 h-5 text-white transition group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
                             </svg>
@@ -125,12 +125,12 @@
                             <div class="grid grid-cols-2 gap-1">
                                 <button type="button" @click="role = 'mitra'"
                                     :class="role === 'mitra' ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200' : 'text-slate-500 hover:text-slate-700 hover:bg-slate-100'"
-                                    class="rounded-lg px-4 py-2.5 text-sm font-semibold transition-all duration-200">
+                                    class="min-h-11 rounded-lg px-4 py-2.5 text-sm font-semibold transition-all duration-200">
                                     Mitra Perusahaan
                                 </button>
                                 <button type="button" @click="role = 'alumni'"
                                     :class="role === 'alumni' ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200' : 'text-slate-500 hover:text-slate-700 hover:bg-slate-100'"
-                                    class="rounded-lg px-2 py-2.5 text-sm font-semibold transition-all duration-200">
+                                    class="min-h-11 rounded-lg px-2 py-2.5 text-sm font-semibold transition-all duration-200">
                                     Alumni
                                 </button>
                             </div>
@@ -173,7 +173,7 @@
 
                         {{-- Remember Me & Mode Indicator --}}
                         <div class="flex items-center justify-between gap-4">
-                            <label for="remember_me" class="flex items-center gap-2 text-sm text-slate-600 cursor-pointer">
+                            <label for="remember_me" class="flex min-h-11 items-center gap-2 text-sm text-slate-600 cursor-pointer">
                                 <input id="remember_me" type="checkbox" name="remember" class="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-2 focus:ring-blue-500/20 transition cursor-pointer">
                                 Ingat saya
                             </label>
@@ -181,7 +181,7 @@
                         </div>
 
                         {{-- Submit Button --}}
-                        <button type="submit" class="w-full rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-slate-900/20 transition-all duration-200 hover:bg-slate-800 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-slate-900/20 active:scale-[0.98]">
+                        <button type="submit" class="min-h-11 w-full rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-slate-900/20 transition-all duration-200 hover:bg-slate-800 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-slate-900/20 active:scale-[0.98]">
                             Masuk
                         </button>
                     </form>

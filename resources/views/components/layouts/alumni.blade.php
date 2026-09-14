@@ -39,7 +39,7 @@
                 <div class="pt-4 pb-1 mt-auto"><p class="px-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500">Lainnya</p></div>
                 <form method="POST" action="{{ route('alumni.logout') }}">
                     @csrf
-                    <button type="submit" class="group w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-300 hover:bg-red-500/10 hover:text-red-400 transition-all duration-200">
+                    <button type="submit" class="group w-full flex min-h-11 items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-300 hover:bg-red-500/10 hover:text-red-400 transition-all duration-200">
                         <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
                         <span>Keluar</span>
                     </button>
@@ -50,7 +50,7 @@
         <div class="flex-1 lg:ml-64 min-w-0 flex flex-col">
             <header class="h-16 bg-white/80 backdrop-blur-md border-b border-slate-200/80 flex items-center justify-between px-4 sm:px-6 sticky top-0 z-10">
                 <div class="flex items-center gap-3">
-                    <button @click="sidebarOpen = !sidebarOpen" class="lg:hidden p-2 -ml-2 text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition" aria-label="Buka menu navigasi">
+                    <button @click="sidebarOpen = !sidebarOpen" class="lg:hidden -ml-2 inline-flex h-11 w-11 items-center justify-center rounded-lg text-slate-500 hover:text-slate-700 hover:bg-slate-100 transition" aria-label="Buka menu navigasi" :aria-expanded="sidebarOpen">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                     </button>
                     <div class="hidden sm:block"><p class="text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-400">Dashboard</p><p class="text-sm font-semibold text-slate-800 leading-tight">{{ $title ?? 'Dashboard Alumni' }}</p></div>

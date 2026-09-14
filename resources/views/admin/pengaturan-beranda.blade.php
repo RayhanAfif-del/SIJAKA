@@ -3,13 +3,13 @@
     {{-- Header --}}
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
         <div>
-            <div class="flex items-center gap-2 text-xs text-slate-500 mb-2">
+            <div class="flex items-center gap-2 text-xs text-slate-500 mb-2" aria-label="Breadcrumb">
                 <a href="{{ route('admin.dashboard') }}" class="hover:text-slate-700 transition">Dashboard</a>
-                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <svg class="hidden h-3 w-3 sm:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
                 </svg>
-                <span class="text-slate-700 font-medium">Pengaturan</span>
-                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <span class="hidden font-medium text-slate-700 sm:inline">Pengaturan</span>
+                <svg class="hidden h-3 w-3 sm:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
                 </svg>
                 <span class="text-slate-700 font-medium">Beranda</span>
@@ -17,7 +17,7 @@
             <h1 class="text-2xl font-semibold text-slate-900 tracking-tight">Pengaturan Beranda</h1>
             <p class="text-sm text-slate-500 mt-1">Atur teks utama, tombol, dan identitas singkat yang tampil di halaman utama web.</p>
         </div>
-        <a href="{{ route('admin.dashboard') }}" class="inline-flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-200 hover:bg-slate-50 rounded-lg transition">
+        <a href="{{ route('admin.dashboard') }}" class="inline-flex min-h-11 items-center justify-center gap-1.5 px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-200 hover:bg-slate-50 rounded-lg transition sm:w-auto">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
             </svg>
@@ -29,10 +29,10 @@
         @csrf
         @method('PUT')
 
-        <div class="grid lg:grid-cols-3 gap-5 max-w-7xl">
+        <div class="grid gap-4 sm:gap-5 md:grid-cols-2 lg:grid-cols-3 max-w-7xl">
 
             {{-- Form Panel --}}
-            <div class="lg:col-span-2 space-y-5">
+            <div class="md:col-span-2 lg:col-span-2 space-y-5">
 
                 {{-- Section 1: Identitas Website --}}
                 <div class="bg-white border border-slate-200/70 rounded-xl shadow-sm overflow-hidden">
@@ -51,7 +51,7 @@
                         </div>
                     </div>
 
-                    <div class="p-5 sm:p-6 space-y-5">
+                    <div class="p-4 sm:p-6 space-y-5">
                         {{-- Site Name --}}
                         <div>
                             <label class="flex items-center gap-1.5 text-sm font-medium text-slate-700 mb-1.5">
@@ -84,8 +84,8 @@
                                 </svg>
                                 Icon SIJAKA / Favicon
                             </label>
-                            <div class="flex flex-col sm:flex-row sm:items-start gap-4 p-4 rounded-lg border border-dashed border-slate-200 bg-slate-50/50">
-                                <div class="w-16 h-16 rounded-full border border-slate-200 bg-white flex items-center justify-center overflow-hidden shrink-0 shadow-sm">
+                            <div class="flex flex-col items-start gap-4 p-4 rounded-lg border border-dashed border-slate-200 bg-slate-50/50 sm:flex-row sm:items-start">
+                                <div class="h-16 w-16 rounded-full border border-slate-200 bg-white flex items-center justify-center overflow-hidden shrink-0 shadow-sm">
                                     @if ($pengaturanWebsite->site_icon)
                                         <img src="{{ \Illuminate\Support\Facades\Storage::url($pengaturanWebsite->site_icon) }}" alt="Icon SIJAKA" class="w-full h-full rounded-full object-cover">
                                     @else
@@ -120,7 +120,7 @@
                         </div>
                     </div>
 
-                    <div class="p-5 sm:p-6 space-y-5">
+                    <div class="p-4 sm:p-6 space-y-5">
                         {{-- Hero Image --}}
                         <div>
                             <label class="flex items-center gap-1.5 text-sm font-medium text-slate-700 mb-1.5">
@@ -129,8 +129,8 @@
                                 </svg>
                                 Foto Beranda Utama
                             </label>
-                            <div class="flex flex-col sm:flex-row sm:items-start gap-4 p-4 rounded-lg border border-dashed border-slate-200 bg-slate-50/50">
-                                <div class="w-full sm:w-64 h-40 rounded-xl border border-slate-200 bg-white overflow-hidden flex items-center justify-center shrink-0 shadow-sm">
+                            <div class="flex flex-col gap-4 p-4 rounded-lg border border-dashed border-slate-200 bg-slate-50/50 sm:flex-row sm:items-start">
+                                <div class="h-40 w-full rounded-xl border border-slate-200 bg-white overflow-hidden flex items-center justify-center shrink-0 shadow-sm sm:w-64">
                                     @if ($pengaturanWebsite->hero_image)
                                         <img src="{{ \Illuminate\Support\Facades\Storage::url($pengaturanWebsite->hero_image) }}" alt="Foto Beranda Utama" class="w-full h-full object-cover">
                                     @else
@@ -249,23 +249,23 @@
                         </div>
                     </div>
 
-                    <div class="p-5 sm:p-6">
+                    <div class="p-4 sm:p-6">
                         <textarea name="footer_text" rows="3" class="w-full rounded-lg border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 text-sm transition resize-none" placeholder="© 2026 SIJAKA. All rights reserved.">{{ old('footer_text', $pengaturanWebsite->footer_text) }}</textarea>
                         @error('footer_text') <p class="mt-1.5 text-xs text-red-600 flex items-center gap-1"><svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>{{ $message }}</p> @enderror
                     </div>
                 </div>
 
                 {{-- Submit Button --}}
-                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-5 bg-white border border-slate-200/70 rounded-xl shadow-sm">
-                    <p class="text-xs text-slate-500">
+                <div class="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5 bg-white border border-slate-200/70 rounded-xl shadow-sm">
+                    <p class="text-xs leading-relaxed text-slate-500">
                         <svg class="w-3.5 h-3.5 inline text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
                         Perubahan akan langsung diterapkan ke halaman beranda.
                     </p>
-                    <div class="flex items-center gap-2">
-                        <a href="{{ route('admin.dashboard') }}" class="px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 rounded-lg transition">Batal</a>
-                        <button type="submit" class="inline-flex items-center gap-1.5 px-5 py-2 text-sm font-medium text-white bg-slate-900 hover:bg-slate-800 rounded-lg shadow-sm transition">
+                    <div class="grid grid-cols-2 gap-2 sm:flex sm:items-center">
+                        <a href="{{ route('admin.dashboard') }}" class="inline-flex min-h-11 items-center justify-center px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 rounded-lg transition">Batal</a>
+                        <button type="submit" class="inline-flex min-h-11 items-center justify-center gap-1.5 px-4 sm:px-5 py-2 text-sm font-medium text-white bg-slate-900 hover:bg-slate-800 rounded-lg shadow-sm transition">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
                             </svg>
@@ -276,7 +276,7 @@
             </div>
 
             {{-- Preview Panel (Sticky) --}}
-            <div class="lg:col-span-1">
+            <div class="lg:col-span-1 overflow-x-auto">
                 <div class="lg:sticky lg:top-5 space-y-4">
                     <div class="flex items-center gap-2 mb-1">
                         <div class="w-6 h-6 rounded-md bg-violet-100 text-violet-600 flex items-center justify-center">
@@ -289,7 +289,7 @@
                     </div>
 
                     {{-- Browser Mockup --}}
-                    <div class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+                    <div class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden w-full max-w-full">
                         {{-- Browser Bar --}}
                         <div class="flex items-center gap-2 px-3 py-2 bg-slate-50 border-b border-slate-200">
                             <div class="flex items-center gap-1.5">

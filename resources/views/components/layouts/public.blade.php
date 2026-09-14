@@ -107,8 +107,8 @@
                         @php
                             $isActive = request()->routeIs($link['route'] . '*');
                         @endphp
-                        <a href="{{ route($link['route']) }}" 
-                        class="relative px-3 py-2 text-sm font-medium transition-all duration-300 group {{ $isActive ? 'text-blue-600' : 'text-slate-600 hover:text-blue-600' }}">
+                            <a href="{{ route($link['route']) }}"
+                        class="relative inline-flex min-h-11 items-center px-3 py-2 text-sm font-medium transition-all duration-300 group {{ $isActive ? 'text-blue-600' : 'text-slate-600 hover:text-blue-600' }}">
                             {{ $link['label'] }}
                             
                             {{-- Animated Underline --}}
@@ -120,7 +120,7 @@
                 {{-- Right Actions --}}
                 <div class="flex items-center gap-3">
                     {{-- Mobile Menu Button --}}
-                    <button @click="mobileMenu = !mobileMenu" class="lg:hidden p-2 rounded-lg text-slate-500 hover:text-slate-700 hover:bg-slate-100 transition">
+                    <button @click="mobileMenu = !mobileMenu" class="lg:hidden inline-flex h-11 w-11 items-center justify-center rounded-lg text-slate-500 hover:text-slate-700 hover:bg-slate-100 transition" aria-label="Buka menu navigasi" :aria-expanded="mobileMenu">
                         <svg x-show="!mobileMenu" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                         <svg x-show="mobileMenu" x-cloak class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                     </button>
@@ -145,7 +145,7 @@
                     @endphp
                     <a href="{{ route($link['route']) }}" 
                        @click="mobileMenu = false"
-                       class="block px-3 py-2.5 rounded-r-lg text-sm font-medium transition border-l-4 {{ $isActive ? 'text-blue-600 bg-blue-50 border-blue-600' : 'text-slate-600 hover:bg-slate-50 border-transparent' }}">
+                       class="flex min-h-11 items-center px-3 py-2.5 rounded-r-lg text-sm font-medium transition border-l-4 {{ $isActive ? 'text-blue-600 bg-blue-50 border-blue-600' : 'text-slate-600 hover:bg-slate-50 border-transparent' }}">
                         {{ $link['label'] }}
                     </a>
                 @endforeach

@@ -22,7 +22,7 @@
     <div class="min-h-screen grid lg:grid-cols-[1.15fr_0.85fr]">
         
         {{-- Left Side: Branding & Illustration --}}
-        <section class="relative overflow-hidden bg-[radial-gradient(circle_at_top_left,_rgba(14,165,233,0.35),_transparent_32%),radial-gradient(circle_at_bottom_right,_rgba(59,130,246,0.28),_transparent_28%),linear-gradient(135deg,_#020617_0%,_#0f172a_48%,_#1e3a8a_100%)] px-6 py-8 sm:px-10 lg:px-12 lg:py-10 flex flex-col justify-between">
+        <section class="relative hidden overflow-hidden bg-[radial-gradient(circle_at_top_left,_rgba(14,165,233,0.35),_transparent_32%),radial-gradient(circle_at_bottom_right,_rgba(59,130,246,0.28),_transparent_28%),linear-gradient(135deg,_#020617_0%,_#0f172a_48%,_#1e3a8a_100%)] px-6 py-8 sm:px-10 lg:flex lg:flex-col lg:justify-between lg:px-12 lg:py-10">
             <div class="relative z-10 max-w-xl pt-10 lg:pt-0">
                 <h1 class="mt-6 text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight text-white tracking-tight">
                     Kelola sistem SIJAKA dengan aman dan terpusat.
