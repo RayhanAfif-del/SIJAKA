@@ -28,8 +28,8 @@ class BerandaController extends Controller
                 Galeri::latest('tanggal')->latest('id')->take(24)->get()
             )->take(5)->values(),
             'kontak' => Kontak::singleton(),
-            'alumniBekerja' => Alumni::bekerja()->count() + Alumni::belumBekerja()->count(),
-            'alumniBerwirausaha' => Alumni::berwirausaha()->count(),
+            'alumniBekerja' => Alumni::bekerja()->count(),
+            'alumniBerwirausaha' => Alumni::berwirausaha()->count() + Alumni::belumBekerja()->count(),
             'alumniMelanjutkanStudi' => Alumni::melanjutkanStudi()->count(),
         ]);
     }

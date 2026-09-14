@@ -52,43 +52,111 @@
         </div>
     </div>
 
-    {{-- Search Bar --}}
-    <form method="GET" action="{{ route('admin.alumni.index') }}" id="searchForm">
-        <div class="bg-white border border-slate-200/70 rounded-xl shadow-sm p-2 mb-5">
-            <div class="flex flex-col gap-2 sm:flex-row sm:items-center">
-                <div class="flex-1 relative">
-                    <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                    </svg>
-                    <input type="text" name="cari" id="searchInput" value="{{ request('cari') }}" 
-                           placeholder="Cari nama atau NIS alumni..." 
-                           class="w-full pl-9 pr-8 py-2 rounded-lg border-0 focus:ring-0 text-sm placeholder:text-slate-400 bg-transparent">
-                    @if (request('cari'))
-                        <a href="{{ route('admin.alumni.index') }}" class="absolute right-2 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition" title="Hapus pencarian">
-                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-                            </svg>
-                        </a>
-                    @endif
-                </div>
-                <button type="submit" class="inline-flex min-h-11 items-center justify-center gap-1.5 px-3 py-2 text-sm font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg transition sm:min-h-9 sm:py-1.5 sm:text-xs">
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                    </svg>
-                    Cari
-                </button>
+    {{-- Search & Filter Section --}}
+    <div class="space-y-3 mb-5">
+        {{-- Status Filter Tabs --}}
+        <div class="bg-white border border-slate-200/70 rounded-xl shadow-sm p-2">
+            <div class="flex flex-wrap items-center gap-1.5">
+                @php
+                    $statusTabs = [
+                        'Semua'             => null,
+                        'Bekerja'           => 'Bekerja',
+                        'Berwirausaha'      => 'Berwirausaha',
+                        'Melanjutkan Studi' => 'Melanjutkan Studi',
+                        'Belum Bekerja'     => 'Belum Bekerja',
+                    ];
+                @endphp
+
+                @foreach ($statusTabs as $label => $val)
+                    @php
+                        $isActive = request('status') === $val || (is_null($val) && !request('status'));
+                        $count = is_null($val) ? ($statusCounts['total'] ?? 0) : ($statusCounts[$val] ?? 0);
+                        
+                        $dotColor = match($val) {
+                            'Bekerja'           => 'bg-emerald-500',
+                            'Berwirausaha'      => 'bg-violet-500',
+                            'Melanjutkan Studi' => 'bg-blue-500',
+                            'Belum Bekerja'     => 'bg-amber-500',
+                            default             => 'bg-slate-400',
+                        };
+
+                        $urlParams = array_filter([
+                            'status' => $val,
+                            'cari'   => request('cari'),
+                        ]);
+                    @endphp
+                    <a href="{{ route('admin.alumni.index', $urlParams) }}"
+                       class="inline-flex min-h-10 items-center gap-2 px-3.5 py-2 text-xs font-medium rounded-lg transition sm:min-h-9 sm:py-1.5
+                              {{ $isActive 
+                                  ? 'bg-slate-900 text-white shadow-sm' 
+                                  : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900' }}">
+                        <span class="w-1.5 h-1.5 rounded-full {{ $isActive ? 'bg-white' : $dotColor }}"></span>
+                        <span>{{ $label }}</span>
+                        <span class="px-1.5 py-0.5 text-[10px] rounded-md font-semibold {{ $isActive ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-500' }}">
+                            {{ $count }}
+                        </span>
+                    </a>
+                @endforeach
             </div>
         </div>
-    </form>
 
-    {{-- Search Info --}}
-    @if (request('cari'))
-        <div class="flex items-center justify-between mb-4 px-1">
-            <p class="text-xs text-slate-500">
-                Menampilkan hasil untuk: <span class="font-semibold text-slate-700">"{{ request('cari') }}"</span>
-            </p>
+        {{-- Search Bar --}}
+        <form method="GET" action="{{ route('admin.alumni.index') }}" id="searchForm">
+            @if (request('status'))
+                <input type="hidden" name="status" value="{{ request('status') }}">
+            @endif
+            <div class="bg-white border border-slate-200/70 rounded-xl shadow-sm p-2">
+                <div class="flex flex-col gap-2 sm:flex-row sm:items-center">
+                    <div class="flex-1 relative">
+                        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                        <input type="text" name="cari" id="searchInput" value="{{ request('cari') }}" 
+                               placeholder="Cari nama, NIS, atau jurusan alumni..." 
+                               class="w-full pl-9 pr-8 py-2 rounded-lg border-0 focus:ring-0 text-sm placeholder:text-slate-400 bg-transparent">
+                        @if (request('cari'))
+                            <a href="{{ route('admin.alumni.index', array_filter(['status' => request('status')])) }}" class="absolute right-2 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition" title="Hapus pencarian">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                                </svg>
+                            </a>
+                        @endif
+                    </div>
+                    <button type="submit" class="inline-flex min-h-11 items-center justify-center gap-1.5 px-3.5 py-2 text-sm font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg transition sm:min-h-9 sm:py-1.5 sm:text-xs">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                        Cari
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    {{-- Active Filter Info --}}
+    @if (request('cari') || request('status'))
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-4 px-1">
+            <div class="flex items-center gap-2 flex-wrap text-xs text-slate-500">
+                <span>Filter aktif:</span>
+                @if (request('status'))
+                    <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-white border border-slate-200 text-slate-700 text-xs font-medium shadow-sm">
+                        Status: <strong class="text-slate-900">{{ request('status') }}</strong>
+                        <a href="{{ route('admin.alumni.index', array_filter(['cari' => request('cari')])) }}" class="hover:text-red-600 ml-1" title="Hapus filter status">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                        </a>
+                    </span>
+                @endif
+                @if (request('cari'))
+                    <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-white border border-slate-200 text-slate-700 text-xs font-medium shadow-sm">
+                        Cari: <strong class="text-slate-900">"{{ request('cari') }}"</strong>
+                        <a href="{{ route('admin.alumni.index', array_filter(['status' => request('status')])) }}" class="hover:text-red-600 ml-1" title="Hapus pencarian">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                        </a>
+                    </span>
+                @endif
+            </div>
             <a href="{{ route('admin.alumni.index') }}" class="text-xs font-medium text-blue-600 hover:text-blue-700 transition">
-                Reset pencarian
+                Reset semua filter
             </a>
         </div>
     @endif
@@ -209,25 +277,25 @@
                                         </svg>
                                     </div>
                                     <h3 class="text-base font-semibold text-slate-900 mb-1">
-                                        @if (request('cari'))
-                                            Tidak ada alumni dengan nama "{{ request('cari') }}"
+                                        @if (request('cari') || request('status'))
+                                            Data tidak ditemukan
                                         @else
                                             Belum ada data alumni
                                         @endif
                                     </h3>
                                     <p class="text-sm text-slate-500 mb-5 max-w-sm">
-                                        @if (request('cari'))
-                                            Coba ubah kata kunci pencarian atau reset filter.
+                                        @if (request('cari') || request('status'))
+                                            Tidak ada alumni yang sesuai dengan filter atau kata kunci yang dipilih. Coba sesuaikan filter atau reset pencarian.
                                         @else
                                             Mulai tambahkan data alumni untuk memantau statistik penyerapan kerja.
                                         @endif
                                     </p>
-                                    @if (request('cari'))
+                                    @if (request('cari') || request('status'))
                                         <a href="{{ route('admin.alumni.index') }}" class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white bg-slate-900 hover:bg-slate-800 rounded-lg shadow-sm transition">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
                                             </svg>
-                                            Reset Pencarian
+                                            Reset Filter
                                         </a>
                                     @else
                                         <a href="{{ route('admin.alumni.create') }}" class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white bg-slate-900 hover:bg-slate-800 rounded-lg shadow-sm transition">

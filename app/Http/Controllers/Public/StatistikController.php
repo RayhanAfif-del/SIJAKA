@@ -11,19 +11,19 @@ class StatistikController extends Controller
 {
     public function index()
     {
-        $bekerja = Alumni::bekerja()->count() + Alumni::belumBekerja()->count();
-        $berwirausaha = Alumni::berwirausaha()->count();
+        $bekerja = Alumni::bekerja()->count();
+        $berwirausaha = Alumni::berwirausaha()->count() + Alumni::belumBekerja()->count();
         $melanjutkanStudi = Alumni::melanjutkanStudi()->count();
 
         $perTahun = Alumni::selectRaw("
                 tahun_lulus,
-                CASE WHEN status = 'Belum Bekerja' THEN 'Bekerja' ELSE status END as status,
+                CASE WHEN status = 'Belum Bekerja' THEN 'Berwirausaha' ELSE status END as status,
                 COUNT(*) as total
             ")
-            ->groupByRaw("tahun_lulus, CASE WHEN status = 'Belum Bekerja' THEN 'Bekerja' ELSE status END")
-            ->orderBy('tahun_lulus')
-            ->get()
-            ->groupBy('tahun_lulus');
+                ->groupByRaw("tahun_lulus, CASE WHEN status = 'Belum Bekerja' THEN 'Berwirausaha' ELSE status END")
+                ->orderBy('tahun_lulus')
+                ->get()
+                ->groupBy('tahun_lulus');
 
         return view('public.statistik.index', [
             'bekerja' => $bekerja,

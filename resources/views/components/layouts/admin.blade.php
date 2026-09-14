@@ -193,6 +193,20 @@
                     </div>
                 @endif
 
+                @if ($errors->any())
+                    <div class="mb-6 p-4 rounded-xl bg-red-50 text-red-700 text-sm border border-red-100 shadow-sm">
+                        <div class="flex items-center gap-2 font-medium mb-1">
+                            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            Terdapat kesalahan pengisian data:
+                        </div>
+                        <ul class="list-disc list-inside text-xs text-red-600 space-y-0.5 ml-6">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
                 <div class="max-w-[1440px] mx-auto animate-fade-in">
                     {{ $slot }}
                 </div>

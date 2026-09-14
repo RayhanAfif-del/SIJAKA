@@ -17,24 +17,47 @@
         </div>
 
         <div class="p-5 sm:p-6">
-            <div>
-                <label class="flex items-center gap-1.5 text-sm font-medium text-slate-700 mb-1.5">
-                    <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                    </svg>
-                    Nama Lengkap
-                    <span class="text-xs font-normal text-red-500 ml-1">*</span>
-                </label>
-                <input type="text" name="nama" value="{{ old('nama', $alumni->nama ?? '') }}" required
-                    class="w-full rounded-lg border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 text-sm transition"
-                    placeholder="Masukkan nama lengkap alumni">
-                <p class="mt-1.5 text-xs text-slate-500">Gunakan nama sesuai ijazah untuk memudahkan pelacakan.</p>
-                @error('nama') 
-                    <p class="mt-1.5 text-xs text-red-600 flex items-center gap-1">
-                        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
-                        {{ $message }}
-                    </p> 
-                @enderror
+            <div class="grid sm:grid-cols-2 gap-5">
+                {{-- Nama Lengkap --}}
+                <div>
+                    <label class="flex items-center gap-1.5 text-sm font-medium text-slate-700 mb-1.5">
+                        <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                        </svg>
+                        Nama Lengkap
+                        <span class="text-xs font-normal text-red-500 ml-1">*</span>
+                    </label>
+                    <input type="text" name="nama" value="{{ old('nama', $alumni->nama ?? '') }}" required
+                        class="w-full rounded-lg border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 text-sm transition"
+                        placeholder="Masukkan nama lengkap alumni">
+                    <p class="mt-1.5 text-xs text-slate-500">Gunakan nama sesuai ijazah untuk memudahkan pelacakan.</p>
+                    @error('nama') 
+                        <p class="mt-1.5 text-xs text-red-600 flex items-center gap-1">
+                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+                            {{ $message }}
+                        </p> 
+                    @enderror
+                </div>
+
+                {{-- NIS --}}
+                <div>
+                    <label class="flex items-center gap-1.5 text-sm font-medium text-slate-700 mb-1.5">
+                        <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"/>
+                        </svg>
+                        NIS (Nomor Induk Siswa)
+                    </label>
+                    <input type="text" name="nis" value="{{ old('nis', $alumni->nis ?? '') }}"
+                        class="w-full rounded-lg border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 text-sm transition"
+                        placeholder="Contoh: 4439">
+                    <p class="mt-1.5 text-xs text-slate-500">Nomor induk siswa (otomatis terisi dari SiPintu).</p>
+                    @error('nis') 
+                        <p class="mt-1.5 text-xs text-red-600 flex items-center gap-1">
+                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+                            {{ $message }}
+                        </p> 
+                    @enderror
+                </div>
             </div>
         </div>
     </div>
@@ -196,20 +219,41 @@
     </div>
 
     <div class="bg-white border border-slate-200/70 rounded-xl shadow-sm overflow-hidden">
-        <div class="px-5 sm:px-6 py-4 border-b border-slate-100 bg-slate-50/50">
-            <h2 class="text-sm font-semibold text-slate-900">Akun Direktori Talenta</h2>
-            <p class="text-xs text-slate-500 mt-0.5">Kredensial ini digunakan alumni untuk mengelola profil dan dokumen.</p>
+        <div class="px-5 sm:px-6 py-4 border-b border-slate-100 bg-slate-50/50 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+            <div>
+                <h2 class="text-sm font-semibold text-slate-900">Akun Direktori Talenta (SiPintu)</h2>
+                <p class="text-xs text-slate-500 mt-0.5">Kredensial login ini terintegrasi langsung dengan SiPintu dan tidak dapat diubah dari dashboard.</p>
+            </div>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200 w-fit">
+                <svg class="w-3.5 h-3.5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                </svg>
+                Otomatis dari SiPintu
+            </span>
         </div>
         <div class="p-5 sm:p-6 grid sm:grid-cols-2 gap-5">
             <div>
-                <label class="text-sm font-medium text-slate-700">Email Alumni</label>
-                <input type="email" name="email" value="{{ old('email', $alumni->email ?? '') }}" class="mt-1.5 w-full rounded-lg border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 text-sm" placeholder="alumni@email.com">
-                @error('email')<p class="mt-1.5 text-xs text-red-600">{{ $message }}</p>@enderror
+                <label class="flex items-center gap-1.5 text-sm font-medium text-slate-700 mb-1.5">
+                    <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                    Email Alumni
+                </label>
+                <input type="text" readonly value="{{ $alumni->email ?? 'Belum ada email dari SiPintu' }}" 
+                    class="w-full rounded-lg border-slate-200 bg-slate-50 text-slate-700 text-sm cursor-not-allowed select-all" 
+                    title="Email ini sinkron langsung dari SiPintu">
+                <p class="mt-1.5 text-xs text-slate-500">Email default sesuai sinkronisasi data SiPintu.</p>
             </div>
             <div>
-                <label class="text-sm font-medium text-slate-700">Password {{ isset($alumni) ? '(kosongkan jika tidak diubah)' : '' }}</label>
-                <input type="password" name="password" minlength="8" class="mt-1.5 w-full rounded-lg border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 text-sm" placeholder="Minimal 8 karakter">
-                @error('password')<p class="mt-1.5 text-xs text-red-600">{{ $message }}</p>@enderror
+                <label class="flex items-center gap-1.5 text-sm font-medium text-slate-700 mb-1.5">
+                    <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                    </svg>
+                    Password Alumni
+                </label>
+                <input type="text" readonly value="•••••••••••• (Default SiPintu)" 
+                    class="w-full rounded-lg border-slate-200 bg-slate-50 text-slate-500 text-sm cursor-not-allowed font-mono tracking-wider">
+                <p class="mt-1.5 text-xs text-slate-500">Password default menggunakan akun SiPintu.</p>
             </div>
         </div>
     </div>

@@ -41,7 +41,9 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
     Route::resource('artikel', ArtikelController::class);
     Route::resource('galeri', GaleriController::class);
     Route::post('/alumni/sync-sipintu', [AlumniController::class, 'syncSipintu'])->name('alumni.sync-sipintu');
-    Route::resource('alumni', AlumniController::class);
+    Route::resource('alumni', AlumniController::class)->parameters(['alumni' => 'alumni']);
+    // Convert alumni with status 'Belum Bekerja' to 'Berwirausaha'
+    Route::post('/alumni/convert-unemployed', [AlumniController::class, 'convertUnemployedToEntrepreneur'])->name('alumni.convert-unemployed');
 
     Route::get('/pengaturan/beranda', [PengaturanBerandaController::class, 'edit'])->name('pengaturan-beranda.edit');
     Route::put('/pengaturan/beranda', [PengaturanBerandaController::class, 'update'])->name('pengaturan-beranda.update');
