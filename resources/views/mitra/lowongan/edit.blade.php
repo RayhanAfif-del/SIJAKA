@@ -26,7 +26,7 @@
     </div>
 
     {{-- Form Container --}}
-    <div class="max-w-4xl">
+    <div class="max-w-4xl mx-auto">
         <form method="POST" action="{{ route('mitra.lowongan.update', $lowongan) }}">
             @csrf
             @method('PUT')

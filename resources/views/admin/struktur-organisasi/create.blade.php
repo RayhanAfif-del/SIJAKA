@@ -26,7 +26,7 @@
     </div>
 
     {{-- Form Container --}}
-    <div class="max-w-4xl">
+    <div class="max-w-4xl mx-auto">
         <form method="POST" action="{{ route('admin.struktur-organisasi.store') }}" enctype="multipart/form-data">
             @csrf
             @include('admin.struktur-organisasi._form')
