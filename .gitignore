@@ -14,7 +14,7 @@
 /.zed
 /auth.json
 /node_modules
-/public/build
+# /public/build (di-unignore agar aset terkompilasi ikut ter-push ke CyberPanel tanpa perlu npm di server)
 /public/fonts-manifest.dev.json
 /public/hot
 /public/storage
