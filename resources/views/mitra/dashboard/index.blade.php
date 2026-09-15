@@ -12,7 +12,7 @@
             </p>
         </div>
         <div class="flex items-center gap-2">
-            <a href="{{ route('mitra.lowongan.create') }}" class="inline-flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium text-white bg-slate-900 hover:bg-slate-800 rounded-lg shadow-sm transition">
+            <a href="{{ route('mitra.lowongan.create') }}" class="btn-primary w-full sm:w-auto justify-center">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
                 </svg>

@@ -11,8 +11,16 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthenticatedSessionController extends Controller
 {
-    public function create(): \Illuminate\View\View
+    public function create(): \Illuminate\View\View|\Illuminate\Http\RedirectResponse
     {
+        if (Auth::guard('mitra')->check()) {
+            return redirect()->route('mitra.dashboard');
+        }
+
+        if (Auth::guard('alumni')->check()) {
+            return redirect()->route('alumni.dashboard');
+        }
+
         return view('auth.login');
     }
 
@@ -24,15 +32,18 @@ class AuthenticatedSessionController extends Controller
         $role = $request->string('role')->value();
 
         return match ($role) {
-            'admin' => redirect()->route('admin.dashboard'),
             'mitra' => redirect()->route('mitra.dashboard'),
             'alumni' => redirect()->route('alumni.dashboard'),
             default => redirect()->route('login'),
         };
     }
 
-    public function createAdmin(): \Illuminate\View\View
+    public function createAdmin(): \Illuminate\View\View|\Illuminate\Http\RedirectResponse
     {
+        if (Auth::guard('admin')->check()) {
+            return redirect()->route('admin.dashboard');
+        }
+
         return view('auth.admin-login');
     }
 
@@ -44,19 +55,22 @@ class AuthenticatedSessionController extends Controller
         return redirect()->route('admin.dashboard');
     }
 
-    public function destroy(Request $request): RedirectResponse
+    public function destroyAdmin(Request $request): RedirectResponse
     {
-        $guard = collect(['admin', 'mitra', 'alumni'])
-            ->first(fn (string $guard) => Auth::guard($guard)->check());
-
-        if ($guard) {
-            Auth::guard($guard)->logout();
-        }
-
+        Auth::guard('admin')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route($guard === 'admin' ? 'admin.login' : 'login');
+        return redirect()->route('admin.login');
+    }
+
+    public function destroyMitra(Request $request): RedirectResponse
+    {
+        Auth::guard('mitra')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('login');
     }
 
     public function destroyAlumni(Request $request): RedirectResponse
@@ -66,5 +80,25 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerateToken();
 
         return redirect()->route('login');
+    }
+
+    public function destroy(Request $request): RedirectResponse
+    {
+        $guard = null;
+        if (Auth::guard('admin')->check()) {
+            $guard = 'admin';
+            Auth::guard('admin')->logout();
+        } elseif (Auth::guard('mitra')->check()) {
+            $guard = 'mitra';
+            Auth::guard('mitra')->logout();
+        } elseif (Auth::guard('alumni')->check()) {
+            $guard = 'alumni';
+            Auth::guard('alumni')->logout();
+        }
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route($guard === 'admin' ? 'admin.login' : 'login');
     }
 }

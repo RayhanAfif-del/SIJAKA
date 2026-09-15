@@ -17,7 +17,7 @@
             <h1 class="text-2xl font-semibold text-slate-900 tracking-tight">Profil BKK</h1>
             <p class="text-sm text-slate-500 mt-1">Kelola informasi profil, visi, dan misi yang tampil di halaman publik.</p>
         </div>
-        <a href="{{ route('admin.dashboard') }}" class="inline-flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-200 hover:bg-slate-50 rounded-lg transition">
+        <a href="{{ route('admin.dashboard') }}" class="btn-secondary w-full sm:w-auto justify-center">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
             </svg>
@@ -169,16 +169,16 @@
                 </div>
 
                 {{-- Submit Button --}}
-                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-5 bg-white border border-slate-200/70 rounded-xl shadow-sm">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-5 bg-white border border-slate-200/70 rounded-xl shadow-sm">
                     <p class="text-xs text-slate-500">
                         <svg class="w-3.5 h-3.5 inline text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
                         Perubahan akan langsung diterapkan ke halaman profil publik.
                     </p>
-                    <div class="flex items-center gap-2">
-                        <a href="{{ route('admin.dashboard') }}" class="px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 rounded-lg transition">Batal</a>
-                        <button type="submit" class="inline-flex items-center gap-1.5 px-5 py-2 text-sm font-medium text-white bg-slate-900 hover:bg-slate-800 rounded-lg shadow-sm transition">
+                    <div class="admin-form-actions">
+                        <a href="{{ route('admin.dashboard') }}" class="btn-secondary w-full sm:w-auto justify-center">Batal</a>
+                        <button type="submit" class="btn-primary w-full sm:w-auto justify-center">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
                             </svg>

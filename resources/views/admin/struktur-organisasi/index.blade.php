@@ -13,7 +13,7 @@
             <h1 class="text-2xl font-semibold text-slate-900 tracking-tight">Struktur Organisasi</h1>
             <p class="text-sm text-slate-500 mt-1">Kelola data pengurus BKK yang tampil di halaman publik.</p>
         </div>
-        <a href="{{ route('admin.struktur-organisasi.create') }}" class="inline-flex items-center gap-1.5 px-4 py-2.5 text-sm font-medium text-white bg-slate-900 hover:bg-slate-800 rounded-lg shadow-sm transition">
+        <a href="{{ route('admin.struktur-organisasi.create') }}" class="btn-primary w-full sm:w-auto justify-center">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
             </svg>
@@ -54,7 +54,7 @@
 
                 {{-- Actions --}}
                 <div class="w-full flex items-center gap-2 pt-4 border-t border-slate-100 mt-auto">
-                    <a href="{{ route('admin.struktur-organisasi.edit', $item) }}" class="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-medium text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 hover:border-slate-300 transition">
+                    <a href="{{ route('admin.struktur-organisasi.edit', $item) }}" class="table-action flex-1 text-slate-700 bg-white border-slate-200 hover:bg-slate-50">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                         </svg>
@@ -63,7 +63,7 @@
                     <form method="POST" action="{{ route('admin.struktur-organisasi.destroy', $item) }}" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data pengurus ini?')" class="flex-1">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="w-full inline-flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-medium text-red-600 bg-white border border-red-200 rounded-lg hover:bg-red-50 hover:border-red-300 transition">
+                        <button type="submit" class="table-action w-full text-red-600 bg-white border-red-200 hover:bg-red-50 hover:border-red-300">
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                             </svg>
@@ -82,7 +82,7 @@
                 </div>
                 <h3 class="text-base font-semibold text-slate-900 mb-1">Belum ada data struktur organisasi</h3>
                 <p class="text-sm text-slate-500 mb-5 max-w-sm text-center">Mulai tambahkan pengurus BKK agar informasi dapat dilihat oleh publik di halaman depan.</p>
-                <a href="{{ route('admin.struktur-organisasi.create') }}" class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white bg-slate-900 hover:bg-slate-800 rounded-lg shadow-sm transition">
+                <a href="{{ route('admin.struktur-organisasi.create') }}" class="btn-primary w-full sm:w-auto justify-center">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
                     </svg>

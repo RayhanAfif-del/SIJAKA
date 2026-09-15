@@ -40,7 +40,7 @@
     {{-- Data Table --}}
     <div class="bg-white border border-slate-200/70 rounded-xl shadow-sm overflow-hidden">
         <div class="overflow-x-auto">
-            <table class="w-full">
+            <table class="w-full min-w-[640px]">
                 <thead class="bg-slate-50/80 border-b border-slate-200">
                     <tr>
                         <th class="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Alumni</th>
@@ -107,29 +107,29 @@
 
                             {{-- Aksi Column --}}
                             <td class="px-6 py-4">
-                                <div class="flex items-center justify-end gap-2">
-                                    <a href="{{ route('admin.talent-pool.show', $item) }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-blue-700 bg-blue-50 border border-blue-200 hover:bg-blue-100 transition-colors">
+                                <div class="flex items-center justify-end gap-1.5">
+                                    <a href="{{ route('admin.talent-pool.show', $item) }}" class="table-action text-blue-700 bg-blue-50 border border-blue-200 hover:bg-blue-100" title="Detail Profil">
                                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
-                                        Detail
+                                        <span class="hidden sm:inline">Detail</span>
                                     </a>
                                     @if ($status !== 'disetujui')
-                                        <form method="POST" action="{{ route('admin.talent-pool.approve', $item) }}" onsubmit="return confirm('Setujui dan publikasikan talenta ini ke direktori publik?')">
+                                        <form method="POST" action="{{ route('admin.talent-pool.approve', $item) }}" onsubmit="return confirm('Setujui dan publikasikan talenta ini ke direktori publik?')" class="inline">
                                             @csrf
                                             @method('PATCH')
-                                            <button type="submit" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 hover:bg-emerald-100 transition-colors">
+                                            <button type="submit" class="table-action text-emerald-700 bg-emerald-50 border border-emerald-200 hover:bg-emerald-100" title="Setujui">
                                                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                                                Setujui
+                                                <span class="hidden sm:inline">Setujui</span>
                                             </button>
                                         </form>
                                     @endif
 
                                     @if ($status !== 'ditolak')
-                                        <form method="POST" action="{{ route('admin.talent-pool.reject', $item) }}" onsubmit="return confirm('Tolak pengajuan talenta ini?')">
+                                        <form method="POST" action="{{ route('admin.talent-pool.reject', $item) }}" onsubmit="return confirm('Tolak pengajuan talenta ini?')" class="inline">
                                             @csrf
                                             @method('PATCH')
-                                            <button type="submit" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-red-700 bg-red-50 border border-red-200 hover:bg-red-100 transition-colors">
+                                            <button type="submit" class="table-action text-red-700 bg-red-50 border border-red-200 hover:bg-red-100" title="Tolak">
                                                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-                                                Tolak
+                                                <span class="hidden sm:inline">Tolak</span>
                                             </button>
                                         </form>
                                     @endif

@@ -74,7 +74,7 @@
 
                     <div class="max-w-md mx-auto">
 
-                        <div class="group bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl p-8 text-white text-center shadow-xl shadow-blue-600/20 relative overflow-hidden">
+                        <div class="group bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl p-6 sm:p-8 text-white text-center shadow-xl shadow-blue-600/20 relative overflow-hidden">
 
                             <div class="absolute top-0 right-0 -mr-10 -mt-10 w-40 h-40 bg-white/10 rounded-full blur-2xl"></div>
 
@@ -306,7 +306,7 @@
 
                     <a
                         href="{{ route('home') }}"
-                        class="inline-flex items-center gap-2 mt-6 px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-sm font-semibold rounded-xl transition shadow-lg shadow-slate-900/10"
+                        class="inline-flex items-center justify-center gap-2 mt-6 min-h-11 px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-sm font-semibold rounded-xl transition shadow-lg shadow-slate-900/10 w-full sm:w-auto"
                     >
                         <svg
                             class="w-4 h-4"

@@ -63,7 +63,7 @@
                         @endphp
                         @foreach ($kategoriSaran as $saran)
                             <button type="button" 
-                                    class="kategori-chip inline-flex items-center px-2.5 py-1 text-xs font-medium text-slate-600 bg-slate-100 hover:bg-blue-50 hover:text-blue-700 border border-transparent hover:border-blue-200 rounded-full transition cursor-pointer"
+                                    class="kategori-chip inline-flex items-center px-3 py-1.5 text-xs font-medium text-slate-600 bg-slate-100 hover:bg-blue-50 hover:text-blue-700 border border-transparent hover:border-blue-200 rounded-full transition cursor-pointer"
                                     data-kategori="{{ $saran }}">
                                 {{ $saran }}
                             </button>
@@ -195,16 +195,16 @@
     </div>
 
     {{-- Section 4: Aksi --}}
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-5 bg-white border border-slate-200/70 rounded-xl shadow-sm">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-5 bg-white border border-slate-200/70 rounded-xl shadow-sm">
         <p class="text-xs text-slate-500 flex items-start gap-1.5">
             <svg class="w-3.5 h-3.5 text-slate-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
             Foto akan langsung tampil di halaman galeri publik setelah disimpan.
         </p>
-        <div class="flex items-center gap-2">
-            <a href="{{ route('admin.galeri.index') }}" class="px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 rounded-lg transition">Batal</a>
-            <button type="submit" class="inline-flex items-center gap-1.5 px-5 py-2 text-sm font-medium text-white bg-slate-900 hover:bg-slate-800 rounded-lg shadow-sm transition">
+        <div class="admin-form-actions">
+            <a href="{{ route('admin.galeri.index') }}" class="btn-secondary w-full sm:w-auto justify-center">Batal</a>
+            <button type="submit" class="btn-primary w-full sm:w-auto justify-center">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
                 </svg>

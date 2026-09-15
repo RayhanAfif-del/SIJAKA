@@ -33,17 +33,17 @@
             <h1 class="text-2xl font-semibold text-slate-900 tracking-tight">Data Alumni</h1>
             <p class="text-sm text-slate-500 mt-1">Kelola data alumni untuk statistik penyerapan kerja dan tracer study.</p>
         </div>
-        <div class="flex flex-wrap items-center gap-2">
-            <form method="POST" action="{{ route('admin.alumni.sync-sipintu') }}">
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto">
+            <form method="POST" action="{{ route('admin.alumni.sync-sipintu') }}" class="w-full sm:w-auto">
                 @csrf
-                <button type="submit" class="inline-flex min-h-11 items-center gap-1.5 px-3.5 py-2.5 text-sm font-medium text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-lg shadow-sm transition">
+                <button type="submit" class="w-full sm:w-auto inline-flex min-h-11 items-center justify-center gap-1.5 px-3.5 py-2.5 text-sm font-medium text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-xl shadow-sm transition">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h5M20 20v-5h-5M5.5 15a7 7 0 0011.9 1.9L20 15M4 9l2.6-1.9A7 7 0 0118.5 9"/>
                     </svg>
                     Sinkronkan SiPintu
                 </button>
             </form>
-        <a href="{{ route('admin.alumni.create') }}" class="inline-flex min-h-11 items-center gap-1.5 px-4 py-2.5 text-sm font-medium text-white bg-slate-900 hover:bg-slate-800 rounded-lg shadow-sm transition">
+            <a href="{{ route('admin.alumni.create') }}" class="w-full sm:w-auto inline-flex min-h-11 items-center justify-center gap-1.5 px-4 py-2.5 text-sm font-medium text-white bg-slate-900 hover:bg-slate-800 rounded-xl shadow-sm transition">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"/>
                 </svg>
@@ -164,7 +164,7 @@
     {{-- Table Container --}}
     <div class="bg-white border border-slate-200/70 rounded-xl shadow-sm overflow-hidden">
         <div class="overflow-x-auto">
-            <table class="w-full">
+            <table class="w-full min-w-[640px]">
                 <thead class="bg-slate-50/80 border-b border-slate-200">
                     <tr>
                         <th class="px-5 py-3.5 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">
@@ -291,14 +291,14 @@
                                         @endif
                                     </p>
                                     @if (request('cari') || request('status'))
-                                        <a href="{{ route('admin.alumni.index') }}" class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white bg-slate-900 hover:bg-slate-800 rounded-lg shadow-sm transition">
+                                        <a href="{{ route('admin.alumni.index') }}" class="inline-flex items-center justify-center gap-1.5 min-h-11 px-4 py-2.5 text-sm font-medium text-white bg-slate-900 hover:bg-slate-800 rounded-xl shadow-sm transition w-full sm:w-auto">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
                                             </svg>
                                             Reset Filter
                                         </a>
                                     @else
-                                        <a href="{{ route('admin.alumni.create') }}" class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white bg-slate-900 hover:bg-slate-800 rounded-lg shadow-sm transition">
+                                        <a href="{{ route('admin.alumni.create') }}" class="inline-flex items-center justify-center gap-1.5 min-h-11 px-4 py-2.5 text-sm font-medium text-white bg-slate-900 hover:bg-slate-800 rounded-xl shadow-sm transition w-full sm:w-auto">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
                                             </svg>

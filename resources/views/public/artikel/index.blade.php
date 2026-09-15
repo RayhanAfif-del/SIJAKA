@@ -46,7 +46,7 @@
 
     {{-- Search Bar (Floating) --}}
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-10 mb-12" data-aos="fade-up">
-        <div class="bg-white rounded-2xl shadow-xl border border-gray-100 p-6">
+        <div class="bg-white rounded-2xl shadow-xl border border-gray-100 p-4 sm:p-6">
             <form method="GET" action="{{ route('artikel.index') }}" class="grid gap-4 lg:grid-cols-[1fr_auto] items-end">
                 <div>
                     <label for="cari" class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Kata Kunci</label>
@@ -57,12 +57,12 @@
                 </div>
 
                 <div class="flex gap-2">
-                    <button type="submit" class="flex-1 lg:flex-none inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition hover:bg-blue-700 hover:-translate-y-0.5">
+                    <button type="submit" class="flex-1 lg:flex-none inline-flex items-center justify-center gap-2 min-h-11 rounded-xl bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition hover:bg-blue-700 hover:-translate-y-0.5">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                         Cari
                     </button>
                     @if (request()->filled('cari'))
-                        <a href="{{ route('artikel.index') }}" class="inline-flex items-center justify-center gap-2 rounded-xl border border-gray-200 px-4 py-3 text-sm font-semibold text-gray-600 transition hover:bg-gray-50 hover:border-gray-300" title="Reset Pencarian">
+                        <a href="{{ route('artikel.index') }}" class="inline-flex items-center justify-center gap-2 min-h-11 rounded-xl border border-gray-200 px-4 py-2.5 text-sm font-semibold text-gray-600 transition hover:bg-gray-50 hover:border-gray-300" title="Reset Pencarian">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
                         </a>
                     @endif
@@ -111,12 +111,12 @@
                         @endif
                     </p>
                     @if (request()->filled('cari'))
-                        <a href="{{ route('artikel.index') }}" class="inline-flex items-center gap-2 px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-sm font-semibold rounded-xl transition shadow-lg shadow-slate-900/10">
+                        <a href="{{ route('artikel.index') }}" class="inline-flex items-center justify-center gap-2 min-h-11 px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-sm font-semibold rounded-xl transition shadow-lg shadow-slate-900/10 w-full sm:w-auto">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
                             Reset Pencarian
                         </a>
                     @else
-                        <a href="{{ route('home') }}" class="inline-flex items-center gap-2 px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-sm font-semibold rounded-xl transition shadow-lg shadow-slate-900/10">
+                        <a href="{{ route('home') }}" class="inline-flex items-center justify-center gap-2 min-h-11 px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-sm font-semibold rounded-xl transition shadow-lg shadow-slate-900/10 w-full sm:w-auto">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
                             Kembali ke Beranda
                         </a>
@@ -151,7 +151,7 @@
                             </div>
                         </a>
 
-                        <div class="p-8 lg:p-10 flex flex-col justify-center">
+                        <div class="p-6 sm:p-8 lg:p-10 flex flex-col justify-center">
                             <div class="flex items-center gap-3 mb-4">
                                 <span class="inline-flex items-center gap-1.5 {{ $kc['bg'] }} {{ $kc['text'] }} border {{ $kc['border'] }} text-xs font-semibold px-3 py-1 rounded-full">
                                     <span class="w-1.5 h-1.5 rounded-full bg-current"></span>
@@ -173,7 +173,7 @@
                                 {{ Str::limit(strip_tags($item->konten), 200) }}
                             </p>
 
-                            <a href="{{ route('artikel.show', $item) }}" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold transition group/link">
+                            <a href="{{ route('artikel.show', $item) }}" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold transition group/link py-1">
                                 Baca Selengkapnya
                                 <svg class="w-4 h-4 transition-transform group-hover/link:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                             </a>

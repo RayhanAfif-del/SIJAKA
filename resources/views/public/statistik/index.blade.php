@@ -55,7 +55,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 lg:gap-5 items-stretch mb-12" data-aos="fade-up">
                 
                 {{-- Kotak Besar: Total Alumni (Row Span 2 di Desktop) --}}
-                <div class="sm:col-span-2 xl:col-span-2 xl:row-span-2 bg-[#024CD4] text-white rounded-3xl p-6 sm:p-8 flex flex-col justify-center relative overflow-hidden shadow-xl shadow-blue-600/20 group min-h-[260px] xl:min-h-[540px]">
+                <div class="sm:col-span-2 xl:col-span-2 xl:row-span-2 bg-[#024CD4] text-white rounded-3xl p-5 sm:p-8 flex flex-col justify-center relative overflow-hidden shadow-xl shadow-blue-600/20 group min-h-[220px] xl:min-h-[540px]">
                     
                     {{-- Decorative Curve/Diagonal Background --}}
                     <div class="absolute inset-0 overflow-hidden">
@@ -69,7 +69,7 @@
 
                     {{-- Paper Plane Icon (Top Right) --}}
                     <div class="absolute top-6 right-6 sm:top-8 sm:right-8 opacity-90 group-hover:opacity-100 transition-opacity">
-                        <svg class="w-12 h-12 sm:w-16 sm:h-16 text-amber-400 transform -rotate-12 group-hover:rotate-0 transition-transform duration-500" fill="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-10 h-10 sm:w-16 sm:h-16 text-amber-400 transform -rotate-12 group-hover:rotate-0 transition-transform duration-500" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
                         </svg>
                     </div>
@@ -88,18 +88,18 @@
                     <div class="relative z-10 flex flex-col h-full justify-between">
                         <div>
                             <div class="flex items-center gap-3 mb-4">
-                                <div class="w-12 h-12 bg-white/15 backdrop-blur-sm rounded-xl flex items-center justify-center shadow-lg border border-white/20">
-                                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <div class="w-10 h-10 sm:w-12 sm:h-12 bg-white/15 backdrop-blur-sm rounded-xl flex items-center justify-center shadow-lg border border-white/20">
+                                    <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"/>
                                     </svg>
                                 </div>
                                 <span class="text-xs font-bold uppercase tracking-wider text-[#d0e3ff]">Total Alumni</span>
                             </div>
-                            <p class="text-5xl sm:text-6xl xl:text-7xl font-extrabold tracking-tight text-white leading-none">
+                            <p class="text-4xl sm:text-5xl xl:text-7xl font-extrabold tracking-tight text-white leading-none">
                                 {{ number_format($totalAlumniStat) }}
                             </p>
                         </div>
-                        <p class="text-[#d0e3ff] text-sm mt-4">Alumni terdata dalam sistem</p>
+                        <p class="text-[#d0e3ff] text-xs sm:text-sm mt-4">Alumni terdata dalam sistem</p>
                     </div>
                 </div>
 
@@ -168,12 +168,12 @@
             <div class="grid lg:grid-cols-3 gap-6 mb-12">
                 
                 {{-- Donut Chart --}}
-                <div class="bg-white border border-gray-100 rounded-3xl p-6 shadow-sm" data-aos="fade-up">
+                <div class="bg-white border border-gray-100 rounded-3xl p-4 sm:p-6 shadow-sm" data-aos="fade-up">
                     <div class="mb-6">
                         <h3 class="text-lg font-bold text-gray-900">Distribusi Status</h3>
                         <p class="text-xs text-gray-500 mt-1">Proporsi status alumni secara keseluruhan</p>
                     </div>
-                    <div class="relative w-56 h-56 mx-auto">
+                    <div class="relative w-48 h-48 sm:w-56 sm:h-56 mx-auto">
                         <canvas id="chartDonut"></canvas>
                         <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
                             <span class="text-3xl font-extrabold text-gray-900 tracking-tight">{{ number_format($totalAlumniStat) }}</span>
@@ -215,12 +215,12 @@
                 </div>
 
                 {{-- Bar Chart per Tahun --}}
-                <div class="lg:col-span-2 bg-white border border-gray-100 rounded-3xl p-6 shadow-sm" data-aos="fade-up" data-aos-delay="100">
+                <div class="lg:col-span-2 bg-white border border-gray-100 rounded-3xl p-4 sm:p-6 shadow-sm" data-aos="fade-up" data-aos-delay="100">
                     <div class="mb-6">
                         <h3 class="text-lg font-bold text-gray-900">Tren Penyerapan per Tahun</h3>
                         <p class="text-xs text-gray-500 mt-1">Distribusi status alumni berdasarkan tahun kelulusan</p>
                     </div>
-                    <div class="h-80 w-full">
+                    <div class="h-64 sm:h-80 w-full">
                         <canvas id="chartPerTahun"></canvas>
                     </div>
                 </div>
@@ -228,7 +228,7 @@
 
             {{-- Progress Bar per Tahun --}}
             <div class="bg-white border border-gray-100 rounded-3xl shadow-sm overflow-hidden" data-aos="fade-up" data-aos-delay="200">
-                <div class="px-6 py-5 border-b border-gray-100 bg-slate-50/50 flex items-center justify-between">
+                <div class="px-4 sm:px-6 py-4 sm:py-5 border-b border-gray-100 bg-slate-50/50 flex items-center justify-between">
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 rounded-xl bg-[#024CD4] text-white flex items-center justify-center shadow-lg shadow-blue-600/20">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
@@ -251,7 +251,7 @@
                             $persenWirausahaTahun = $tTotal ? round($tWirausaha / $tTotal * 100) : 0;
                             $persenStudiTahun = $tTotal ? round($tStudi / $tTotal * 100) : 0;
                         @endphp
-                        <div class="p-6 hover:bg-slate-50/80 transition-colors duration-200">
+                        <div class="p-4 sm:p-6 hover:bg-slate-50/80 transition-colors duration-200">
                             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
                                 <div class="flex items-center gap-4">
                                     <div class="w-12 h-12 rounded-xl bg-blue-50 text-[#024CD4] flex items-center justify-center font-extrabold text-sm shrink-0 border border-blue-100">
@@ -336,7 +336,7 @@
                     </div>
                     <h3 class="text-xl font-bold text-gray-900 mb-2">Belum Ada Data Statistik</h3>
                     <p class="text-gray-500 leading-relaxed mb-8">Data statistik penyerapan alumni sedang dalam proses pengumpulan. Silakan kunjungi kami kembali nanti untuk melihat capaian terkini.</p>
-                    <a href="{{ route('home') }}" class="inline-flex items-center gap-2 px-6 py-3 bg-slate-900 hover:bg-slate-800 text-white text-sm font-semibold rounded-xl transition shadow-lg shadow-slate-900/10 hover:-translate-y-0.5">
+                    <a href="{{ route('home') }}" class="inline-flex items-center justify-center gap-2 min-h-11 px-6 py-3 bg-slate-900 hover:bg-slate-800 text-white text-sm font-semibold rounded-xl transition shadow-lg shadow-slate-900/10 hover:-translate-y-0.5 w-full sm:w-auto">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
                         Kembali ke Beranda
                     </a>

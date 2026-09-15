@@ -67,13 +67,13 @@
                     </div>
                 </div>
 
-                <div class="flex gap-2">
-                    <button type="submit" class="flex-1 lg:flex-none inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition hover:bg-blue-700 hover:-translate-y-0.5">
+                <div class="flex gap-2 w-full lg:w-auto">
+                    <button type="submit" class="flex-1 lg:flex-none inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition hover:bg-blue-700 hover:-translate-y-0.5">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                         Cari
                     </button>
                     @if (request()->filled('cari') || request()->filled('lokasi'))
-                        <a href="{{ route('lowongan.index') }}" class="inline-flex items-center justify-center gap-2 rounded-xl border border-gray-200 px-4 py-3 text-sm font-semibold text-gray-600 transition hover:bg-gray-50 hover:border-gray-300" title="Reset Filter">
+                        <a href="{{ route('lowongan.index') }}" class="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-gray-200 px-4 py-2.5 text-sm font-semibold text-gray-600 transition hover:bg-gray-50 hover:border-gray-300" title="Reset Filter">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
                         </a>
                     @endif
@@ -142,7 +142,7 @@
                         @endif
                     </div>
 
-                    <a href="{{ route('lowongan.show', $item) }}" class="mt-auto inline-flex items-center justify-center gap-2 w-full hover:bg-blue-700 bg-blue-600 text-white text-sm font-semibold py-2.5 rounded-xl transition-all duration-200 group-hover:shadow-lg group-hover:shadow-blue-600/20">
+                    <a href="{{ route('lowongan.show', $item) }}" class="mt-auto inline-flex min-h-11 items-center justify-center gap-2 w-full hover:bg-blue-700 bg-blue-600 text-white text-sm font-semibold py-2.5 px-4 rounded-xl transition-all duration-200 group-hover:shadow-lg group-hover:shadow-blue-600/20">
                         Lihat Detail
                         <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                     </a>

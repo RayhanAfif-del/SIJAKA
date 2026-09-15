@@ -39,7 +39,7 @@
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
         <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             {{-- Image Side --}}
-            <div class="relative" data-aos="fade-right">
+            <div class="relative" data-aos="fade-up">
                 <div class="absolute -inset-4 bg-blue-100 rounded-3xl transform -rotate-2"></div>
                 <div class="relative rounded-2xl overflow-hidden shadow-2xl shadow-blue-900/10 ring-1 ring-gray-900/5">
                     @if ($profilBkk->gambar)
@@ -65,7 +65,7 @@
             </div>
             
             {{-- Text Side --}}
-            <div data-aos="fade-left">
+            <div data-aos="fade-up">
                 <span class="inline-block px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-wider mb-4">Tentang Kami</span>
                 <h2 class="text-3xl font-bold text-gray-900 mb-6 tracking-tight">Membangun Jembatan Karier untuk Masa Depan</h2>
                 <div class="prose prose-slate text-gray-600 leading-relaxed space-y-4">
@@ -85,7 +85,7 @@
             
             <div class="grid lg:grid-cols-2 gap-8" data-aos="fade-up" data-aos-delay="100">
                 {{-- Visi Card --}}
-                <div class="bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl p-8 lg:p-10 text-white shadow-xl shadow-blue-600/20 relative overflow-hidden">
+                <div class="bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl p-6 sm:p-8 lg:p-10 text-white shadow-xl shadow-blue-600/20 relative overflow-hidden">
                     <div class="absolute top-0 right-0 -mr-10 -mt-10 w-40 h-40 bg-white/10 rounded-full blur-2xl"></div>
                     <div class="relative z-10">
                         <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mb-6 backdrop-blur-sm">
@@ -99,7 +99,7 @@
                 </div>
 
                 {{-- Misi Card --}}
-                <div class="bg-white rounded-2xl p-8 lg:p-10 border border-gray-100 shadow-sm flex flex-col justify-center">
+                <div class="bg-white rounded-2xl p-6 sm:p-8 lg:p-10 border border-gray-100 shadow-sm flex flex-col justify-center">
                     <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-xl flex items-center justify-center mb-6">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
                     </div>
@@ -202,11 +202,11 @@
             @endforelse
         </div>
 
-        {{-- Tombol Lihat Halaman Penuh (Diperbaiki) --}}
+        {{-- Tombol Lihat Halaman Penuh --}}
         @if (isset($struktur) && $struktur->count() > 0)
             <div class="text-center mt-10" data-aos="fade-up">
-                <a href="{{ route('struktur-organisasi.index') }}" class="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-700 hover:underline transition-all duration-200">
-                    Lihat Halaman Penuh
+                <a href="{{ route('struktur-organisasi.index') }}" class="inline-flex items-center justify-center gap-2 min-h-11 px-5 py-2.5 rounded-xl border border-blue-200 bg-white text-sm font-semibold text-blue-600 hover:text-blue-700 hover:bg-blue-50 hover:border-blue-300 transition shadow-sm w-full sm:w-auto">
+                    Lihat Struktur Lengkap
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                 </a>
             </div>

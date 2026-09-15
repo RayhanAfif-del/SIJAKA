@@ -86,7 +86,7 @@
                 </div>
 
                 {{-- Logout Button --}}
-                <form method="POST" action="{{ route('logout') }}">
+                <form method="POST" action="{{ route('mitra.logout') }}">
                     @csrf
                     <button type="submit" class="group w-full flex min-h-11 items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-300 hover:bg-red-500/10 hover:text-red-400 transition-all duration-200">
                         <svg class="w-5 h-5 shrink-0 transition-transform duration-200 group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -133,7 +133,7 @@
             </header>
 
             {{-- Page Content --}}
-            <main class="flex-1 p-4 sm:p-6 lg:p-8">
+            <main class="flex-1 p-3.5 sm:p-6 lg:p-8">
                 @if (session('status'))
                     <div class="mb-6 px-4 py-3 rounded-xl bg-emerald-50 text-emerald-700 text-sm border border-emerald-100 shadow-sm flex items-center gap-2">
                         <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">

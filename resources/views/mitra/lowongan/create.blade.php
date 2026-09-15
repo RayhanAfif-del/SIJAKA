@@ -17,7 +17,7 @@
             <h1 class="text-2xl font-semibold text-slate-900 tracking-tight">Tambah Lowongan Baru</h1>
             <p class="text-sm text-slate-500 mt-1">Lengkapi detail lowongan. Setelah disimpan, lowongan akan menunggu persetujuan admin sebelum tampil di website.</p>
         </div>
-        <a href="{{ route('mitra.lowongan.index') }}" class="inline-flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-200 hover:bg-slate-50 rounded-lg transition">
+        <a href="{{ route('mitra.lowongan.index') }}" class="btn-secondary w-full sm:w-auto justify-center">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
             </svg>

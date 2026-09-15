@@ -59,7 +59,7 @@
     {{-- Table Container --}}
     <div class="bg-white border border-slate-200/70 rounded-xl shadow-sm overflow-hidden">
         <div class="overflow-x-auto">
-            <table class="w-full">
+            <table class="w-full min-w-[640px]">
                 <thead class="bg-slate-50/80 border-b border-slate-200">
                     <tr>
                         <th class="px-5 py-3.5 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">
@@ -221,7 +221,7 @@
                                         @endif
                                     </p>
                                     @if (request('status'))
-                                        <a href="{{ route('admin.lowongan.index') }}" class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white bg-slate-900 hover:bg-slate-800 rounded-lg shadow-sm transition">
+                                        <a href="{{ route('admin.lowongan.index') }}" class="inline-flex items-center justify-center gap-1.5 min-h-11 px-4 py-2.5 text-sm font-medium text-white bg-slate-900 hover:bg-slate-800 rounded-xl shadow-sm transition w-full sm:w-auto">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
                                             </svg>

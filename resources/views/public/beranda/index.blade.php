@@ -48,16 +48,16 @@
                     {{ $heroDescription }}
                 </p>
                 
-                <div class="flex flex-wrap gap-4 mb-12">
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 mb-10 sm:mb-12">
                     <a href="{{ $heroPrimaryUrl }}" 
-                       class="group relative inline-flex items-center gap-2 bg-blue-400 hover:bg-blue-500 text-slate-900 text-sm font-bold px-8 py-4 rounded-xl shadow-lg transition-all duration-300 hover:-translate-y-1">
+                       class="group relative inline-flex min-h-12 w-full sm:w-auto items-center justify-center gap-2 bg-blue-400 hover:bg-blue-500 text-slate-900 text-sm font-bold px-6 py-3.5 sm:px-8 sm:py-4 rounded-xl shadow-lg transition-all duration-300 hover:-translate-y-1">
                         <span class="relative">{{ $heroPrimaryLabel }}</span>
                         <svg class="w-4 h-4 relative group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                         </svg>
                     </a>
                     <a href="{{ $heroSecondaryUrl }}" 
-                       class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white text-sm font-semibold px-8 py-4 rounded-xl transition-all duration-300 hover:-translate-y-1">
+                       class="inline-flex min-h-12 w-full sm:w-auto items-center justify-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white text-sm font-semibold px-6 py-3.5 sm:px-8 sm:py-4 rounded-xl transition-all duration-300 hover:-translate-y-1">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
@@ -127,7 +127,7 @@
     {{-- QUICK LINKS - Premium Glassmorphism          --}}
     {{-- ============================================ --}}
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-14 relative z-20" data-aos="fade-up">
-        <div class="bg-white rounded-2xl shadow-xl border border-gray-100 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 divide-y sm:divide-y-0 sm:divide-x divide-gray-100">
+        <div class="bg-white rounded-2xl shadow-xl border border-gray-100 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 divide-y divide-gray-100 lg:divide-y-0 lg:divide-x">
             @foreach ([
                 ['label' => 'Lowongan Pekerjaan', 'desc' => 'Temukan peluang kerja sesuai minat Anda', 'icon' => 'M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z', 'url' => route('lowongan.index'), 'color' => 'bg-[#024CD4]'],
                 ['label' => 'Artikel Dunia Kerja', 'desc' => 'Tips, berita, dan informasi seputar dunia kerja', 'icon' => 'M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z', 'url' => route('artikel.index'), 'color' => 'bg-[#024CD4]'],
@@ -154,10 +154,10 @@
     {{-- LOWONGAN UNGGULAN - Enhanced Design          --}}
     {{-- ============================================ --}}
     @if ($lowonganUnggulan->isNotEmpty())
-        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-14">
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-14 overflow-hidden">
             <div class="grid lg:grid-cols-3 gap-8 items-stretch">
                 <div class="lg:col-span-2 flex flex-col">
-                    <div class="flex items-center justify-between mb-8" data-aos="fade-up">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-8" data-aos="fade-up">
                         <div>
                             <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 flex items-center gap-3">
                                 <span class="w-1 h-8 bg-[#024CD4] rounded-full"></span>
@@ -165,7 +165,7 @@
                             </h2>
                             <p class="text-gray-500 mt-2 text-sm">Peluang karier terbaik untuk masa depanmu</p>
                         </div>
-                        <a href="{{ route('lowongan.index') }}" class="group inline-flex items-center gap-2 text-sm font-semibold text-[#024CD4] hover:text-[#013ba8] bg-[#024CD4]/10 hover:bg-[#024CD4]/20 px-4 py-2 rounded-lg transition-all duration-200">
+                        <a href="{{ route('lowongan.index') }}" class="self-start sm:self-auto group inline-flex min-h-10 items-center gap-2 text-sm font-semibold text-[#024CD4] hover:text-[#013ba8] bg-[#024CD4]/10 hover:bg-[#024CD4]/20 px-4 py-2 rounded-xl transition-all duration-200">
                             Lihat Semua 
                             <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
@@ -233,7 +233,7 @@
                 </div>
 
                 {{-- CTA Box - Enhanced (Matching Image Design) --}}
-                <div class="relative bg-[#024CD4] rounded-2xl p-8 lg:p-10 text-white flex flex-col justify-between shadow-xl overflow-hidden h-full" data-aos="fade-left">
+                <div class="relative bg-[#024CD4] rounded-2xl p-8 lg:p-10 text-white flex flex-col justify-between shadow-xl overflow-hidden h-full" data-aos="fade-up">
 
                     {{-- Decorative Curved Shapes (Right Side) --}}
                     <div class="absolute top-0 right-0 w-64 h-64 lg:w-80 lg:h-80">
@@ -291,17 +291,17 @@
     {{-- ============================================ --}}
     {{-- LOWONGAN & ARTIKEL TERBARU                   --}}
     {{-- ============================================ --}}
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-14 grid lg:grid-cols-2 gap-8 lg:gap-12">
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-14 grid lg:grid-cols-2 gap-8 lg:gap-12 overflow-hidden">
         {{-- Lowongan Terbaru --}}
         <div data-aos="fade-up">
-            <div class="flex items-center justify-between mb-6">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
                 <div>
                     <h2 class="text-2xl font-bold text-gray-900 flex items-center gap-3">
                         <span class="w-1 h-8 bg-[#024CD4] rounded-full"></span>
                         Lowongan Terbaru
                     </h2>
                 </div>
-                <a href="{{ route('lowongan.index') }}" class="group inline-flex items-center gap-2 text-sm font-semibold text-[#024CD4] hover:text-[#013ba8] bg-[#024CD4]/10 hover:bg-[#024CD4]/20 px-4 py-2 rounded-lg transition-all">
+                <a href="{{ route('lowongan.index') }}" class="self-start sm:self-auto group inline-flex min-h-10 items-center gap-2 text-sm font-semibold text-[#024CD4] hover:text-[#013ba8] bg-[#024CD4]/10 hover:bg-[#024CD4]/20 px-4 py-2 rounded-xl transition-all">
                     Lihat Semua 
                     <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
@@ -310,8 +310,8 @@
             </div>
             <div class="bg-white rounded-2xl border border-gray-100 shadow-lg shadow-gray-100/50 divide-y divide-gray-50 overflow-hidden">
                 @forelse ($lowonganTerbaru as $item)
-                    <a href="{{ route('lowongan.show', $item) }}" class="group flex items-center justify-between gap-4 p-5 hover:bg-gradient-to-r hover:from-[#024CD4]/5 hover:to-transparent transition-all duration-200">
-                        <span class="flex items-center gap-4 min-w-0">
+                    <a href="{{ route('lowongan.show', $item) }}" class="group flex items-center justify-between gap-3 sm:gap-4 p-4 sm:p-5 hover:bg-gradient-to-r hover:from-[#024CD4]/5 hover:to-transparent transition-all duration-200">
+                        <span class="flex items-center gap-3 sm:gap-4 min-w-0">
                             <span class="w-12 h-12 rounded-xl bg-gradient-to-br from-[#024CD4]/10 to-[#024CD4]/20 flex items-center justify-center text-[#024CD4] text-sm font-bold overflow-hidden flex-shrink-0 ring-2 ring-[#024CD4]/20 group-hover:ring-[#024CD4]/40 transition-all">
                                 @if ($item->mitra->logo)
                                     <img src="{{ Storage::url($item->mitra->logo) }}" class="w-full h-full object-cover" alt="{{ $item->mitra->nama_perusahaan }}">
@@ -329,8 +329,8 @@
                                 </span>
                             </span>
                         </span>
-                        <span class="flex items-center gap-3">
-                            <span class="text-xs font-semibold bg-gray-100 text-gray-600 px-3 py-1.5 rounded-lg whitespace-nowrap group-hover:bg-[#024CD4]/20 group-hover:text-[#013ba8] transition-colors">
+                        <span class="flex items-center gap-2 sm:gap-3 shrink-0">
+                            <span class="text-xs font-semibold bg-gray-100 text-gray-600 px-2.5 sm:px-3 py-1.5 rounded-lg whitespace-nowrap group-hover:bg-[#024CD4]/20 group-hover:text-[#013ba8] transition-colors">
                                 {{ $item->jenis_pekerjaan }}
                             </span>
                             <svg class="w-4 h-4 text-gray-400 group-hover:text-[#024CD4] group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -353,14 +353,14 @@
 
         {{-- Artikel Terbaru --}}
         <div data-aos="fade-up" data-aos-delay="100">
-            <div class="flex items-center justify-between mb-6">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
                 <div>
                     <h2 class="text-2xl font-bold text-gray-900 flex items-center gap-3">
                         <span class="w-1 h-8 bg-[#024CD4] rounded-full"></span>
                         Artikel Terbaru
                     </h2>
                 </div>
-                <a href="{{ route('artikel.index') }}" class="group inline-flex items-center gap-2 text-sm font-semibold text-emerald-600 hover:text-emerald-700 bg-emerald-50 hover:bg-emerald-100 px-4 py-2 rounded-lg transition-all">
+                <a href="{{ route('artikel.index') }}" class="self-start sm:self-auto group inline-flex min-h-10 items-center gap-2 text-sm font-semibold text-emerald-600 hover:text-emerald-700 bg-emerald-50 hover:bg-emerald-100 px-4 py-2 rounded-xl transition-all">
                     Lihat Semua 
                     <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
@@ -433,8 +433,8 @@
             </div>
 
             <div class="absolute inset-0 overflow-hidden pointer-events-none">
-                <div class="absolute -top-40 -right-40 w-[600px] h-[600px] bg-[#024CD4]/50 rounded-full filter blur-3xl opacity-15"></div>
-                <div class="absolute -bottom-40 -left-40 w-[600px] h-[600px] bg-[#024CD4]/70 rounded-full filter blur-3xl opacity-10"></div>
+                <div class="absolute -top-20 -right-20 sm:-top-40 sm:-right-40 w-72 h-72 sm:w-[500px] sm:h-[500px] lg:w-[600px] lg:h-[600px] bg-[#024CD4]/50 rounded-full filter blur-3xl opacity-15"></div>
+                <div class="absolute -bottom-20 -left-20 sm:-bottom-40 sm:-left-40 w-72 h-72 sm:w-[500px] sm:h-[500px] lg:w-[600px] lg:h-[600px] bg-[#024CD4]/70 rounded-full filter blur-3xl opacity-10"></div>
             </div>
 
             <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -729,7 +729,7 @@
     {{-- ============================================ --}}
     @php $totalAlumniBeranda = $alumniBekerja + $alumniBerwirausaha + $alumniMelanjutkanStudi; @endphp
     
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 overflow-hidden">
         <div class="text-center mb-12 lg:mb-16" data-aos="fade-up">
             <span class="inline-block px-4 py-1.5 rounded-full bg-[#024CD4]/10 text-[#024CD4] text-xs font-bold uppercase tracking-wider mb-4">Statistik Kami</span>
             <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 tracking-tight">
@@ -746,10 +746,10 @@
     
     {{-- Decorative Curve/Diagonal Background --}}
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
-        <svg class="absolute top-0 right-0 w-[120%] h-[120%] -translate-y-1/4 translate-x-1/4 opacity-10" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg class="absolute top-0 right-0 w-full h-full opacity-10" viewBox="0 0 400 400" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M0 400C100 300 200 200 400 0V400H0Z" fill="white"/>
         </svg>
-        <svg class="absolute top-0 right-0 w-[100%] h-[100%] -translate-y-1/4 translate-x-1/4 opacity-5" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg class="absolute top-0 right-0 w-full h-full opacity-5" viewBox="0 0 400 400" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M0 400C150 280 250 180 400 0V400H0Z" fill="white"/>
         </svg>
     </div>

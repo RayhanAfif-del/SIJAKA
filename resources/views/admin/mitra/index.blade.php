@@ -13,7 +13,7 @@
             <h1 class="text-2xl font-semibold text-slate-900 tracking-tight">Mitra Perusahaan</h1>
             <p class="text-sm text-slate-500 mt-1">Kelola akun perusahaan mitra SIJAKA dan pantau aktivitas mereka.</p>
         </div>
-        <a href="{{ route('admin.mitra.create') }}" class="inline-flex items-center gap-1.5 px-4 py-2.5 text-sm font-medium text-white bg-slate-900 hover:bg-slate-800 rounded-lg shadow-sm transition">
+        <a href="{{ route('admin.mitra.create') }}" class="inline-flex items-center justify-center gap-1.5 min-h-11 px-4 py-2.5 text-sm font-medium text-white bg-slate-900 hover:bg-slate-800 rounded-xl shadow-sm transition w-full sm:w-auto">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
             </svg>
@@ -24,7 +24,7 @@
     {{-- Table Container --}}
     <div class="bg-white border border-slate-200/70 rounded-xl shadow-sm overflow-hidden">
         <div class="overflow-x-auto">
-            <table class="w-full">
+            <table class="w-full min-w-[600px]">
                 <thead class="bg-slate-50/80 border-b border-slate-200">
                     <tr>
                         <th class="px-5 py-3.5 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">
@@ -90,7 +90,7 @@
                                 <div class="flex items-center justify-end gap-1.5">
                                     {{-- Edit --}}
                                     <a href="{{ route('admin.mitra.edit', $item) }}" 
-                                       class="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs font-medium text-blue-600 bg-blue-50 border border-blue-200 rounded-lg hover:bg-blue-100 hover:border-blue-300 transition"
+                                       class="table-action text-blue-600 bg-blue-50 border-blue-200 hover:bg-blue-100 hover:border-blue-300"
                                        title="Edit data mitra">
                                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
@@ -102,7 +102,7 @@
                                     <form method="POST" action="{{ route('admin.mitra.reset-password', $item) }}" onsubmit="return confirm('Apakah Anda yakin ingin mereset password mitra ini? Password akan direset ke default.')" class="inline">
                                         @csrf
                                         <button type="submit" 
-                                                class="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs font-medium text-amber-600 bg-amber-50 border border-amber-200 rounded-lg hover:bg-amber-100 hover:border-amber-300 transition"
+                                                class="table-action text-amber-600 bg-amber-50 border-amber-200 hover:bg-amber-100 hover:border-amber-300"
                                                 title="Reset password ke default">
                                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
@@ -116,7 +116,7 @@
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" 
-                                                class="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs font-medium text-red-600 bg-red-50 border border-red-200 rounded-lg hover:bg-red-100 hover:border-red-300 transition"
+                                                class="table-action text-red-600 bg-red-50 border-red-200 hover:bg-red-100 hover:border-red-300"
                                                 title="Hapus akun mitra">
                                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
@@ -139,7 +139,7 @@
                                     </div>
                                     <h3 class="text-base font-semibold text-slate-900 mb-1">Belum ada mitra terdaftar</h3>
                                     <p class="text-sm text-slate-500 mb-5 max-w-sm">Mulai tambahkan perusahaan mitra agar mereka dapat memposting lowongan kerja untuk alumni.</p>
-                                    <a href="{{ route('admin.mitra.create') }}" class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white bg-slate-900 hover:bg-slate-800 rounded-lg shadow-sm transition">
+                                    <a href="{{ route('admin.mitra.create') }}" class="inline-flex items-center justify-center gap-1.5 min-h-11 px-4 py-2.5 text-sm font-medium text-white bg-slate-900 hover:bg-slate-800 rounded-xl shadow-sm transition w-full sm:w-auto">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
                                         </svg>

@@ -7,10 +7,17 @@
 
     html {
         scroll-behavior: smooth;
+        overflow-x: clip;
     }
 
     body {
         @apply bg-slate-50 text-slate-800 antialiased;
+        overflow-x: clip;
+        max-width: 100vw;
+    }
+
+    [x-cloak] {
+        display: none !important;
     }
 
     ::selection {
@@ -85,8 +92,9 @@
        arbitrary padding values that become too small on phones. */
     .btn-primary,
     .btn-secondary,
-    .btn-danger {
-        @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition focus:outline-none focus:ring-4;
+    .btn-danger,
+    .btn-accent {
+        @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-xl px-4 sm:px-5 py-2.5 text-sm font-semibold transition focus:outline-none focus:ring-4 active:scale-[0.98];
     }
 
     .btn-primary {
@@ -94,15 +102,23 @@
     }
 
     .btn-secondary {
-        @apply border border-slate-200 bg-white text-slate-700 shadow-sm hover:border-slate-300 hover:bg-slate-50 focus:ring-slate-300/40;
+        @apply border border-slate-200 bg-white text-slate-700 shadow-sm hover:border-slate-300 hover:bg-slate-50 focus:ring-slate-300/40 font-medium;
     }
 
     .btn-danger {
-        @apply border border-red-200 bg-red-50 text-red-700 hover:border-red-300 hover:bg-red-100 focus:ring-red-200/50;
+        @apply border border-red-200 bg-red-50 text-red-700 hover:border-red-300 hover:bg-red-100 focus:ring-red-200/50 font-medium;
+    }
+
+    .btn-accent {
+        @apply bg-[#024CD4] text-white shadow-sm hover:bg-[#013ba8] focus:ring-blue-500/25;
     }
 
     .table-action {
-        @apply inline-flex min-h-10 items-center justify-center gap-1.5 rounded-lg border px-3 py-2 text-sm font-medium transition sm:min-h-9 sm:px-2.5 sm:py-1.5 sm:text-xs;
+        @apply inline-flex min-h-10 min-w-10 sm:min-h-9 sm:min-w-0 items-center justify-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs font-semibold transition active:scale-[0.96];
+    }
+
+    .admin-form-actions {
+        @apply flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5 w-full sm:w-auto;
     }
 
     .admin-filter-chip {
@@ -135,11 +151,11 @@
     }
 
     .admin-action-group {
-        @apply flex flex-wrap items-center justify-end gap-2;
+        @apply flex flex-wrap items-center justify-end gap-1.5;
     }
 
     .admin-action-link {
-        @apply inline-flex min-h-10 items-center justify-center gap-1.5 rounded-lg border px-3 py-2 text-sm font-medium transition sm:min-h-9 sm:px-2.5 sm:py-1.5 sm:text-xs;
+        @apply inline-flex min-h-10 min-w-10 sm:min-h-9 sm:min-w-0 items-center justify-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs font-semibold transition active:scale-[0.96];
     }
 
     .admin-empty-state {

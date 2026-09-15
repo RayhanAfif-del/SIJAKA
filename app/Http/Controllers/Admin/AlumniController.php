@@ -112,6 +112,9 @@ class AlumniController extends Controller
             'ringkasan'              => 'nullable|string',
             'keahlian'               => 'nullable|string',
             'portfolio_url'          => 'nullable|url',
+            'linkedin_url'           => 'nullable|string|max:255',
+            'instagram_url'          => 'nullable|string|max:255',
+            'tiktok_url'             => 'nullable|string|max:255',
             'is_visible'             => 'nullable|boolean',
             'talent_approval_status' => 'nullable|string',
         ]);

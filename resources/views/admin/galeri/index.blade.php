@@ -35,7 +35,7 @@
             <h1 class="text-2xl font-semibold text-slate-900 tracking-tight">Galeri Kegiatan</h1>
             <p class="text-sm text-slate-500 mt-1">Kelola dokumentasi foto kegiatan BKK yang tampil di halaman publik.</p>
         </div>
-        <a href="{{ route('admin.galeri.create') }}" class="inline-flex items-center gap-1.5 px-4 py-2.5 text-sm font-medium text-white bg-slate-900 hover:bg-slate-800 rounded-lg shadow-sm transition">
+        <a href="{{ route('admin.galeri.create') }}" class="btn-primary w-full sm:w-auto justify-center">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
             </svg>
@@ -72,14 +72,14 @@
             </div>
 
             <div class="flex gap-2">
-                <button type="submit" class="flex-1 lg:flex-none inline-flex items-center justify-center gap-1.5 rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800">
+                <button type="submit" class="flex-1 lg:flex-none min-h-11 inline-flex items-center justify-center gap-1.5 rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                     </svg>
                     Cari
                 </button>
                 @if (request()->filled('cari') || request()->filled('kategori'))
-                    <a href="{{ route('admin.galeri.index') }}" class="inline-flex items-center justify-center gap-1.5 rounded-lg border border-slate-200 px-3 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-50 hover:border-slate-300" title="Reset Filter">
+                    <a href="{{ route('admin.galeri.index') }}" class="min-h-11 min-w-11 inline-flex items-center justify-center gap-1.5 rounded-lg border border-slate-200 px-3 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-50 hover:border-slate-300" title="Reset Filter">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
                         </svg>
@@ -308,14 +308,14 @@
                     @endif
                 </p>
                 @if (request()->filled('cari') || request()->filled('kategori'))
-                    <a href="{{ route('admin.galeri.index') }}" class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white bg-slate-900 hover:bg-slate-800 rounded-lg shadow-sm transition">
+                    <a href="{{ route('admin.galeri.index') }}" class="btn-primary w-full sm:w-auto justify-center">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
                         </svg>
                         Reset Filter
                     </a>
                 @else
-                    <a href="{{ route('admin.galeri.create') }}" class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white bg-slate-900 hover:bg-slate-800 rounded-lg shadow-sm transition">
+                    <a href="{{ route('admin.galeri.create') }}" class="btn-primary w-full sm:w-auto justify-center">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
                         </svg>
@@ -364,7 +364,7 @@
         x-transition:leave-start="opacity-100"
         x-transition:leave-end="opacity-0"
         x-cloak
-        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/90 backdrop-blur-sm"
+        class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/90 backdrop-blur-sm"
         @click.self="isOpen = false">
 
         <div class="relative max-w-6xl w-full bg-white rounded-2xl shadow-2xl overflow-hidden" @click.stop>
@@ -392,7 +392,7 @@
                         </span>
                     </div>
                 </div>
-                <button type="button" @click="isOpen = false" class="p-2 rounded-lg hover:bg-slate-200 text-slate-500 hover:text-slate-700 transition shrink-0">
+                <button type="button" @click="isOpen = false" class="min-h-11 min-w-11 flex items-center justify-center rounded-lg hover:bg-slate-200 text-slate-500 hover:text-slate-700 transition shrink-0">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
                     </svg>
@@ -400,7 +400,7 @@
             </div>
 
             <div class="grid lg:grid-cols-[1fr_320px] bg-slate-950">
-                <div class="flex items-center justify-center p-4 md:p-6 min-h-[420px]">
+                <div class="flex items-center justify-center p-3 sm:p-4 md:p-6 min-h-[260px] sm:min-h-[420px]">
                     <template x-if="items.length">
                         <img :src="currentItem().url" :alt="currentItem().title || title" class="max-w-full max-h-[72vh] object-contain rounded-xl shadow-2xl bg-white/5">
                     </template>

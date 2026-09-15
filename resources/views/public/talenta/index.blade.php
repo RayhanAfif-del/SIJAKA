@@ -42,13 +42,13 @@
                     placeholder="Cari nama, jurusan, atau keahlian (contoh: Laravel, Akuntansi)..." 
                     class="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-200 focus:border-[#024CD4] focus:ring-2 focus:ring-[#024CD4]/20 text-sm outline-none transition placeholder:text-slate-400">
             </div>
-            <div class="flex gap-2">
-                <button type="submit" class="inline-flex items-center justify-center gap-2 rounded-xl bg-[#024CD4] px-6 py-3 text-sm font-semibold text-white hover:bg-blue-700 transition shadow-lg shadow-blue-600/20">
+            <div class="flex gap-2 w-full sm:w-auto">
+                <button type="submit" class="flex-1 sm:flex-none inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-[#024CD4] px-6 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 transition shadow-lg shadow-blue-600/20 active:scale-[0.98]">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                     Cari
                 </button>
                 @if (request()->filled('cari'))
-                    <a href="{{ route('talenta.index') }}" class="inline-flex items-center justify-center rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-600 hover:bg-slate-50 transition" title="Reset pencarian">
+                    <a href="{{ route('talenta.index') }}" class="inline-flex min-h-11 items-center justify-center rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-600 hover:bg-slate-50 transition" title="Reset pencarian">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                     </a>
                 @endif
@@ -127,7 +127,7 @@
                     @endif
 
                     {{-- Action Button --}}
-                    <a href="{{ route('talenta.show', $item) }}" class="mt-5 w-full inline-flex items-center justify-center gap-2 hover:bg-blue-700 bg-blue-600 text-white text-sm font-semibold py-3 rounded-xl transition-all duration-200 shadow-lg shadow-slate-900/10 hover:shadow-blue-600/20">
+                    <a href="{{ route('talenta.show', $item) }}" class="mt-5 w-full inline-flex min-h-11 items-center justify-center gap-2 hover:bg-blue-700 bg-blue-600 text-white text-sm font-semibold py-2.5 px-4 rounded-xl transition-all duration-200 shadow-lg shadow-slate-900/10 hover:shadow-blue-600/20 active:scale-[0.98]">
                         Lihat Profil Lengkap
                         <svg class="w-4 h-4 transition-transform group-hover/btn:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
                     </a>

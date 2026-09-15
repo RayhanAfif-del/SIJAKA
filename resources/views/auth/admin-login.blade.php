@@ -80,14 +80,14 @@
 
             <div class="relative z-10 w-full max-w-md">
                 {{-- Card Form --}}
-                <div class="bg-white rounded-2xl shadow-xl border border-slate-200/60 p-6 sm:p-8 lg:p-10">
-                    <div class="flex items-center gap-3 mb-8">
-                        <div class="w-12 h-12 rounded-xl flex items-center justify-center overflow-hidden bg-transparent">
+                <div class="bg-white rounded-2xl shadow-xl border border-slate-200/60 p-4 sm:p-8 lg:p-10">
+                    <div class="flex items-center gap-3 mb-6 sm:mb-8">
+                        <div class="w-12 h-12 rounded-xl flex items-center justify-center overflow-hidden bg-transparent shrink-0">
                             <x-application-logo class="w-full h-full object-contain" />
                         </div>
                         <div>
                             <p class="text-xs uppercase tracking-[0.2em] text-slate-400 font-semibold">Akses Terbatas</p>
-                            <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Panel Admin</h2>
+                            <h2 class="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">Panel Admin</h2>
                         </div>
                     </div>
 
@@ -129,20 +129,20 @@
 
                         {{-- Remember Me --}}
                         <div class="flex items-center justify-between gap-4">
-                            <label for="remember_me" class="flex items-center gap-2 text-sm text-slate-600 cursor-pointer">
+                            <label for="remember_me" class="flex min-h-11 items-center gap-2 text-sm text-slate-600 cursor-pointer">
                                 <input id="remember_me" type="checkbox" name="remember" class="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-2 focus:ring-blue-500/20 transition cursor-pointer">
                                 Ingat saya
                             </label>
                         </div>
 
                         {{-- Submit Button --}}
-                        <button type="submit" class="w-full rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-slate-900/20 transition-all duration-200 hover:bg-slate-800 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-slate-900/20 active:scale-[0.98]">
+                        <button type="submit" class="min-h-11 w-full rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-slate-900/20 transition-all duration-200 hover:bg-slate-800 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-slate-900/20 active:scale-[0.98]">
                             Masuk ke Panel Admin
                         </button>
                     </form>
 
                     <div class="mt-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-sm pt-6 border-t border-slate-100">
-                        <a href="{{ route('home') }}" class="text-slate-500 hover:text-blue-600 transition flex items-center gap-1">
+                        <a href="{{ route('home') }}" class="min-h-11 inline-flex items-center text-slate-500 hover:text-blue-600 transition gap-1">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
                             Kembali ke beranda
                         </a>

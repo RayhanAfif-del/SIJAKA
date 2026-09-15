@@ -49,13 +49,13 @@
             </div>
         @endif
 
-        <article class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 sm:p-8 lg:p-10" data-aos="fade-up">
+        <article class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 sm:p-8 lg:p-10" data-aos="fade-up">
             <div class="prose prose-slate max-w-none text-gray-600 leading-relaxed">
                 {!! nl2br(e($artikel->konten)) !!}
             </div>
 
             <div class="mt-10 pt-6 border-t border-gray-100">
-                <a href="{{ route('artikel.index') }}" class="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-700 transition">
+                <a href="{{ route('artikel.index') }}" class="inline-flex items-center justify-center gap-2 min-h-11 px-5 py-2.5 rounded-xl border border-gray-200 bg-white text-sm font-semibold text-gray-700 hover:text-blue-600 hover:border-blue-200 hover:bg-gray-50 transition shadow-sm w-full sm:w-auto">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
                     Kembali ke Artikel
                 </a>

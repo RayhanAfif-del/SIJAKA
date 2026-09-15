@@ -53,7 +53,7 @@
                 {{-- Header Card --}}
                 <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 sm:p-8" data-aos="fade-up">
                     <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
-                        <div class="flex items-start gap-4">
+                        <div class="flex flex-col sm:flex-row items-start gap-4 min-w-0">
                             <div class="w-16 h-16 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 text-lg font-bold overflow-hidden flex-shrink-0 ring-1 ring-blue-100">
                                 @if ($lowongan->mitra->logo)
                                     <img src="{{ Storage::url($lowongan->mitra->logo) }}" class="w-full h-full object-cover" alt="{{ $lowongan->mitra->nama_perusahaan }}">
@@ -61,7 +61,7 @@
                                     {{ strtoupper(substr($lowongan->mitra->nama_perusahaan, 0, 2)) }}
                                 @endif
                             </div>
-                            <div>
+                            <div class="min-w-0">
                                 <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-1">{{ $lowongan->posisi }}</h2>
                                 <p class="text-blue-600 font-medium mb-3">{{ $lowongan->mitra->nama_perusahaan }}</p>
                                 <div class="flex flex-wrap gap-3 text-sm text-gray-600">
@@ -139,7 +139,7 @@
             <div class="space-y-6 lg:sticky lg:top-24 lg:self-start">
                 
                 {{-- Ringkasan Lowongan --}}
-                <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6" data-aos="fade-left">
+                <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6" data-aos="fade-up">
                     <h3 class="font-bold text-gray-900 mb-5 flex items-center gap-2">
                         <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                         Ringkasan Lowongan
@@ -184,7 +184,7 @@
                     </dl>
 
                     <div class="mt-6 pt-6 border-t border-gray-100">
-                        <a href="{{ route('lowongan.index') }}" class="w-full inline-flex items-center justify-center gap-2 hover:bg-blue-700 bg-blue-600 text-white text-sm font-semibold py-3 rounded-xl transition-all duration-200 shadow-lg shadow-slate-900/10 hover:shadow-blue-600/20">
+                        <a href="{{ route('lowongan.index') }}" class="w-full inline-flex min-h-11 items-center justify-center gap-2 hover:bg-blue-700 bg-blue-600 text-white text-sm font-semibold py-2.5 px-4 rounded-xl transition-all duration-200 shadow-lg shadow-slate-900/10 hover:shadow-blue-600/20">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
                             Kembali ke Daftar
                         </a>
@@ -193,7 +193,7 @@
 
                 {{-- Lowongan Lainnya --}}
                 @if (isset($lowonganLainnya) && $lowonganLainnya->isNotEmpty())
-                    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6" data-aos="fade-left" data-aos-delay="100">
+                    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6" data-aos="fade-up" data-aos-delay="100">
                         <h3 class="font-bold text-gray-900 mb-4 flex items-center gap-2">
                             <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
                             Lowongan Lainnya

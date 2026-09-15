@@ -48,14 +48,14 @@
 
     {{-- Filter Kategori --}}
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-10 mb-10" data-aos="fade-up">
-        <div class="bg-white rounded-2xl shadow-xl border border-gray-100 p-5">
+        <div class="bg-white rounded-2xl shadow-xl border border-gray-100 p-4 sm:p-5">
             <div class="flex items-center gap-2 mb-3">
                 <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
                 <span class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Filter Kategori</span>
             </div>
             <div class="flex flex-wrap gap-2">
                 <a href="{{ route('galeri.index') }}" 
-                   class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 {{ !request('kategori') ? 'bg-blue-600 text-white shadow-md shadow-slate-900/20' : 'bg-gray-50 text-gray-600 hover:bg-gray-100 border border-gray-200' }}">
+                   class="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-medium min-h-9 sm:min-h-10 transition-all duration-200 {{ !request('kategori') ? 'bg-blue-600 text-white shadow-md shadow-slate-900/20' : 'bg-gray-50 text-gray-600 hover:bg-gray-100 border border-gray-200' }}">
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
                     Semua Kegiatan
                 </a>
@@ -65,7 +65,7 @@
                         $kc = $kategoriColors[$kategoriKey] ?? $kategoriColors['kegiatan lain'];
                     @endphp
                     <a href="{{ route('galeri.index', ['kategori' => $kategori]) }}" 
-                       class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 {{ request('kategori') === $kategori ? 'bg-blue-600 text-white shadow-md shadow-slate-900/20' : 'bg-gray-50 text-gray-600 hover:bg-gray-100 border border-gray-200' }}">
+                       class="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-medium min-h-9 sm:min-h-10 transition-all duration-200 {{ request('kategori') === $kategori ? 'bg-blue-600 text-white shadow-md shadow-slate-900/20' : 'bg-gray-50 text-gray-600 hover:bg-gray-100 border border-gray-200' }}">
                         <span class="w-1.5 h-1.5 rounded-full {{ $kc['dot'] }}"></span>
                         {{ $kategori }}
                     </a>
@@ -185,7 +185,7 @@
                                 Dokumentasi kegiatan BKK akan segera tersedia. Silakan kunjungi kami kembali nanti.
                             @endif
                         </p>
-                        <a href="{{ route('galeri.index') }}" class="inline-flex items-center gap-2 px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-sm font-semibold rounded-xl transition shadow-lg shadow-slate-900/10">
+                        <a href="{{ route('galeri.index') }}" class="inline-flex items-center justify-center gap-2 min-h-11 px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-sm font-semibold rounded-xl transition shadow-lg shadow-slate-900/10 w-full sm:w-auto">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
                             Lihat Semua Kegiatan
                         </a>
@@ -233,7 +233,7 @@
         x-transition:leave-start="opacity-100"
         x-transition:leave-end="opacity-0"
         x-cloak
-        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/90 backdrop-blur-sm"
+        class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/90 backdrop-blur-sm"
         @click.self="isOpen = false">
 
         <div class="relative max-w-6xl w-full bg-white rounded-2xl shadow-2xl overflow-hidden" @click.stop>
@@ -262,7 +262,7 @@
                         </span>
                     </div>
                 </div>
-                <button type="button" @click="isOpen = false" class="p-2 rounded-lg hover:bg-slate-200 text-slate-500 hover:text-slate-700 transition shrink-0">
+                <button type="button" @click="isOpen = false" class="min-h-11 min-w-11 inline-flex items-center justify-center p-2 rounded-xl hover:bg-slate-200 text-slate-500 hover:text-slate-700 transition shrink-0">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
                     </svg>
@@ -270,7 +270,7 @@
             </div>
 
             <div class="grid lg:grid-cols-[1fr_320px] bg-slate-950">
-                <div class="flex items-center justify-center p-4 md:p-6 min-h-[420px]">
+                <div class="flex items-center justify-center p-3 sm:p-4 md:p-6 min-h-[260px] sm:min-h-[420px]">
                     <template x-if="items.length">
                         <img :src="currentItem().url" :alt="currentItem().title || title" class="max-w-full max-h-[72vh] object-contain rounded-xl shadow-2xl bg-white/5">
                     </template>

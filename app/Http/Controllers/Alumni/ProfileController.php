@@ -29,28 +29,108 @@ class ProfileController extends Controller
         $alumni = $request->user();
 
         $validated = $request->validate([
-            'nama' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:alumni,email,' . $alumni->id,
-            'password' => 'nullable|confirmed|min:8',
-            'foto_path' => 'nullable|image|max:2048',
-            // add other fields as needed
+            'headline'      => 'nullable|string|max:255',
+            'ringkasan'     => 'nullable|string',
+            'keahlian'      => 'nullable|string|max:500',
+            'portfolio_url' => 'nullable|string|max:255',
+            'linkedin_url'  => 'nullable|string|max:255',
+            'instagram_url' => 'nullable|string|max:255',
+            'tiktok_url'    => 'nullable|string|max:255',
+            'foto'          => 'nullable|image|max:2048',
+            'cv'            => 'nullable|mimes:pdf,doc,docx|max:5120',
+            'portfolio'     => 'nullable|mimes:pdf,zip|max:10240',
+            'is_visible'    => 'nullable|boolean',
         ]);
 
-        if (isset($validated['password'])) {
-            $validated['password'] = bcrypt($validated['password']);
-        }
+        $data = [
+            'headline'      => $validated['headline'] ?? null,
+            'ringkasan'     => $validated['ringkasan'] ?? null,
+            'keahlian'      => $validated['keahlian'] ?? null,
+            'portfolio_url' => $this->normalizeUrl($validated['portfolio_url'] ?? null),
+            'linkedin_url'  => $this->normalizeSocialUrl($validated['linkedin_url'] ?? null, 'linkedin'),
+            'instagram_url' => $this->normalizeSocialUrl($validated['instagram_url'] ?? null, 'instagram'),
+            'tiktok_url'    => $this->normalizeSocialUrl($validated['tiktok_url'] ?? null, 'tiktok'),
+        ];
 
-        if ($request->hasFile('foto_path')) {
-            // store new photo and delete old one if exists
-            if ($alumni->foto_path) {
-                Storage::delete($alumni->foto_path);
+        // Foto Profil
+        if ($request->hasFile('foto')) {
+            if ($alumni->foto_path && Storage::disk('public')->exists($alumni->foto_path)) {
+                Storage::disk('public')->delete($alumni->foto_path);
             }
-            $validated['foto_path'] = $request->file('foto_path')->store('alumni/photos');
+            $data['foto_path'] = $request->file('foto')->store('alumni/photos', 'public');
         }
 
-        $alumni->update($validated);
+        // CV File
+        if ($request->hasFile('cv')) {
+            if ($alumni->cv_path && Storage::disk('local')->exists($alumni->cv_path)) {
+                Storage::disk('local')->delete($alumni->cv_path);
+            }
+            $data['cv_path'] = $request->file('cv')->store('alumni/cv', 'local');
+        }
 
-        return redirect()->route('alumni.dashboard')->with('status', 'Profil berhasil diperbarui.');
+        // Portfolio File
+        if ($request->hasFile('portfolio')) {
+            if ($alumni->portfolio_path && Storage::disk('local')->exists($alumni->portfolio_path)) {
+                Storage::disk('local')->delete($alumni->portfolio_path);
+            }
+            $data['portfolio_path'] = $request->file('portfolio')->store('alumni/portfolios', 'local');
+        }
+
+        // Talent Pool Visibility & Approval
+        $wantsPublication = $request->boolean('is_visible');
+        if ($wantsPublication) {
+            if ($alumni->talent_approval_status === 'disetujui') {
+                $data['is_visible'] = true;
+            } else {
+                $data['talent_approval_status'] = 'menunggu';
+                $data['is_visible'] = false;
+            }
+        } else {
+            $data['is_visible'] = false;
+        }
+
+        $alumni->update($data);
+
+        return redirect()->route('alumni.profile.edit')->with('status', 'Profil talenta berhasil diperbarui.');
+    }
+
+    /**
+     * Normalize standard URL.
+     */
+    protected function normalizeUrl(?string $url): ?string
+    {
+        if (!$url || trim($url) === '') {
+            return null;
+        }
+        $url = trim($url);
+        if (!preg_match('~^(?:f|ht)tps?://~i', $url)) {
+            $url = 'https://' . $url;
+        }
+        return filter_var($url, FILTER_VALIDATE_URL) ? $url : null;
+    }
+
+    /**
+     * Normalize social media URL or handle.
+     */
+    protected function normalizeSocialUrl(?string $value, string $platform): ?string
+    {
+        if (!$value || trim($value) === '') {
+            return null;
+        }
+        $value = trim($value);
+
+        if (str_starts_with($value, 'http://') || str_starts_with($value, 'https://')) {
+            return $value;
+        }
+
+        $clean = ltrim($value, '@');
+
+        return match ($platform) {
+            'linkedin'  => str_contains($value, 'linkedin.com') ? 'https://' . ltrim($value, '/') : 'https://www.linkedin.com/in/' . $clean,
+            'instagram' => str_contains($value, 'instagram.com') ? 'https://' . ltrim($value, '/') : 'https://www.instagram.com/' . $clean,
+            'tiktok'    => str_contains($value, 'tiktok.com') ? 'https://' . ltrim($value, '/') : 'https://www.tiktok.com/@' . $clean,
+            default     => 'https://' . $value,
+        };
     }
 
     /**

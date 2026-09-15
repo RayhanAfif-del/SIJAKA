@@ -165,31 +165,33 @@
                     </div>
 
                     @if ($mapSource !== '')
-                        <div class="relative isolate min-h-[360px] lg:min-h-[560px] bg-slate-100">
-                            <iframe
-                                title="Peta Lokasi BKK SMK N 1 Bangsri"
-                                src="{{ $mapEmbedUrl }}"
-                                class="absolute inset-0 h-full w-full grayscale-[10%] transition-all duration-500 hover:grayscale-0"
-                                style="border: 0;"
-                                loading="lazy"
-                                referrerpolicy="no-referrer-when-downgrade"
-                            ></iframe>
-                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/10 via-transparent to-transparent pointer-events-none"></div>
-                            <a href="{{ $mapOpenUrl }}" target="_blank" rel="noopener noreferrer" class="absolute right-4 top-4 inline-flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 text-sm font-semibold text-slate-800 shadow-lg shadow-slate-900/10 ring-1 ring-black/5 backdrop-blur transition hover:-translate-y-0.5 hover:bg-white" aria-label="Buka lokasi di Google Maps">
-                                <svg class="h-4 w-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
-                                </svg>
-                                Buka Maps
-                            </a>
+                        <div class="relative isolate bg-slate-100 flex flex-col sm:block min-h-[320px] sm:min-h-[360px] lg:min-h-[560px]">
+                            <div class="relative w-full h-[280px] sm:h-full sm:min-h-[360px] lg:min-h-[560px]">
+                                <iframe
+                                    title="Peta Lokasi BKK SMK N 1 Bangsri"
+                                    src="{{ $mapEmbedUrl }}"
+                                    class="absolute inset-0 h-full w-full grayscale-[10%] transition-all duration-500 hover:grayscale-0"
+                                    style="border: 0;"
+                                    loading="lazy"
+                                    referrerpolicy="no-referrer-when-downgrade"
+                                ></iframe>
+                                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/10 via-transparent to-transparent pointer-events-none"></div>
+                                <a href="{{ $mapOpenUrl }}" target="_blank" rel="noopener noreferrer" class="absolute right-3 top-3 sm:right-4 sm:top-4 inline-flex items-center gap-1.5 sm:gap-2 rounded-full bg-white/95 px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-semibold text-slate-800 shadow-lg shadow-slate-900/10 ring-1 ring-black/5 backdrop-blur transition hover:-translate-y-0.5 hover:bg-white" aria-label="Buka lokasi di Google Maps">
+                                    <svg class="h-3.5 w-3.5 sm:h-4 sm:w-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                                    </svg>
+                                    Buka Maps
+                                </a>
+                            </div>
 
-                            <div class="absolute inset-x-0 bottom-0 p-4 sm:p-5">
-                                <div class="rounded-2xl border border-white/60 bg-white/90 p-4 shadow-xl shadow-slate-900/10 backdrop-blur">
+                            <div class="p-4 sm:absolute sm:inset-x-0 sm:bottom-0 sm:p-5">
+                                <div class="rounded-2xl border border-slate-200 sm:border-white/60 bg-white sm:bg-white/90 p-4 shadow-sm sm:shadow-xl shadow-slate-900/10 backdrop-blur">
                                     <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                                         <div class="min-w-0">
                                             <div class="flex items-center gap-2">
                                                 <span class="inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-xl bg-blue-600 text-white">
                                                     <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"/>
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.828 0l-4.244-4.243a8 8 0 1111.314 0z"/>
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                                                     </svg>
                                                 </span>
@@ -199,7 +201,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <a href="{{ $mapOpenUrl }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-800">
+                                        <a href="{{ $mapOpenUrl }}" target="_blank" rel="noopener noreferrer" class="inline-flex min-h-10 items-center justify-center rounded-xl sm:rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-800 w-full sm:w-auto">
                                             Buka tab baru
                                         </a>
                                     </div>

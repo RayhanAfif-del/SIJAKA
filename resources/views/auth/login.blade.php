@@ -80,14 +80,14 @@
 
             <div class="relative z-10 w-full max-w-md">
                 {{-- Card Form --}}
-                <div class="bg-white rounded-2xl shadow-xl border border-slate-200/60 p-5 sm:p-8 lg:p-10">
-                    <div class="flex items-center gap-3 mb-8">
-                        <div class="w-12 h-12 rounded-xl flex items-center justify-center overflow-hidden bg-transparent">
+                <div class="bg-white rounded-2xl shadow-xl border border-slate-200/60 p-4 sm:p-8 lg:p-10">
+                    <div class="flex items-center gap-3 mb-6 sm:mb-8">
+                        <div class="w-12 h-12 rounded-xl flex items-center justify-center overflow-hidden bg-transparent shrink-0">
                             <x-application-logo class="w-full h-full object-contain" />
                         </div>
                         <div>
                             <p class="text-xs uppercase tracking-[0.2em] text-slate-400 font-semibold">Masuk ke aplikasi</p>
-                            <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Login SIJAKA</h2>
+                            <h2 class="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">Login SIJAKA</h2>
                         </div>
                     </div>
 
@@ -100,20 +100,20 @@
 
                     {{-- SiPintu SSO Quick Access --}}
                     <div class="mb-6">
-                        <a href="{{ route('sipintu.redirect') }}" class="group relative flex min-h-12 w-full items-center justify-center gap-3 px-5 py-3 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-700 hover:to-indigo-800 text-white rounded-xl font-semibold text-sm shadow-md hover:shadow-lg transition-all duration-200 active:scale-[0.98] text-center">
-                            <svg class="w-5 h-5 text-white transition group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <a href="{{ route('sipintu.redirect') }}" class="group relative flex min-h-11 sm:min-h-12 w-full items-center justify-center gap-2 sm:gap-3 px-3 sm:px-5 py-2.5 sm:py-3 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-700 hover:to-indigo-800 text-white rounded-xl font-semibold text-xs sm:text-sm shadow-md hover:shadow-lg transition-all duration-200 active:scale-[0.98] text-center">
+                            <svg class="w-4 h-4 sm:w-5 sm:h-5 text-white transition group-hover:scale-110 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
                             </svg>
                             <span>Masuk dengan Akun SiPintu (SSO)</span>
                         </a>
-                        <p class="mt-2 text-center text-xs text-slate-500">
+                        <p class="mt-2 text-center text-[11px] sm:text-xs text-slate-500">
                             Password & data akun otomatis tersinkronisasi langsung dari aplikasi SiPintu.
                         </p>
                     </div>
 
                     <div class="relative my-6 text-center">
                         <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-slate-200"></div></div>
-                        <div class="relative"><span class="bg-white px-3 text-xs uppercase tracking-wider text-slate-400 font-medium">atau masuk dengan email / nis</span></div>
+                        <div class="relative"><span class="bg-white px-3 text-[11px] sm:text-xs uppercase tracking-wider text-slate-400 font-medium">atau masuk dengan email / nis</span></div>
                     </div>
 
                     <form method="POST" action="{{ route('login') }}" x-data="{ role: '{{ old('role', 'mitra') }}' }" class="space-y-5">
@@ -125,12 +125,12 @@
                             <div class="grid grid-cols-2 gap-1">
                                 <button type="button" @click="role = 'mitra'"
                                     :class="role === 'mitra' ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200' : 'text-slate-500 hover:text-slate-700 hover:bg-slate-100'"
-                                    class="min-h-11 rounded-lg px-4 py-2.5 text-sm font-semibold transition-all duration-200">
+                                    class="min-h-11 rounded-lg px-2 sm:px-4 py-2 text-xs sm:text-sm font-semibold transition-all duration-200 flex items-center justify-center">
                                     Mitra Perusahaan
                                 </button>
                                 <button type="button" @click="role = 'alumni'"
                                     :class="role === 'alumni' ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200' : 'text-slate-500 hover:text-slate-700 hover:bg-slate-100'"
-                                    class="min-h-11 rounded-lg px-2 py-2.5 text-sm font-semibold transition-all duration-200">
+                                    class="min-h-11 rounded-lg px-2 py-2 text-xs sm:text-sm font-semibold transition-all duration-200 flex items-center justify-center">
                                     Alumni
                                 </button>
                             </div>

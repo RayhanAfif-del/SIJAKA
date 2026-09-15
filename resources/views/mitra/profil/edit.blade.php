@@ -191,17 +191,14 @@
                 </div>
             </div>
 
-            {{-- Submit Actions --}}
-            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-5 bg-white border border-slate-200/80 rounded-2xl shadow-sm">
-                <p class="text-xs text-slate-500 flex items-start gap-2">
-                    <svg class="w-4 h-4 text-[#024CD4] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-                    </svg>
+            {{-- Submit Action Bar --}}
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-5 sm:p-6 bg-white border border-slate-200/80 rounded-2xl shadow-sm">
+                <p class="text-xs text-slate-500 leading-relaxed max-w-sm">
                     Perubahan akan langsung diterapkan pada profil perusahaan Anda di halaman publik dan daftar lowongan.
                 </p>
-                <div class="flex items-center gap-3">
-                    <a href="{{ route('mitra.dashboard') }}" class="px-5 py-2.5 text-sm font-semibold text-slate-700 bg-white border border-slate-200 hover:bg-slate-50 rounded-xl transition">Batal</a>
-                    <button type="submit" class="inline-flex items-center gap-2 px-6 py-2.5 text-sm font-semibold text-white bg-[#024CD4] hover:bg-blue-700 rounded-xl shadow-lg shadow-blue-600/20 transition-all duration-200 hover:-translate-y-0.5">
+                <div class="admin-form-actions">
+                    <a href="{{ route('mitra.dashboard') }}" class="btn-secondary w-full sm:w-auto justify-center">Batal</a>
+                    <button type="submit" class="btn-primary w-full sm:w-auto justify-center">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
                         </svg>

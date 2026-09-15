@@ -11,17 +11,17 @@
                 Selamat datang kembali, <span class="font-medium text-slate-700">{{ auth('admin')->user()->name }}</span> 👋
             </p>
         </div>
-        <div class="flex items-center gap-2">
-            <form method="POST" action="{{ route('admin.dashboard.sync-sipintu') }}">
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto">
+            <form method="POST" action="{{ route('admin.dashboard.sync-sipintu') }}" class="w-full sm:w-auto">
                 @csrf
-                <button type="submit" class="inline-flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-lg shadow-sm transition">
+                <button type="submit" class="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 min-h-11 px-4 py-2.5 text-sm font-medium text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-xl shadow-sm transition">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h5M20 20v-5h-5M5.5 15a7 7 0 0011.9 1.9L20 15M4 9l2.6-1.9A7 7 0 0118.5 9"/>
                     </svg>
                     Sinkronkan SiPintu
                 </button>
             </form>
-            <a href="{{ route('admin.lowongan.index') }}" class="inline-flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium text-white bg-slate-900 hover:bg-slate-800 rounded-lg shadow-sm transition">
+            <a href="{{ route('admin.lowongan.index') }}" class="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 min-h-11 px-4 py-2.5 text-sm font-medium text-white bg-slate-900 hover:bg-slate-800 rounded-xl shadow-sm transition">
                 Kelola Lowongan
             </a>
         </div>
@@ -289,7 +289,7 @@
             </div>
 
             @if ($lowonganMenunggu->isNotEmpty())
-                <a href="{{ route('admin.lowongan.index', ['status' => 'menunggu']) }}" class="flex items-center justify-center gap-1.5 w-full mt-4 pt-4 border-t border-slate-100 text-sm font-medium text-blue-600 hover:text-blue-700 transition">
+                <a href="{{ route('admin.lowongan.index', ['status' => 'menunggu']) }}" class="flex items-center justify-center gap-1.5 w-full mt-4 pt-4 border-t border-slate-100 min-h-11 text-sm font-medium text-blue-600 hover:text-blue-700 transition">
                     Lihat semua
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
@@ -460,7 +460,7 @@
                         </span>
                     </div>
                 </div>
-                <button type="button" @click="isOpen = false" class="p-2 rounded-lg hover:bg-slate-200 text-slate-500 hover:text-slate-700 transition shrink-0">
+                <button type="button" @click="isOpen = false" class="min-h-11 min-w-11 inline-flex items-center justify-center p-2 rounded-xl hover:bg-slate-200 text-slate-500 hover:text-slate-700 transition shrink-0">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
                     </svg>
@@ -468,7 +468,7 @@
             </div>
 
             <div class="grid lg:grid-cols-[1fr_320px] bg-slate-950">
-                <div class="flex items-center justify-center p-4 md:p-6 min-h-[420px]">
+                <div class="flex items-center justify-center p-3 sm:p-4 md:p-6 min-h-[260px] sm:min-h-[420px]">
                     <template x-if="items.length">
                         <img :src="currentItem().url" :alt="currentItem().title || title" class="max-w-full max-h-[72vh] object-contain rounded-xl shadow-2xl bg-white/5">
                     </template>

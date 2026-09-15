@@ -15,6 +15,17 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->redirectUsersTo(function (Request $request) {
+            if ($request->is('panel-sijaka')) {
+                if (Auth::guard('mitra')->check()) {
+                    return route('mitra.dashboard');
+                }
+                return route('alumni.dashboard');
+            }
+
+            if ($request->is('pane-admin-sijaka') || $request->is('panel-admin-sijaka')) {
+                return route('admin.dashboard');
+            }
+
             return match (true) {
                 Auth::guard('admin')->check() => route('admin.dashboard'),
                 Auth::guard('mitra')->check() => route('mitra.dashboard'),
