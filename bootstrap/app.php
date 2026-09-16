@@ -39,6 +39,11 @@ return Application::configure(basePath: dirname(__DIR__))
                 ? route('admin.login')
                 : route('login');
         });
+
+        $middleware->validateCsrfTokens(except: [
+            'api/*',
+            'health',
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(

@@ -31,6 +31,9 @@ Route::get('/talenta/{alumni}', [TalentaController::class, 'show'])->name('talen
 
 Route::get('/kontak', [KontakController::class, 'index'])->name('kontak.index');
 
+// Endpoint pemantauan health check downstream untuk SiPintu (/health)
+Route::match(['get', 'head'], '/health', [\App\Http\Controllers\Api\SipintuWebhookController::class, 'health'])->name('health');
+
 require __DIR__.'/auth.php';
 require __DIR__.'/alumni.php';
 require __DIR__.'/admin.php';
