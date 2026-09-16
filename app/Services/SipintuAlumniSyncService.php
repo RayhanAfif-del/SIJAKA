@@ -15,9 +15,9 @@ class SipintuAlumniSyncService
 
     /**
      * Sync alumni records from SiPintu API Gateway.
-     * Only processes students where classroom and classroom_id are null.
+     * Only processes students where graduated is true.
      *
-     * @param bool $deleteDummy Whether to delete dummy alumni records (nis is null or empty)
+     * @param bool $deleteDummy Whether to delete dummy alumni records (nis is null or empty) and non-graduated records
      * @return array{synced: int, total_received: int}
      */
     public function sync(bool $deleteDummy = false): array
@@ -32,17 +32,18 @@ class SipintuAlumniSyncService
         Cache::put('sipintu.students', $payload, now()->addHour());
 
         $records = $this->extractRecords($payload);
-        $alumniRecords = $this->filterOnlyNullClassroom($records);
+        $alumniRecords = $this->filterGraduatedStudents($records);
 
         $synced = 0;
-        $this->db->transaction(function () use ($alumniRecords, $deleteDummy, &$synced): void {
+        $this->db->transaction(function () use ($records, $alumniRecords, $deleteDummy, &$synced): void {
             if ($deleteDummy) {
                 $this->deleteDummyAlumni();
+                $this->pruneNonGraduatedAlumni($records);
             }
 
             foreach ($alumniRecords as $student) {
                 $nis = (string) data_get($student, 'nis');
-                $sourceEmail = data_get($student, 'user.email');
+                $sourceEmail = data_get($student, 'user.email') ?? data_get($student, 'email');
                 $email = is_string($sourceEmail) && filter_var($sourceEmail, FILTER_VALIDATE_EMAIL)
                     ? $sourceEmail
                     : null;
@@ -54,32 +55,54 @@ class SipintuAlumniSyncService
                 $existing = Alumni::where('nis', $nis)->first()
                     ?? ($email ? Alumni::where('email', $email)->first() : null);
 
-                $attributes = [
-                    'nis' => $nis,
-                    'nama' => data_get($student, 'nama', data_get($student, 'user.name', 'Alumni SiPintu')),
-                    'jurusan' => 'Belum ditentukan',
-                    'tahun_lulus' => (string) config('services.sipintu.default_graduation_year', date('Y')),
-                    'status' => 'Belum Bekerja',
-                ];
-
-                if ($email) {
-                    $attributes['email'] = $email;
-                }
+                $nama = data_get($student, 'nama', data_get($student, 'user.name', 'Alumni SiPintu'));
+                $jurusan = $this->determineJurusan($student);
+                $tahunLulus = $this->determineTahunLulus($student);
 
                 $rawPassword = (string) (data_get($student, 'password')
                     ?? data_get($student, 'user.password')
                     ?? 'password');
 
                 if ($existing) {
+                    $updateAttributes = [
+                        'nama' => $nama,
+                    ];
+
+                    if ($email) {
+                        $updateAttributes['email'] = $email;
+                    }
+
+                    if ($existing->jurusan === 'Belum ditentukan' && $jurusan !== 'Belum ditentukan') {
+                        $updateAttributes['jurusan'] = $jurusan;
+                    }
+
+                    if (blank($existing->tahun_lulus) || $existing->tahun_lulus === '') {
+                        $updateAttributes['tahun_lulus'] = $tahunLulus;
+                    }
+
                     if (blank($existing->password) && $rawPassword !== '') {
-                        $attributes['password'] = $rawPassword;
+                        $updateAttributes['password'] = $rawPassword;
                     }
-                    $existing->update($attributes);
+
+                    $existing->update($updateAttributes);
                 } else {
-                    if ($rawPassword !== '') {
-                        $attributes['password'] = $rawPassword;
+                    $createAttributes = [
+                        'nis' => $nis,
+                        'nama' => $nama,
+                        'jurusan' => $jurusan,
+                        'tahun_lulus' => $tahunLulus,
+                        'status' => 'Belum Bekerja',
+                    ];
+
+                    if ($email) {
+                        $createAttributes['email'] = $email;
                     }
-                    Alumni::create($attributes);
+
+                    if ($rawPassword !== '') {
+                        $createAttributes['password'] = $rawPassword;
+                    }
+
+                    Alumni::create($createAttributes);
                 }
                 $synced++;
             }
@@ -102,13 +125,107 @@ class SipintuAlumniSyncService
     }
 
     /**
-     * Strictly filter records where classroom is null.
+     * Prune alumni in SIJAKA who are present in SiPintu data but marked as NOT graduated.
+     */
+    public function pruneNonGraduatedAlumni(array $records): int
+    {
+        $nonGraduatedNis = [];
+        foreach ($records as $record) {
+            $graduated = data_get($record, 'graduated', data_get($record, 'user.graduated'));
+            $isGrad = filter_var($graduated, FILTER_VALIDATE_BOOLEAN) === true
+                || $graduated === 1
+                || $graduated === '1'
+                || $graduated === true;
+
+            if (! $isGrad) {
+                $nis = (string) data_get($record, 'nis');
+                if ($nis !== '') {
+                    $nonGraduatedNis[] = $nis;
+                }
+            }
+        }
+
+        if (! empty($nonGraduatedNis)) {
+            return Alumni::whereIn('nis', $nonGraduatedNis)->delete();
+        }
+
+        return 0;
+    }
+
+    /**
+     * Filter records where graduated is true.
+     */
+    public function filterGraduatedStudents(array $records): array
+    {
+        return array_values(array_filter($records, function (mixed $record): bool {
+            $graduated = data_get($record, 'graduated', data_get($record, 'user.graduated'));
+
+            return filter_var($graduated, FILTER_VALIDATE_BOOLEAN) === true
+                || $graduated === 1
+                || $graduated === '1'
+                || $graduated === true;
+        }));
+    }
+
+    /**
+     * @deprecated Gunakan filterGraduatedStudents(). Dipertahankan untuk kompatibilitas.
      */
     public function filterOnlyNullClassroom(array $records): array
     {
-        return array_values(array_filter($records, function (mixed $record): bool {
-            return is_null(data_get($record, 'classroom')) && is_null(data_get($record, 'classroom_id'));
-        }));
+        return $this->filterGraduatedStudents($records);
+    }
+
+    /**
+     * Determine major (jurusan) from classroom name or student record.
+     */
+    public function determineJurusan(mixed $student): string
+    {
+        $className = (string) (data_get($student, 'classroom.name') ?? data_get($student, 'classroom_name') ?? '');
+        if ($className !== '') {
+            $majorMap = [
+                'PPLG' => 'Pengembangan Perangkat Lunak dan Gim',
+                'RPL' => 'Rekayasa Perangkat Lunak',
+                'AKL' => 'Akuntansi dan Keuangan Lembaga',
+                'MPLB' => 'Manajemen Perkantoran dan Layanan Bisnis',
+                'PM' => 'Pemasaran',
+                'TO' => 'Teknik Otomotif',
+                'DKV' => 'Desain Komunikasi Visual',
+                'TKJ' => 'Teknik Komputer dan Jaringan',
+                'TBSM' => 'Teknik Bisnis Sepeda Motor',
+            ];
+
+            foreach ($majorMap as $code => $fullName) {
+                if (preg_match('/\b' . preg_quote($code, '/') . '\b/i', $className)) {
+                    return $fullName;
+                }
+            }
+
+            if (preg_match('/^(?:X|XI|XII)\s+([A-Za-z]+)/i', $className, $matches)) {
+                return strtoupper($matches[1]);
+            }
+
+            return $className;
+        }
+
+        return (string) (data_get($student, 'jurusan') ?? 'Belum ditentukan');
+    }
+
+    /**
+     * Determine graduation year from student record.
+     */
+    public function determineTahunLulus(mixed $student): string
+    {
+        $year = data_get($student, 'tahun_lulus', data_get($student, 'graduation_year'));
+        if ($year && is_numeric($year)) {
+            return (string) $year;
+        }
+
+        $gradDate = data_get($student, 'graduated_at', data_get($student, 'updated_at'));
+        if ($gradDate && strtotime((string) $gradDate)) {
+            return date('Y', strtotime((string) $gradDate));
+        }
+
+        return (string) config('services.sipintu.default_graduation_year', date('Y'));
     }
 
     private function extractRecords(mixed $payload): array

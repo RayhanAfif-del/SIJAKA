@@ -27,7 +27,7 @@ class DashboardController extends Controller
 
             return redirect()->route('admin.dashboard')->with(
                 'status',
-                "Sinkronisasi SiPintu berhasil. {$syncedAlumni} data alumni (classroom = null) dari {$totalReceived} data yang diterima berhasil disinkronkan."
+                "Sinkronisasi SiPintu berhasil. {$syncedAlumni} data alumni (graduated = true) dari {$totalReceived} data yang diterima berhasil disinkronkan."
             );
         } catch (\Throwable $exception) {
             Log::warning('SiPintu dashboard synchronization failed', [
@@ -145,11 +145,12 @@ class DashboardController extends Controller
     private function alumniRecords(array $records): array
     {
         return array_values(array_filter($records, function (mixed $record): bool {
-            $role = data_get($record, 'role', data_get($record, 'user.role'));
+            $graduated = data_get($record, 'graduated', data_get($record, 'user.graduated'));
 
-            return $role !== null
-                ? strtolower((string) $role) === 'alumni'
-                : data_get($record, 'classroom') === null;
+            return filter_var($graduated, FILTER_VALIDATE_BOOLEAN) === true
+                || $graduated === 1
+                || $graduated === '1'
+                || $graduated === true;
         }));
     }
 

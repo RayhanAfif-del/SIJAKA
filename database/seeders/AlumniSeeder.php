@@ -16,7 +16,7 @@ class AlumniSeeder extends Seeder
 
         try {
             $result = $syncService->sync(deleteDummy: true);
-            $this->command?->info("AlumniSeeder: Berhasil menyinkronkan {$result['synced']} data alumni dari SiPintu API (classroom = null).");
+            $this->command?->info("AlumniSeeder: Berhasil menyinkronkan {$result['synced']} data alumni dari SiPintu API (graduated = true).");
         } catch (\Throwable $e) {
             Log::warning('AlumniSeeder gagal menyinkronkan data SiPintu: ' . $e->getMessage());
             $this->command?->warn("AlumniSeeder: Gagal menyinkronkan dari SiPintu API ({$e->getMessage()}). Data dummy tetap dibersihkan.");

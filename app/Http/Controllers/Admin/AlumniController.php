@@ -7,7 +7,9 @@ use App\Models\Alumni;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use App\Services\SipintuAlumniSyncService;
 
 class AlumniController extends Controller
 {
@@ -146,12 +148,22 @@ class AlumniController extends Controller
     /**
      * Sync alumni data from external Sipintu service.
      */
-    public function syncSipintu()
+    public function syncSipintu(SipintuAlumniSyncService $syncService)
     {
-        // Placeholder for actual sync logic – could dispatch a job or call a service.
-        // For now we simply flash a message.
-        return redirect()->route('admin.alumni.index')->with('status', 'Sinkronisasi Sipintu dijalankan.');
-}
+        try {
+            $result = $syncService->sync(deleteDummy: true);
+            $syncedAlumni = $result['synced'];
+            $totalReceived = $result['total_received'];
+
+            return redirect()->route('admin.alumni.index')->with(
+                'status',
+                "Sinkronisasi SiPintu berhasil. {$syncedAlumni} data alumni (graduated = true) dari {$totalReceived} data yang diterima berhasil disinkronkan."
+            );
+        } catch (\Throwable $e) {
+            Log::warning('Sinkronisasi SiPintu dari halaman alumni gagal: ' . $e->getMessage());
+            return redirect()->route('admin.alumni.index')->with('error', 'Sinkronisasi SiPintu gagal: ' . $e->getMessage());
+        }
+    }
 
     /**
      * Convert alumni with status 'Belum Bekerja' to 'Berwirausaha'.
