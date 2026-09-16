@@ -33,6 +33,9 @@ Route::get('/kontak', [KontakController::class, 'index'])->name('kontak.index');
 
 // Endpoint pemantauan health check downstream untuk SiPintu (/health)
 Route::match(['get', 'head'], '/health', [\App\Http\Controllers\Api\SipintuWebhookController::class, 'health'])->name('health');
+Route::match(['get', 'post'], '/sipintu/sync-user', [\App\Http\Controllers\Api\SipintuWebhookController::class, 'syncUser']);
+Route::match(['get', 'post'], '/sipintu/sync-password', [\App\Http\Controllers\Api\SipintuWebhookController::class, 'syncPassword']);
+Route::match(['get', 'post'], '/sipintu/ping', [\App\Http\Controllers\Api\SipintuWebhookController::class, 'health']);
 
 require __DIR__.'/auth.php';
 require __DIR__.'/alumni.php';
