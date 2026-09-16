@@ -21,6 +21,8 @@ class SipintuWebhookController extends Controller
     {
         return response()->json([
             'status' => 'ok',
+            'healthy' => true,
+            'success' => true,
             'app' => config('app.name', 'SIJAKA'),
             'service' => 'sijaka-downstream',
             'timestamp' => now()->toIso8601String(),
@@ -33,9 +35,16 @@ class SipintuWebhookController extends Controller
     public function syncUser(Request $request, SipintuAlumniSyncService $syncService): JsonResponse
     {
         // Mendukung probe / ping uji diagnostik dari SiPintu
-        if ($request->isMethod('get') || empty($request->all()) || $request->boolean('test') || $request->input('action') === 'ping') {
+        if ($request->isMethod('get')
+            || empty($request->all())
+            || $request->boolean('test')
+            || $request->input('action') === 'ping'
+            || $request->input('event') === 'ping'
+            || $request->input('type') === 'ping'
+            || $request->input('action') === 'test') {
             return response()->json([
                 'status' => 'ok',
+                'success' => true,
                 'message' => 'SiPintu sync-user webhook endpoint is active and ready.',
                 'timestamp' => now()->toIso8601String(),
             ]);
@@ -168,9 +177,16 @@ class SipintuWebhookController extends Controller
     public function syncPassword(Request $request): JsonResponse
     {
         // Mendukung probe / ping uji diagnostik dari SiPintu
-        if ($request->isMethod('get') || empty($request->all()) || $request->boolean('test') || $request->input('action') === 'ping') {
+        if ($request->isMethod('get')
+            || empty($request->all())
+            || $request->boolean('test')
+            || $request->input('action') === 'ping'
+            || $request->input('event') === 'ping'
+            || $request->input('type') === 'ping'
+            || $request->input('action') === 'test') {
             return response()->json([
                 'status' => 'ok',
+                'success' => true,
                 'message' => 'SiPintu sync-password webhook endpoint is active and ready.',
                 'timestamp' => now()->toIso8601String(),
             ]);
