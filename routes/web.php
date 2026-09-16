@@ -42,11 +42,21 @@ Route::get('/talenta/{alumni}', [TalentaController::class, 'show'])->name('talen
 
 Route::get('/kontak', [KontakController::class, 'index'])->name('kontak.index');
 
+// Route sentral /dashboard yang mengarahkan user sesuai perannya
+Route::get('/dashboard', function () {
+    return match (true) {
+        \Illuminate\Support\Facades\Auth::guard('admin')->check() => redirect()->route('admin.dashboard'),
+        \Illuminate\Support\Facades\Auth::guard('mitra')->check() => redirect()->route('mitra.dashboard'),
+        \Illuminate\Support\Facades\Auth::guard('alumni')->check() => redirect()->route('alumni.dashboard'),
+        default => redirect()->route('login'),
+    };
+})->name('dashboard');
+
 // Endpoint pemantauan health check downstream untuk SiPintu (/health)
-Route::match(['get', 'head'], '/health', [\App\Http\Controllers\Api\SipintuWebhookController::class, 'health'])->name('health');
-Route::match(['get', 'post'], '/sipintu/sync-user', [\App\Http\Controllers\Api\SipintuWebhookController::class, 'syncUser']);
-Route::match(['get', 'post'], '/sipintu/sync-password', [\App\Http\Controllers\Api\SipintuWebhookController::class, 'syncPassword']);
-Route::match(['get', 'post'], '/sipintu/ping', [\App\Http\Controllers\Api\SipintuWebhookController::class, 'health']);
+Route::match(['get', 'head'], '/health', [\App\Http\Controllers\OAuthController::class, 'health'])->name('health');
+Route::match(['get', 'post'], '/sipintu/sync-user', [\App\Http\Controllers\OAuthController::class, 'syncUser']);
+Route::match(['get', 'post'], '/sipintu/sync-password', [\App\Http\Controllers\OAuthController::class, 'syncPassword']);
+Route::match(['get', 'post'], '/sipintu/ping', [\App\Http\Controllers\OAuthController::class, 'health']);
 
 require __DIR__.'/auth.php';
 require __DIR__.'/alumni.php';

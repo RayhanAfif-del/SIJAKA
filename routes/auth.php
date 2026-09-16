@@ -15,6 +15,10 @@ Route::middleware('guest:mitra,alumni')->group(function () use ($alumniMitraLogi
         Route::get('panel-sijaka', [AuthenticatedSessionController::class, 'create']);
         Route::post('panel-sijaka', [AuthenticatedSessionController::class, 'store']);
     }
+    if ($alumniMitraLoginPath !== 'login') {
+        Route::get('login', [AuthenticatedSessionController::class, 'create']);
+        Route::post('login', [AuthenticatedSessionController::class, 'store']);
+    }
 });
 
 // Panel Admin (support both pane-admin-sijaka and panel-admin-sijaka)
@@ -33,8 +37,8 @@ Route::middleware('guest:admin')->group(function () use ($adminLoginPath) {
 });
 
 Route::middleware('guest:admin,mitra,alumni')->group(function () {
-    Route::match(['get', 'head'], '/oauth/redirect', [SipintuController::class, 'redirect'])->name('sipintu.redirect');
-    Route::match(['get', 'head'], '/oauth/callback', [SipintuController::class, 'callback'])->name('sipintu.callback');
+    Route::match(['get', 'head'], '/oauth/redirect', [\App\Http\Controllers\OAuthController::class, 'redirect'])->name('oauth.redirect');
+    Route::match(['get', 'head'], '/oauth/callback', [\App\Http\Controllers\OAuthController::class, 'callback'])->name('oauth.callback');
 });
 
 Route::middleware('auth:admin,mitra,alumni')->group(function () {

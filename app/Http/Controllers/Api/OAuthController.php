@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
-class OAuthController extends SipintuWebhookController
+use App\Http\Controllers\OAuthController as BaseOAuthController;
+
+class OAuthController extends BaseOAuthController
 {
-    // Alias to SipintuWebhookController for compatibility with SiPintu webhook documentation
+    // Alias to base OAuthController for route and namespace compatibility
 }

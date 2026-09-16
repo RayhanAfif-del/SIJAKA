@@ -19,6 +19,23 @@
                     <p class="text-sm text-slate-500 mt-0.5">Lengkapi profil agar mitra dapat menemukan keahlian Anda. Kontak pribadi tidak ditampilkan.</p>
                 </div>
             </div>
+        {{-- SiPintu Password Policy Notice --}}
+        <div class="mb-5 rounded-xl border border-blue-100 bg-blue-50/70 p-4 text-xs sm:text-sm text-blue-900 flex items-start gap-3">
+            <svg class="w-5 h-5 text-blue-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <div class="flex-1">
+                <p class="font-semibold text-blue-950">Informasi Keamanan & Kata Sandi Terpusat</p>
+                <p class="mt-0.5 text-blue-800">
+                    Akun dan kata sandi Anda terintegrasi langsung dengan <strong>SiPintu Identity Gateway</strong>. Sesuai kebijakan keamanan terpusat, perubahan kata sandi hanya dapat dilakukan melalui portal utama SiPintu.
+                </p>
+                <div class="mt-2">
+                    <a href="{{ config('services.sipintu.base_url', 'http://localhost:8000') }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 font-semibold text-blue-700 hover:text-blue-900 underline">
+                        Buka Portal SiPintu Gateway
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                    </a>
+                </div>
+            </div>
         </div>
 
         <form method="POST" action="{{ route('alumni.profile.update') }}" enctype="multipart/form-data" class="space-y-5">

@@ -44,6 +44,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'api/*',
             'health',
             'sipintu/*',
+            'oauth/*',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

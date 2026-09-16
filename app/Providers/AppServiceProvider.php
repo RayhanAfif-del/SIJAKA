@@ -14,11 +14,16 @@ class AppServiceProvider extends ServiceProvider
         //
     }
 
-    /**
-     * Bootstrap any application services.
-     */
     public function boot(): void
     {
-        //
+        app('url')->resolveMissingNamedRoutesUsing(function (string $name, array $parameters, bool $absolute) {
+            return match ($name) {
+                'sipintu.callback' => route('oauth.callback', $parameters, $absolute),
+                'sipintu.redirect' => route('oauth.redirect', $parameters, $absolute),
+                'oauth.callback' => route('sipintu.callback', $parameters, $absolute),
+                'oauth.redirect' => route('sipintu.redirect', $parameters, $absolute),
+                default => null,
+            };
+        });
     }
 }
