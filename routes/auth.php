@@ -33,8 +33,8 @@ Route::middleware('guest:admin')->group(function () use ($adminLoginPath) {
 });
 
 Route::middleware('guest:admin,mitra,alumni')->group(function () {
-    Route::get('/oauth/redirect', [SipintuController::class, 'redirect'])->name('sipintu.redirect');
-    Route::get('/oauth/callback', [SipintuController::class, 'callback'])->name('sipintu.callback');
+    Route::match(['get', 'head'], '/oauth/redirect', [SipintuController::class, 'redirect'])->name('sipintu.redirect');
+    Route::match(['get', 'head'], '/oauth/callback', [SipintuController::class, 'callback'])->name('sipintu.callback');
 });
 
 Route::middleware('auth:admin,mitra,alumni')->group(function () {

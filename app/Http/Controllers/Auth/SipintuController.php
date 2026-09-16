@@ -27,8 +27,29 @@ class SipintuController extends Controller
         return redirect()->away($this->gateway->authorizationUrl($state));
     }
 
-    public function callback(Request $request): RedirectResponse
+    public function callback(Request $request)
     {
+        // Tangani probe diagnostik / ping otomatis dari SiPintu Gateway
+        if (! $request->has('code') && ! $request->has('state')) {
+            if ($request->wantsJson() || $request->isJson() || $request->has('test') || $request->has('ping') || str_contains((string) $request->header('User-Agent'), 'SiPintu')) {
+                return response()->json([
+                    'status' => 'ok',
+                    'healthy' => true,
+                    'message' => 'Route callback SSO ditemukan dan aktif merespons.',
+                    'callback_url' => route('sipintu.callback'),
+                    'timestamp' => now()->toIso8601String(),
+                ]);
+            }
+
+            // Kembalikan HTTP 200 langsung agar mesin diagnostik SiPintu (Guzzle/cURL)
+            // mendeteksi callback aktif tanpa perlu follow-redirect yang membebani koneksi
+            return response(
+                '<!DOCTYPE html><html><head><meta charset="utf-8"><title>SSO Callback Ready</title><meta http-equiv="refresh" content="0;url=' . route('login') . '"></head><body style="font-family:sans-serif;text-align:center;padding:40px;"><h3>Endpoint Callback SSO Aktif</h3><p>Mengalihkan ke panel login...</p><script>window.location.href="' . route('login') . '";</script></body></html>',
+                200,
+                ['Content-Type' => 'text/html']
+            );
+        }
+
         $state = (string) $request->query('state');
         $expectedState = (string) $request->session()->pull('sipintu_oauth_state');
 

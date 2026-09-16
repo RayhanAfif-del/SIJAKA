@@ -11,7 +11,18 @@ use App\Http\Controllers\Public\StrukturOrganisasiController;
 use App\Http\Controllers\Public\TalentaController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [BerandaController::class, 'index'])->name('home');
+Route::match(['get', 'head'], '/', function (\Illuminate\Http\Request $request) {
+    if ($request->wantsJson() || $request->isJson() || $request->has('ping') || $request->has('health')) {
+        return response()->json([
+            'status' => 'ok',
+            'healthy' => true,
+            'app' => config('app.name', 'SIJAKA'),
+            'service' => 'sijaka-downstream',
+            'timestamp' => now()->toIso8601String(),
+        ]);
+    }
+    return app(BerandaController::class)->index();
+})->name('home');
 
 Route::get('/profil', [ProfilController::class, 'index'])->name('profil.index');
 Route::get('/struktur-organisasi', [StrukturOrganisasiController::class, 'index'])->name('struktur-organisasi.index');
