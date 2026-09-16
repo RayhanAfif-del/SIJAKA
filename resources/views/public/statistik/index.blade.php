@@ -51,117 +51,122 @@
 
         @if ($totalAlumniStat > 0)
 
-            {{-- Stat Cards (Bento Grid Style - Sama dengan Beranda) --}}
-            <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 lg:gap-5 items-stretch mb-12" data-aos="fade-up">
+            {{-- Section Title & Intro --}}
+            <div class="text-center mb-10 lg:mb-14" data-aos="fade-up">
+                <span class="inline-block px-4 py-1.5 rounded-full bg-[#024CD4]/10 text-[#024CD4] text-xs font-bold uppercase tracking-wider mb-4">Statistik Kami</span>
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 tracking-tight">
+                    Capaian Penyerapan Alumni
+                </h2>
+                <p class="text-gray-500 mt-4 text-base lg:text-lg max-w-2xl mx-auto">Data real-time dari tracer study BKK SMKN 1 Bangsri</p>
+            </div>
+
+            {{-- 4 Cards Grid Layout --}}
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16" data-aos="fade-up" data-aos-delay="100">
                 
-                {{-- Kotak Besar: Total Alumni (Row Span 2 di Desktop) --}}
-                <div class="sm:col-span-2 xl:col-span-2 xl:row-span-2 bg-[#024CD4] text-white rounded-3xl p-5 sm:p-8 flex flex-col justify-center relative overflow-hidden shadow-xl shadow-blue-600/20 group min-h-[220px] xl:min-h-[540px]">
-                    
-                    {{-- Decorative Curve/Diagonal Background --}}
-                    <div class="absolute inset-0 overflow-hidden">
-                        <svg class="absolute top-0 right-0 w-[120%] h-[120%] -translate-y-1/4 translate-x-1/4 opacity-10" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M0 400C100 300 200 200 400 0V400H0Z" fill="white"/>
-                        </svg>
-                        <svg class="absolute top-0 right-0 w-[100%] h-[100%] -translate-y-1/4 translate-x-1/4 opacity-5" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M0 400C150 280 250 180 400 0V400H0Z" fill="white"/>
-                        </svg>
-                    </div>
-
-                    {{-- Paper Plane Icon (Top Right) --}}
-                    <div class="absolute top-6 right-6 sm:top-8 sm:right-8 opacity-90 group-hover:opacity-100 transition-opacity">
-                        <svg class="w-10 h-10 sm:w-16 sm:h-16 text-amber-400 transform -rotate-12 group-hover:rotate-0 transition-transform duration-500" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
-                        </svg>
-                    </div>
-
-                    {{-- Dot Pattern (Bottom Left) --}}
-                    <div class="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 grid grid-cols-5 gap-1.5 opacity-30 group-hover:opacity-50 transition-opacity">
-                        @for ($i = 0; $i < 20; $i++)
-                            <div class="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-white rounded-full"></div>
-                        @endfor
-                    </div>
-
-                    {{-- Glow Effects --}}
-                    <div class="absolute top-0 right-0 -mr-10 -mt-10 w-48 h-48 bg-white/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500"></div>
-                    <div class="absolute bottom-0 left-0 -ml-10 -mb-10 w-48 h-48 bg-[#024CD4]/40 rounded-full blur-2xl"></div>
-                    
-                    <div class="relative z-10 flex flex-col h-full justify-between">
-                        <div>
-                            <div class="flex items-center gap-3 mb-4">
-                                <div class="w-10 h-10 sm:w-12 sm:h-12 bg-white/15 backdrop-blur-sm rounded-xl flex items-center justify-center shadow-lg border border-white/20">
-                                    <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"/>
-                                    </svg>
-                                </div>
-                                <span class="text-xs font-bold uppercase tracking-wider text-[#d0e3ff]">Total Alumni</span>
-                            </div>
-                            <p class="text-4xl sm:text-5xl xl:text-7xl font-extrabold tracking-tight text-white leading-none">
-                                {{ number_format($totalAlumniStat) }}
-                            </p>
+                {{-- Card 1: Total Alumni --}}
+                <div class="bg-white rounded-3xl p-6 sm:p-7 border border-slate-100 border-t-4 border-t-[#024CD4] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between relative group">
+                    <div class="flex items-center justify-between mb-5">
+                        <div class="w-11 h-11 rounded-2xl bg-blue-50 border border-blue-100/80 flex items-center justify-center text-[#024CD4] shadow-sm group-hover:scale-105 transition-transform">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"/>
+                            </svg>
                         </div>
-                        <p class="text-[#d0e3ff] text-xs sm:text-sm mt-4">Alumni terdata dalam sistem</p>
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50/80 border border-blue-100 text-[#024CD4] text-xs font-semibold">
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#024CD4]"></span>
+                            Terverifikasi
+                        </span>
+                    </div>
+
+                    <div class="mb-5">
+                        <p class="text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">TOTAL ALUMNI</p>
+                        <p class="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight mb-2">{{ number_format($totalAlumniStat) }}</p>
+                        <p class="text-xs text-gray-500 leading-relaxed min-h-[36px]">Alumni terdata dalam sistem BKK SMKN 1 Bangsri.</p>
+                    </div>
+
+                    <div class="pt-4 border-t border-gray-100 flex items-center justify-between text-xs mt-auto">
+                        <span class="text-gray-500 font-medium">Validasi Data BKK</span>
+                        <span class="font-bold text-[#024CD4]">100% Valid</span>
                     </div>
                 </div>
 
-                {{-- Kotak Kecil: Bekerja --}}
-                <div class="bg-white border border-gray-100 rounded-3xl p-5 sm:p-6 flex flex-col justify-between hover:border-emerald-200 hover:shadow-2xl hover:shadow-emerald-100/50 transition-all duration-300 group relative overflow-hidden min-h-[220px]">
-                    <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-emerald-400 to-emerald-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
-                    
-                    <div class="w-12 h-12 bg-[#024CD4] text-white rounded-xl flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                        </svg>
+                {{-- Card 2: Sudah Bekerja --}}
+                <div class="bg-white rounded-3xl p-6 sm:p-7 border border-slate-100 border-t-4 border-t-emerald-500 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between relative group">
+                    <div class="flex items-center justify-between mb-5">
+                        <div class="w-11 h-11 rounded-2xl bg-emerald-50 border border-emerald-100/80 flex items-center justify-center text-emerald-600 shadow-sm group-hover:scale-105 transition-transform">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50/80 border border-emerald-100 text-emerald-600 text-xs font-semibold">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                            {{ $persenBekerja }}% Terserap
+                        </span>
                     </div>
-                    <div>
-                        <p class="text-4xl font-extrabold text-gray-900 tracking-tight leading-none">{{ number_format($bekerja) }}</p>
-                        <p class="text-xs font-semibold text-gray-500 mt-3 uppercase tracking-wide">Sudah Bekerja</p>
-                        @if ($totalAlumniStat > 0)
-                            <div class="mt-3 bg-emerald-50 rounded-full px-3 py-1.5 inline-block border border-emerald-100">
-                                <p class="text-xs text-emerald-600 font-bold">{{ $persenBekerja }}%</p>
-                            </div>
-                        @endif
+
+                    <div class="mb-5">
+                        <p class="text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">SUDAH BEKERJA</p>
+                        <p class="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight mb-2">{{ number_format($bekerja) }}</p>
+                        <p class="text-xs text-gray-500 leading-relaxed min-h-[36px]">Bekerja di mitra DUDI, manufaktur, teknologi & BUMN.</p>
+                    </div>
+
+                    <div class="pt-4 border-t border-gray-100 flex items-center justify-between text-xs mt-auto">
+                        <span class="text-gray-500 font-medium">Tingkat Penyerapan</span>
+                        <span class="font-bold text-emerald-600">{{ $persenBekerja }}%</span>
                     </div>
                 </div>
 
-                {{-- Kotak Kecil: Berwirausaha --}}
-                <div class="bg-white border border-gray-100 rounded-3xl p-5 sm:p-6 flex flex-col justify-between hover:border-violet-200 hover:shadow-2xl hover:shadow-violet-100/50 transition-all duration-300 group relative overflow-hidden min-h-[220px]">
-                    <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-violet-400 to-violet-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
-                    
-                    <div class="w-12 h-12 bg-[#024CD4] text-white rounded-xl flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m-6 4h6m-6 4h6M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                        </svg>
+                {{-- Card 3: Berwirausaha --}}
+                <div class="bg-white rounded-3xl p-6 sm:p-7 border border-slate-100 border-t-4 border-t-purple-500 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between relative group">
+                    <div class="flex items-center justify-between mb-5">
+                        <div class="w-11 h-11 rounded-2xl bg-purple-50 border border-purple-100/80 flex items-center justify-center text-purple-600 shadow-sm group-hover:scale-105 transition-transform">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                            </svg>
+                        </div>
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-50/80 border border-purple-100 text-purple-600 text-xs font-semibold">
+                            <span class="w-1.5 h-1.5 rounded-full bg-purple-500"></span>
+                            {{ $persenWirausaha }}%
+                        </span>
                     </div>
-                    <div>
-                        <p class="text-4xl font-extrabold text-gray-900 tracking-tight leading-none">{{ number_format($berwirausaha) }}</p>
-                        <p class="text-xs font-semibold text-gray-500 mt-3 uppercase tracking-wide">Berwirausaha</p>
-                        @if ($totalAlumniStat > 0)
-                            <div class="mt-3 bg-violet-50 rounded-full px-3 py-1.5 inline-block border border-violet-100">
-                                <p class="text-xs text-violet-600 font-bold">{{ $persenWirausaha }}%</p>
-                            </div>
-                        @endif
+
+                    <div class="mb-5">
+                        <p class="text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">BERWIRAUSAHA</p>
+                        <p class="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight mb-2">{{ number_format($berwirausaha) }}</p>
+                        <p class="text-xs text-gray-500 leading-relaxed min-h-[36px]">Memulai rintisan usaha mandiri, UMKM, & bisnis kreatif.</p>
+                    </div>
+
+                    <div class="pt-4 border-t border-gray-100 flex items-center justify-between text-xs mt-auto">
+                        <span class="text-gray-500 font-medium">Proporsi Wirausaha</span>
+                        <span class="font-bold text-purple-600">{{ $persenWirausaha }}%</span>
                     </div>
                 </div>
 
-                {{-- Kotak Lebar: Melanjutkan Studi --}}
-                <div class="sm:col-span-2 bg-white border border-gray-100 rounded-3xl p-5 sm:p-6 flex flex-col justify-between hover:border-amber-200 hover:shadow-2xl hover:shadow-amber-100/50 transition-all duration-300 group relative overflow-hidden min-h-[220px]">
-                    <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-amber-400 to-amber-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
-                    
-                    <div class="w-12 h-12 bg-[#024CD4] text-white rounded-xl flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"/>
-                        </svg>
+                {{-- Card 4: Melanjutkan Studi --}}
+                <div class="bg-white rounded-3xl p-6 sm:p-7 border border-slate-100 border-t-4 border-t-amber-500 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between relative group">
+                    <div class="flex items-center justify-between mb-5">
+                        <div class="w-11 h-11 rounded-2xl bg-amber-50 border border-amber-100/80 flex items-center justify-center text-amber-600 shadow-sm group-hover:scale-105 transition-transform">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                            </svg>
+                        </div>
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50/80 border border-amber-100 text-amber-600 text-xs font-semibold">
+                            <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                            {{ $persenStudi }}%
+                        </span>
                     </div>
-                    <div>
-                        <p class="text-4xl font-extrabold text-gray-900 tracking-tight leading-none">{{ number_format($melanjutkanStudi) }}</p>
-                        <p class="text-xs font-semibold text-gray-500 mt-3 uppercase tracking-wide">Melanjutkan Studi</p>
-                        @if ($totalAlumniStat > 0)
-                            <div class="mt-3 bg-amber-50 rounded-full px-3 py-1.5 inline-block border border-amber-100">
-                                <p class="text-xs text-amber-600 font-bold">{{ $persenStudi }}%</p>
-                            </div>
-                        @endif
+
+                    <div class="mb-5">
+                        <p class="text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">MELANJUTKAN STUDI</p>
+                        <p class="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight mb-2">{{ number_format($melanjutkanStudi) }}</p>
+                        <p class="text-xs text-gray-500 leading-relaxed min-h-[36px]">Melanjutkan ke jenjang pendidikan tinggi/perguruan tinggi.</p>
+                    </div>
+
+                    <div class="pt-4 border-t border-gray-100 flex items-center justify-between text-xs mt-auto">
+                        <span class="text-gray-500 font-medium">Proporsi Studi Lanjut</span>
+                        <span class="font-bold text-amber-600">{{ $persenStudi }}%</span>
                     </div>
                 </div>
+
             </div>
 
             {{-- Charts Section --}}
