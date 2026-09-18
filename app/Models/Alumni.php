@@ -34,6 +34,9 @@ class Alumni extends Authenticatable
         'portfolio_path',
         'is_visible',
         'talent_approval_status',
+        'phone',
+        'classroom',
+        'sipintu_last_synced_at',
     ];
 
     protected $hidden = ['password', 'remember_token'];
@@ -43,7 +46,33 @@ class Alumni extends Authenticatable
         return [
             'password' => 'hashed',
             'is_visible' => 'boolean',
+            'sipintu_last_synced_at' => 'datetime',
         ];
+    }
+
+    public function getNameAttribute(): ?string
+    {
+        return $this->nama;
+    }
+
+    public function setNameAttribute(?string $value): void
+    {
+        $this->attributes['nama'] = $value;
+    }
+
+    public function getExternalIdAttribute(): ?string
+    {
+        return $this->nis;
+    }
+
+    public function setExternalIdAttribute(?string $value): void
+    {
+        $this->attributes['nis'] = $value;
+    }
+
+    public function getRoleAttribute(): string
+    {
+        return 'alumni';
     }
 
     public function interviewRequests()

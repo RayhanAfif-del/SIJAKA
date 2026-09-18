@@ -2,19 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Auth\SipintuController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\OAuthController as BaseOAuthController;
 
-class OAuthController extends SipintuWebhookController
+class OAuthController extends BaseOAuthController
 {
-    // Alias to SipintuWebhookController and SipintuController for compatibility with SiPintu webhook documentation
-    public function callback(Request $request)
-    {
-        return app(SipintuController::class)->callback($request);
-    }
-
-    public function redirect(Request $request)
-    {
-        return app(SipintuController::class)->redirect($request);
-    }
+    // Alias to base OAuthController for route and namespace compatibility
 }

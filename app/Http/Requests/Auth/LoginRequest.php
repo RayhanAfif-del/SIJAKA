@@ -18,6 +18,13 @@ class LoginRequest extends FormRequest
         return true;
     }
 
+    protected function prepareForValidation(): void
+    {
+        if (! $this->has('role') || empty($this->input('role'))) {
+            $this->merge(['role' => 'alumni']);
+        }
+    }
+
     public function rules(): array
     {
         $role = $this->input('role');
