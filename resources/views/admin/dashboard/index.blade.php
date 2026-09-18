@@ -355,16 +355,24 @@
 
         {{-- Top Lowongan --}}
         <div class="bg-white border border-slate-200/70 rounded-xl p-5 sm:p-6 shadow-sm">
-            <div class="mb-5">
-                <h2 class="text-base font-semibold text-slate-900">Top Lowongan Dilihat</h2>
-                <p class="text-xs text-slate-500 mt-0.5">Lowongan dengan kunjungan terbanyak</p>
+            <div class="flex items-center justify-between gap-3 mb-5">
+                <div>
+                    <h2 class="text-base font-semibold text-slate-900">Top Lowongan Dilihat</h2>
+                    <p class="text-xs text-slate-500 mt-0.5">Lowongan dengan kunjungan terbanyak</p>
+                </div>
+                <a href="{{ route('admin.lowongan.index') }}" class="inline-flex items-center gap-1 text-xs font-medium text-blue-600 hover:text-blue-700 transition">
+                    Kelola
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                    </svg>
+                </a>
             </div>
 
             @if ($topLowongan->isNotEmpty())
                 <div class="space-y-1">
                     @foreach ($topLowongan as $i => $item)
-                        <div class="flex items-center justify-between gap-3 p-2.5 -mx-2.5 rounded-lg hover:bg-slate-50 transition">
-                            <div class="flex items-center gap-3 min-w-0 flex-1">
+                        <div class="flex items-center justify-between gap-3 p-2.5 -mx-2.5 rounded-lg hover:bg-slate-50 transition group">
+                            <a href="{{ route('admin.lowongan.edit', $item) }}" class="flex items-center gap-3 min-w-0 flex-1">
                                 <span class="w-7 h-7 flex items-center justify-center rounded-lg text-xs font-bold shrink-0
                                     {{ $i === 0 ? 'bg-gradient-to-br from-amber-400 to-amber-500 text-white shadow-sm' :
                                        ($i === 1 ? 'bg-gradient-to-br from-slate-300 to-slate-400 text-white shadow-sm' :
@@ -373,20 +381,33 @@
                                     {{ $i + 1 }}
                                 </span>
                                 <div class="min-w-0 flex-1">
-                                    <p class="text-sm font-medium text-slate-800 truncate">{{ $item->posisi }}</p>
+                                    <p class="text-sm font-medium text-slate-800 truncate group-hover:text-blue-600 transition">{{ $item->posisi }}</p>
                                     <p class="text-xs text-slate-500 truncate mt-0.5">{{ $item->mitra->nama_perusahaan }}</p>
                                 </div>
-                            </div>
-                            <div class="flex items-center gap-1 text-slate-600 text-xs font-semibold shrink-0 bg-slate-100 px-2 py-1 rounded-md">
-                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                                </svg>
-                                {{ number_format($item->jumlah_kunjungan) }}
+                            </a>
+                            <div class="flex items-center gap-2 shrink-0">
+                                <span class="flex items-center gap-1 text-slate-600 text-xs font-semibold bg-slate-100 px-2 py-1 rounded-md">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                    </svg>
+                                    {{ number_format($item->jumlah_kunjungan) }}
+                                </span>
+                                <a href="{{ route('lowongan.show', $item) }}" target="_blank" title="Lihat di halaman publik" class="p-1 rounded text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition" aria-label="Lihat lowongan di publik">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                                    </svg>
+                                </a>
                             </div>
                         </div>
                     @endforeach
                 </div>
+                <a href="{{ route('admin.lowongan.index') }}" class="flex items-center justify-center gap-1.5 w-full mt-4 pt-4 border-t border-slate-100 min-h-11 text-sm font-medium text-blue-600 hover:text-blue-700 transition">
+                    Lihat semua lowongan
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                    </svg>
+                </a>
             @else
                 <div class="flex flex-col items-center justify-center text-center py-12">
                     <div class="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center mb-4">
@@ -396,7 +417,7 @@
                         </svg>
                     </div>
                     <p class="text-sm font-medium text-slate-700">Belum ada kunjungan</p>
-                    <p class="text-xs text-slate-400 mt-1">Data akan muncul setelah ada kunjungan</p>
+                    <p class="text-xs text-slate-400 mt-1">Data akan muncul setelah ada lowongan yang dilihat</p>
                 </div>
             @endif
         </div>

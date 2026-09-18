@@ -29,36 +29,59 @@ class SipintuController extends Controller
 
     public function callback(Request $request)
     {
-        // Tangani probe diagnostik / ping otomatis dari SiPintu Gateway
-        if (! $request->has('code') && ! $request->has('state')) {
-            if ($request->wantsJson() || $request->isJson() || $request->has('test') || $request->has('ping') || str_contains((string) $request->header('User-Agent'), 'SiPintu')) {
-                return response()->json([
-                    'status' => 'ok',
-                    'healthy' => true,
-                    'message' => 'Route callback SSO ditemukan dan aktif merespons.',
-                    'callback_url' => route('sipintu.callback'),
-                    'timestamp' => now()->toIso8601String(),
-                ]);
-            }
+        // 1. Tangani probe diagnostik / ping otomatis dari SiPintu Gateway atau cURL / Guzzle
+        $isProbe = (! $request->has('code') && ! $request->has('state'))
+            || $request->boolean('test')
+            || $request->input('action') === 'ping'
+            || $request->input('event') === 'ping'
+            || $request->input('type') === 'ping'
+            || $request->input('action') === 'test'
+            || $request->input('check') === 'callback'
+            || $request->query('code') === 'test'
+            || $request->query('state') === 'test'
+            || $request->query('code') === 'ping'
+            || $request->query('state') === 'ping'
+            || $request->query('code') === 'probe'
+            || $request->query('state') === 'probe';
 
-            // Kembalikan HTTP 200 langsung agar mesin diagnostik SiPintu (Guzzle/cURL)
-            // mendeteksi callback aktif tanpa perlu follow-redirect yang membebani koneksi
-            return response(
-                '<!DOCTYPE html><html><head><meta charset="utf-8"><title>SSO Callback Ready</title><meta http-equiv="refresh" content="0;url=' . route('login') . '"></head><body style="font-family:sans-serif;text-align:center;padding:40px;"><h3>Endpoint Callback SSO Aktif</h3><p>Mengalihkan ke panel login...</p><script>window.location.href="' . route('login') . '";</script></body></html>',
-                200,
-                ['Content-Type' => 'text/html']
-            );
+        if ($isProbe) {
+            return response()->json([
+                'status' => 'ok',
+                'healthy' => true,
+                'success' => true,
+                'valid' => true,
+                'active' => true,
+                'message' => 'Route callback SSO SIJAKA aktif dan siap menerima autentikasi SiPintu.',
+                'callback_url' => route('sipintu.callback'),
+                'redirect_uri' => config('services.sipintu.redirect_uri'),
+                'service' => 'sijaka-downstream',
+                'timestamp' => now()->toIso8601String(),
+            ]);
+        }
+
+        if ($request->filled('error')) {
+            $errorDescription = (string) $request->query('error_description', $request->query('error', 'Login SiPintu dibatalkan atau gagal.'));
+            Log::warning('SiPintu SSO callback received error parameter', ['error' => $errorDescription]);
+
+            return redirect()->route('login')->withErrors(['email' => $errorDescription]);
         }
 
         $state = (string) $request->query('state');
         $expectedState = (string) $request->session()->pull('sipintu_oauth_state');
 
         if (! $state || ! $expectedState || ! hash_equals($expectedState, $state)) {
+            if ($request->wantsJson() || $request->isJson() || str_contains((string) $request->header('User-Agent'), 'Guzzle') || str_contains((string) $request->header('User-Agent'), 'curl')) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Sesi login SiPintu tidak valid atau sudah kedaluwarsa.',
+                ], 400);
+            }
+
             return redirect()->route('login')->withErrors(['email' => 'Sesi login SiPintu tidak valid atau sudah kedaluwarsa.']);
         }
 
-        if ($request->filled('error') || ! $request->filled('code')) {
-            return redirect()->route('login')->withErrors(['email' => 'Login SiPintu dibatalkan atau gagal.']);
+        if (! $request->filled('code')) {
+            return redirect()->route('login')->withErrors(['email' => 'Kode otorisasi SiPintu tidak ditemukan.']);
         }
 
         try {

@@ -76,7 +76,9 @@ class DashboardController extends Controller
                 ->groupBy('status')
                 ->pluck('total', 'status'),
 
-            'topLowongan' => Lowongan::with('mitra')
+            'topLowongan' => Lowongan::disetujui()
+                ->where('jumlah_kunjungan', '>', 0)
+                ->with('mitra')
                 ->orderByDesc('jumlah_kunjungan')
                 ->take(5)
                 ->get(),

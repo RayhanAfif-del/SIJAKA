@@ -35,7 +35,7 @@ class LowonganSeeder extends Seeder
                     'persyaratan' => "Pendidikan minimal SMK sederajat.\nUsia maksimal 25 tahun.\nSehat jasmani dan rohani.\nMampu bekerja dalam tim.",
                     'cara_melamar' => 'Kirimkan lamaran melalui email atau website resmi perusahaan.',
                     'deadline' => now()->addMonths(2),
-                    'jumlah_kunjungan' => rand(50, 1300),
+                    'jumlah_kunjungan' => 0,
                 ])
             );
         }

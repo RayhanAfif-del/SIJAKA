@@ -34,8 +34,13 @@ Route::middleware('guest:admin')->group(function () use ($adminLoginPath) {
 
 Route::middleware('guest:admin,mitra,alumni')->group(function () {
     Route::match(['get', 'head'], '/oauth/redirect', [SipintuController::class, 'redirect'])->name('sipintu.redirect');
-    Route::match(['get', 'head'], '/oauth/callback', [SipintuController::class, 'callback'])->name('sipintu.callback');
 });
+
+// Route callback SSO harus dapat diakses publik tanpa pembatasan guest middleware
+// dan mendukung GET, POST, serta HEAD untuk pengujian probe dari SiPintu Gateway
+Route::match(['get', 'post', 'head'], '/oauth/callback', [SipintuController::class, 'callback'])->name('sipintu.callback');
+Route::match(['get', 'post', 'head'], '/callback', [SipintuController::class, 'callback']);
+Route::match(['get', 'post', 'head'], '/sipintu/callback', [SipintuController::class, 'callback']);
 
 Route::middleware('auth:admin,mitra,alumni')->group(function () {
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');

@@ -20,6 +20,10 @@ Route::prefix('api/sipintu')->group(function () {
     Route::match(['get', 'post'], '/sync-password', [SipintuWebhookController::class, 'syncPassword']);
 });
 
+// Alias route callback SSO di level API (/api/oauth/callback dan /api/sipintu/callback)
+Route::match(['get', 'post', 'head'], '/oauth/callback', [\App\Http\Controllers\Auth\SipintuController::class, 'callback']);
+Route::match(['get', 'post', 'head'], '/sipintu/callback', [\App\Http\Controllers\Auth\SipintuController::class, 'callback']);
+
 Route::middleware('auth:admin')->prefix('sijuna')->group(function () {
     Route::get('/students', [SijunaController::class, 'students'])->name('api.sijuna.students');
     Route::get('/teachers', [SijunaController::class, 'teachers'])->name('api.sijuna.teachers');
