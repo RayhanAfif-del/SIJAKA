@@ -146,4 +146,38 @@ class ProfileController extends Controller
         }
         return Storage::download($path);
     }
+
+    /**
+     * Download the CV document.
+     */
+    public function downloadCv()
+    {
+        /** @var Alumni $alumni */
+        $alumni = Auth::guard('alumni')->user();
+        if (! $alumni?->cv_path || ! Storage::disk('local')->exists($alumni->cv_path)) {
+            abort(404, 'File CV belum diunggah atau tidak ditemukan.');
+        }
+
+        $extension = pathinfo($alumni->cv_path, PATHINFO_EXTENSION) ?: 'pdf';
+        $filename = 'CV-' . \Illuminate\Support\Str::slug($alumni->nama) . '.' . $extension;
+
+        return Storage::disk('local')->download($alumni->cv_path, $filename);
+    }
+
+    /**
+     * Download the Portfolio document.
+     */
+    public function downloadPortfolio()
+    {
+        /** @var Alumni $alumni */
+        $alumni = Auth::guard('alumni')->user();
+        if (! $alumni?->portfolio_path || ! Storage::disk('local')->exists($alumni->portfolio_path)) {
+            abort(404, 'File Portofolio belum diunggah atau tidak ditemukan.');
+        }
+
+        $extension = pathinfo($alumni->portfolio_path, PATHINFO_EXTENSION) ?: 'pdf';
+        $filename = 'Portofolio-' . \Illuminate\Support\Str::slug($alumni->nama) . '.' . $extension;
+
+        return Storage::disk('local')->download($alumni->portfolio_path, $filename);
+    }
 }
