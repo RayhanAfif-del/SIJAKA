@@ -76,9 +76,9 @@ class SipintuAlumniSyncService
                         $updateAttributes['jurusan'] = $jurusan;
                     }
 
-                    if (blank($existing->tahun_lulus) || $existing->tahun_lulus === '') {
-                        $updateAttributes['tahun_lulus'] = $tahunLulus;
-                    }
+                    if ($existing->tahun_lulus !== $tahunLulus) {
+    $updateAttributes['tahun_lulus'] = $tahunLulus;
+}
 
                     if (blank($existing->password) && $rawPassword !== '') {
                         $updateAttributes['password'] = $rawPassword;
