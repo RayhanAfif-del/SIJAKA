@@ -6,6 +6,8 @@
     <title>{{ $title ?? 'Dashboard Admin' }} - SIJAKA</title>
     
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <!-- Google Font Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     @php
         $pengaturanLayout = \App\Models\PengaturanWebsite::singleton();

@@ -177,51 +177,11 @@
                 </div>
                 <div class="p-5 space-y-3">
                     @if ($alumni->cv_path)
-                        <div class="p-3.5 rounded-lg border border-slate-200 hover:border-slate-300 transition-all duration-200">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-lg bg-red-50 text-red-600 flex items-center justify-center shrink-0">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
-                                </div>
-                                <div class="min-w-0 flex-1">
-                                    <p class="text-sm font-medium text-slate-900 leading-tight">Curriculum Vitae (CV)</p>
-                                    <p class="text-xs text-slate-500 mt-0.5 truncate">Berkas resume alumni</p>
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-2 gap-2 mt-3 pt-3 border-t border-slate-100">
-                                <a href="{{ route('admin.talent-pool.document.view', [$alumni, 'cv']) }}" target="_blank" class="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors">
-                                    <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
-                                    Lihat
-                                </a>
-                                <a href="{{ route('admin.talent-pool.document.download', [$alumni, 'cv']) }}" class="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-red-600 text-white hover:bg-red-700 transition-colors shadow-sm">
-                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-                                    Unduh
-                                </a>
-                            </div>
-                        </div>
+                        <x-document-button :alumni="$alumni" type="cv" :routeView="route('admin.talent-pool.document.view', [$alumni, 'cv'])" :routeDownload="route('admin.talent-pool.document.download', [$alumni, 'cv'])" />
                     @endif
 
                     @if ($alumni->portfolio_path)
-                        <div class="p-3.5 rounded-lg border border-slate-200 hover:border-slate-300 transition-all duration-200">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
-                                </div>
-                                <div class="min-w-0 flex-1">
-                                    <p class="text-sm font-medium text-slate-900 leading-tight">File Portofolio</p>
-                                    <p class="text-xs text-slate-500 mt-0.5 truncate">Berkas karya dan proyek</p>
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-2 gap-2 mt-3 pt-3 border-t border-slate-100">
-                                <a href="{{ route('admin.talent-pool.document.view', [$alumni, 'portfolio']) }}" target="_blank" class="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors">
-                                    <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
-                                    Lihat
-                                </a>
-                                <a href="{{ route('admin.talent-pool.document.download', [$alumni, 'portfolio']) }}" class="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-amber-600 text-white hover:bg-amber-700 transition-colors shadow-sm">
-                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-                                    Unduh
-                                </a>
-                            </div>
-                        </div>
+<x-document-button :alumni="$alumni" type="portfolio" :routeView="route('admin.talent-pool.document.view', [$alumni, 'portfolio'])" :routeDownload="route('admin.talent-pool.document.download', [$alumni, 'portfolio'])" />
                     @endif
 
                     @if ($alumni->portfolio_url)
