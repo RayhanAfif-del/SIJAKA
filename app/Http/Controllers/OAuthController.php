@@ -70,9 +70,10 @@ class OAuthController extends Controller
             }
 
             // Kembalikan HTTP 200 langsung agar mesin diagnostik SiPintu (Guzzle/cURL)
-            // mendeteksi callback aktif tanpa perlu follow-redirect
+            // mendeteksi callback aktif tanpa perlu follow-redirect, dan jika dibuka oleh browser manusia
+            // langsung dialihkan ke alur otorisasi SSO SiPintu agar otomatis login ke dashboard alumni.
             return response(
-                '<!DOCTYPE html><html><head><meta charset="utf-8"><title>SSO Callback Ready</title><meta http-equiv="refresh" content="0;url=' . route('login') . '"></head><body style="font-family:sans-serif;text-align:center;padding:40px;"><h3>Endpoint Callback SSO Aktif</h3><p>Mengalihkan ke panel login...</p><script>window.location.href="' . route('login') . '";</script></body></html>',
+                '<!DOCTYPE html><html><head><meta charset="utf-8"><title>Endpoint Callback SSO Aktif</title><meta http-equiv="refresh" content="0;url=' . route('oauth.redirect') . '"></head><body style="font-family:sans-serif;text-align:center;padding:40px;"><h3>Endpoint Callback SSO Aktif</h3><p>Mengalihkan otomatis ke otorisasi SiPintu...</p><script>window.location.href="' . route('oauth.redirect') . '";</script></body></html>',
                 200,
                 ['Content-Type' => 'text/html']
             );

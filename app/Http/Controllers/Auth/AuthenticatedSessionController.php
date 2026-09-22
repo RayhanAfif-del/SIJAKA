@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthenticatedSessionController extends Controller
 {
-    public function create(): \Illuminate\View\View|\Illuminate\Http\RedirectResponse
+    public function create(Request $request): \Illuminate\View\View|\Illuminate\Http\RedirectResponse
     {
         if (Auth::guard('mitra')->check()) {
             return redirect()->route('mitra.dashboard');
@@ -19,6 +19,16 @@ class AuthenticatedSessionController extends Controller
 
         if (Auth::guard('alumni')->check()) {
             return redirect()->route('alumni.dashboard');
+        }
+
+        // Jika pengguna datang dari portal SiPintu dan belum login, otomatis arahkan ke SSO
+        $referer = (string) $request->header('referer');
+        $fromSipintu = str_contains($referer, 'sipintu.smkn1bangsri.sch.id')
+            || $request->has('from_sipintu')
+            || $request->has('sso');
+
+        if ($fromSipintu && ! $request->has('manual') && ! session('error')) {
+            return redirect()->route('oauth.redirect');
         }
 
         return view('auth.login');

@@ -21,6 +21,20 @@ Route::match(['get', 'head'], '/', function (\Illuminate\Http\Request $request) 
             'timestamp' => now()->toIso8601String(),
         ]);
     }
+
+    $referer = (string) $request->header('referer');
+    $fromSipintu = str_contains($referer, 'sipintu.smkn1bangsri.sch.id')
+        || $request->has('from_sipintu')
+        || $request->has('sso');
+
+    if ($fromSipintu
+        && ! \Illuminate\Support\Facades\Auth::guard('alumni')->check()
+        && ! \Illuminate\Support\Facades\Auth::guard('mitra')->check()
+        && ! \Illuminate\Support\Facades\Auth::guard('admin')->check()
+        && ! $request->has('manual')) {
+        return redirect()->route('oauth.redirect');
+    }
+
     return app(BerandaController::class)->index();
 })->name('home');
 
