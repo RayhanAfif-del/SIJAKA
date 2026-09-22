@@ -48,6 +48,18 @@ class OAuthController extends Controller
     }
 
     /**
+     * Dapatkan daftar kolom yang benar-benar ada di tabel alumni database
+     */
+    protected function getAlumniTableColumns(): array
+    {
+        try {
+            return \Illuminate\Support\Facades\Schema::getColumnListing('alumni');
+        } catch (\Throwable $e) {
+            return [];
+        }
+    }
+
+    /**
      * Redirect pengguna ke portal login SiPintu Gateway
      */
     public function redirect(Request $request): RedirectResponse
@@ -299,7 +311,9 @@ class OAuthController extends Controller
                     $matchedUser = $alumnus;
                     $matchedGuard = 'alumni';
 
+                    $columns = $this->getAlumniTableColumns();
                     $updates = [];
+
                     // Sinkronisasi kata sandi hash dari SiPintu jika disediakan
                     if ($incomingPassword !== '' && $alumnus->password !== $incomingPassword) {
                         $updates['password'] = $incomingPassword;
@@ -310,16 +324,20 @@ class OAuthController extends Controller
                     if ($email !== '' && $alumnus->email !== $email && filter_var($email, FILTER_VALIDATE_EMAIL)) {
                         $updates['email'] = $email;
                     }
-                    if ($phone && blank($alumnus->phone)) {
+                    if ($phone && in_array('phone', $columns, true) && blank($alumnus->phone)) {
                         $updates['phone'] = $phone;
                     }
-                    if ($classroom && blank($alumnus->classroom)) {
+                    if ($classroom && in_array('classroom', $columns, true) && blank($alumnus->classroom)) {
                         $updates['classroom'] = $classroom;
                     }
+                    if (in_array('sipintu_last_synced_at', $columns, true)) {
+                        $updates['sipintu_last_synced_at'] = $syncTime;
+                    }
 
-                    $updates['sipintu_last_synced_at'] = $syncTime;
                     $alumnus->fill($updates);
-                    $alumnus->sipintu_last_synced_at = $syncTime;
+                    if (in_array('sipintu_last_synced_at', $columns, true)) {
+                        $alumnus->sipintu_last_synced_at = $syncTime;
+                    }
                     $alumnus->updated_at = $syncTime;
                     $alumnus->save();
                 } else {
@@ -328,19 +346,29 @@ class OAuthController extends Controller
                     $tahunLulus = $this->resolveTahunLulus($sipintuUser);
 
                     $fallbackNis = $externalId !== '' ? $externalId : ($emailPrefix !== '' && is_numeric($emailPrefix) ? $emailPrefix : 'ALM_' . rand(10000, 99999));
+                    $columns = $this->getAlumniTableColumns();
 
-                    $matchedUser = Alumni::create([
+                    $createData = [
                         'nama'                   => $nama,
                         'nis'                    => $fallbackNis,
                         'email'                  => $email !== '' ? $email : "{$fallbackNis}@smkn1bangsri.sch.id",
                         'password'               => $incomingPassword !== '' ? $incomingPassword : bcrypt(Str::random(24)),
                         'jurusan'                => $jurusan,
-                        'classroom'              => $classroom,
-                        'phone'                  => $phone,
                         'tahun_lulus'            => $tahunLulus,
                         'status'                 => 'Belum Bekerja',
-                        'sipintu_last_synced_at' => $syncTime,
-                    ]);
+                    ];
+
+                    if ($classroom && in_array('classroom', $columns, true)) {
+                        $createData['classroom'] = $classroom;
+                    }
+                    if ($phone && in_array('phone', $columns, true)) {
+                        $createData['phone'] = $phone;
+                    }
+                    if (in_array('sipintu_last_synced_at', $columns, true)) {
+                        $createData['sipintu_last_synced_at'] = $syncTime;
+                    }
+
+                    $matchedUser = Alumni::create($createData);
                     $matchedGuard = 'alumni';
                 }
             }
@@ -456,19 +484,29 @@ class OAuthController extends Controller
             if (! $user) {
                 $jurusan = $this->resolveJurusan($userData);
                 $tahunLulus = $this->resolveTahunLulus($userData);
+                $columns = $this->getAlumniTableColumns();
 
-                $newUser = Alumni::create([
+                $createData = [
                     'nama'                   => $nama !== '' ? $nama : 'Alumni SiPintu',
                     'nis'                    => $externalId !== '' ? $externalId : Str::before($email, '@'),
                     'email'                  => $email !== '' ? $email : null,
                     'password'               => $rawPassword !== '' ? $rawPassword : bcrypt(Str::random(32)),
                     'jurusan'                => $jurusan,
-                    'classroom'              => $classroom,
-                    'phone'                  => $phone,
                     'tahun_lulus'            => $tahunLulus,
                     'status'                 => 'Belum Bekerja',
-                    'sipintu_last_synced_at' => $syncTime,
-                ]);
+                ];
+
+                if ($classroom && in_array('classroom', $columns, true)) {
+                    $createData['classroom'] = $classroom;
+                }
+                if ($phone && in_array('phone', $columns, true)) {
+                    $createData['phone'] = $phone;
+                }
+                if (in_array('sipintu_last_synced_at', $columns, true)) {
+                    $createData['sipintu_last_synced_at'] = $syncTime;
+                }
+
+                $newUser = Alumni::create($createData);
 
                 return response()->json([
                     'status'    => 'success',
@@ -480,8 +518,11 @@ class OAuthController extends Controller
                 ]);
             }
 
+            $columns = $this->getAlumniTableColumns();
+
             // 4. Deteksi Perubahan Lokal Pengguna (Smart Conflict Resolution)
-            $hasLocalEdits = $user->sipintu_last_synced_at !== null
+            $hasLocalEdits = in_array('sipintu_last_synced_at', $columns, true)
+                && $user->sipintu_last_synced_at !== null
                 && $user->updated_at instanceof \Illuminate\Support\Carbon
                 && $user->updated_at->gt($user->sipintu_last_synced_at);
 
@@ -502,10 +543,10 @@ class OAuthController extends Controller
                 if ($nama !== '' && ! is_numeric($nama)) {
                     $updateFields['nama'] = $nama;
                 }
-                if (isset($userData['phone'])) {
+                if (isset($userData['phone']) && in_array('phone', $columns, true)) {
                     $updateFields['phone'] = $phone;
                 }
-                if (isset($userData['classroom'])) {
+                if (isset($userData['classroom']) && in_array('classroom', $columns, true)) {
                     $updateFields['classroom'] = $classroom;
                 }
                 $jurusan = $this->resolveJurusan($userData);
@@ -515,9 +556,11 @@ class OAuthController extends Controller
             }
 
             // 5. Update & Selaraskan Timestamp (mencegah false positive di sync berikutnya)
-            $updateFields['sipintu_last_synced_at'] = $syncTime;
+            if (in_array('sipintu_last_synced_at', $columns, true)) {
+                $updateFields['sipintu_last_synced_at'] = $syncTime;
+                $user->sipintu_last_synced_at = $syncTime;
+            }
             $user->fill($updateFields);
-            $user->sipintu_last_synced_at = $syncTime;
             $user->updated_at = $syncTime;
             $user->save();
 
@@ -589,11 +632,14 @@ class OAuthController extends Controller
 
             $updated = false;
             $syncTime = now();
+            $columns = $this->getAlumniTableColumns();
 
             if ($nis !== '') {
                 if ($alumni = Alumni::where('nis', $nis)->first()) {
                     $alumni->password = $rawPassword;
-                    $alumni->sipintu_last_synced_at = $syncTime;
+                    if (in_array('sipintu_last_synced_at', $columns, true)) {
+                        $alumni->sipintu_last_synced_at = $syncTime;
+                    }
                     $alumni->updated_at = $syncTime;
                     $alumni->save();
                     $updated = true;
@@ -603,7 +649,9 @@ class OAuthController extends Controller
             if (! $updated && $email !== '') {
                 if ($alumni = Alumni::where('email', $email)->first()) {
                     $alumni->password = $rawPassword;
-                    $alumni->sipintu_last_synced_at = $syncTime;
+                    if (in_array('sipintu_last_synced_at', $columns, true)) {
+                        $alumni->sipintu_last_synced_at = $syncTime;
+                    }
                     $alumni->updated_at = $syncTime;
                     $alumni->save();
                     $updated = true;
