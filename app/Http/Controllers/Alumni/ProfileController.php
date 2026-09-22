@@ -145,16 +145,4 @@ class ProfileController extends Controller
         }
         return Storage::download($path);
     }
-
-    /**
-     * Respond to an interview request (accept or reject).
-     */
-    public function respond(string $interviewRequest, string $status)
-    {
-        $alumni = auth('alumni')->user();
-        $requestModel = $alumni->interviewRequests()->where('id', $interviewRequest)->firstOrFail();
-        $requestModel->status = $status;
-        $requestModel->save();
-        return back()->with('status', 'Respon wawancara berhasil disimpan.');
-    }
 }

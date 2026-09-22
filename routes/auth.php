@@ -1,8 +1,6 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Auth\PasswordResetLinkController;
-use App\Http\Controllers\Auth\NewPasswordController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest:admin,mitra,alumni')->group(function () {
@@ -56,11 +54,4 @@ Route::middleware('auth:admin,mitra,alumni')->group(function () {
     Route::post('admin/logout', [AuthenticatedSessionController::class, 'destroyAdmin'])->name('admin.logout');
     Route::post('mitra/logout', [AuthenticatedSessionController::class, 'destroyMitra'])->name('mitra.logout');
     Route::post('alumni/logout', [AuthenticatedSessionController::class, 'destroyAlumni'])->name('alumni.logout');
-});
-
-Route::middleware('guest')->group(function () {
-    Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])->name('password.request');
-    Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])->name('password.email');
-    Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
-    Route::post('reset-password', [NewPasswordController::class, 'store'])->name('password.store');
 });

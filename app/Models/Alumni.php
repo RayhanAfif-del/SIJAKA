@@ -75,11 +75,6 @@ class Alumni extends Authenticatable
         return 'alumni';
     }
 
-    public function interviewRequests()
-    {
-        return $this->hasMany(InterviewRequest::class);
-    }
-
     public function scopeBekerja(Builder $query): Builder
     {
         return $query->where('status', 'Bekerja');

@@ -43,9 +43,4 @@ class Mitra extends Authenticatable
     {
         return $this->lowongan()->where('status', 'disetujui');
     }
-
-    public function interviewRequests()
-    {
-        return $this->hasMany(InterviewRequest::class);
-    }
 }
