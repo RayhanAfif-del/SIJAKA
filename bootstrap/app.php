@@ -24,7 +24,7 @@ return Application::configure(basePath: dirname(__DIR__))
                 return route('alumni.dashboard');
             }
 
-            if ($request->is('pane-admin-sijaka') || $request->is('panel-admin-sijaka')) {
+            if ($request->is('panel-admin-sijaka') || $request->is('panel-admin-sijaka')) {
                 return route('admin.dashboard');
             }
 

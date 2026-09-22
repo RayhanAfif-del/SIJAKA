@@ -20,19 +20,19 @@ Route::middleware('guest:admin,mitra,alumni')->group(function () {
     }
 });
 
-// Panel Admin (support both pane-admin-sijaka and panel-admin-sijaka)
+// Panel Admin (support both panel-admin-sijaka and panel-admin-sijaka)
 Route::middleware('guest:admin')->group(function () {
-    $adminLoginPath = config('app.admin_panel_login_path', 'pane-admin-sijaka');
-    if ($adminLoginPath !== 'pane-admin-sijaka' && $adminLoginPath !== 'panel-admin-sijaka') {
+    $adminLoginPath = config('app.admin_panel_login_path', 'panel-admin-sijaka');
+    if ($adminLoginPath !== 'panel-admin-sijaka' && $adminLoginPath !== 'panel-admin-sijaka') {
         Route::get($adminLoginPath, [AuthenticatedSessionController::class, 'createAdmin'])->name('admin.login');
         Route::post($adminLoginPath, [AuthenticatedSessionController::class, 'storeAdmin']);
     } else {
         Route::get($adminLoginPath, [AuthenticatedSessionController::class, 'createAdmin'])->name('admin.login');
         Route::post($adminLoginPath, [AuthenticatedSessionController::class, 'storeAdmin']);
     }
-    if ($adminLoginPath !== 'pane-admin-sijaka') {
-        Route::get('pane-admin-sijaka', [AuthenticatedSessionController::class, 'createAdmin']);
-        Route::post('pane-admin-sijaka', [AuthenticatedSessionController::class, 'storeAdmin']);
+    if ($adminLoginPath !== 'panel-admin-sijaka') {
+        Route::get('panel-admin-sijaka', [AuthenticatedSessionController::class, 'createAdmin']);
+        Route::post('panel-admin-sijaka', [AuthenticatedSessionController::class, 'storeAdmin']);
     }
     if ($adminLoginPath !== 'panel-admin-sijaka') {
         Route::get('panel-admin-sijaka', [AuthenticatedSessionController::class, 'createAdmin']);
