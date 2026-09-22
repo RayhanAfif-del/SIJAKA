@@ -304,10 +304,17 @@
                                 class="block w-full text-xs text-slate-600 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-blue-600 file:text-white hover:file:bg-blue-700 file:cursor-pointer file:transition cursor-pointer">
                             @error('cv')<p class="mt-2 text-xs text-red-600">{{ $message }}</p>@enderror
                             @if ($alumni->cv_path)
-                                <a href="{{ route('alumni.cv.download') }}" class="inline-flex items-center gap-1.5 mt-3 text-xs font-bold text-blue-600 hover:underline">
-                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-                                    Unduh CV
-                                </a>
+                                <div class="flex items-center gap-3 mt-3">
+                                    <a href="{{ route('alumni.cv.view') }}" target="_blank" class="inline-flex items-center gap-1.5 text-xs font-bold text-slate-700 hover:text-blue-600 hover:underline">
+                                        <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                        Lihat CV
+                                    </a>
+                                    <span class="text-slate-300">•</span>
+                                    <a href="{{ route('alumni.cv.download') }}" class="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:underline">
+                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                                        Unduh CV
+                                    </a>
+                                </div>
                             @endif
                         </div>
 
@@ -327,10 +334,17 @@
                                 class="block w-full text-xs text-slate-600 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-violet-600 file:text-white hover:file:bg-violet-700 file:cursor-pointer file:transition cursor-pointer">
                             @error('portfolio')<p class="mt-2 text-xs text-red-600">{{ $message }}</p>@enderror
                             @if ($alumni->portfolio_path)
-                                <a href="{{ route('alumni.portfolio.download') }}" class="inline-flex items-center gap-1.5 mt-3 text-xs font-bold text-violet-600 hover:underline">
-                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-                                    Unduh Portofolio
-                                </a>
+                                <div class="flex items-center gap-3 mt-3">
+                                    <a href="{{ route('alumni.portfolio.view') }}" target="_blank" class="inline-flex items-center gap-1.5 text-xs font-bold text-slate-700 hover:text-violet-600 hover:underline">
+                                        <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                        Lihat Portofolio
+                                    </a>
+                                    <span class="text-slate-300">•</span>
+                                    <a href="{{ route('alumni.portfolio.download') }}" class="inline-flex items-center gap-1.5 text-xs font-bold text-violet-600 hover:underline">
+                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                                        Unduh Portofolio
+                                    </a>
+                                </div>
                             @endif
                         </div>
                     </div>

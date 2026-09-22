@@ -148,6 +148,23 @@ class ProfileController extends Controller
     }
 
     /**
+     * View the CV document inline.
+     */
+    public function viewCv()
+    {
+        /** @var Alumni $alumni */
+        $alumni = Auth::guard('alumni')->user();
+        if (! $alumni?->cv_path || ! Storage::disk('local')->exists($alumni->cv_path)) {
+            abort(404, 'File CV belum diunggah atau tidak ditemukan.');
+        }
+
+        $extension = pathinfo($alumni->cv_path, PATHINFO_EXTENSION) ?: 'pdf';
+        $filename = 'CV-' . \Illuminate\Support\Str::slug($alumni->nama) . '.' . $extension;
+
+        return Storage::disk('local')->response($alumni->cv_path, $filename);
+    }
+
+    /**
      * Download the CV document.
      */
     public function downloadCv()
@@ -162,6 +179,23 @@ class ProfileController extends Controller
         $filename = 'CV-' . \Illuminate\Support\Str::slug($alumni->nama) . '.' . $extension;
 
         return Storage::disk('local')->download($alumni->cv_path, $filename);
+    }
+
+    /**
+     * View the Portfolio document inline.
+     */
+    public function viewPortfolio()
+    {
+        /** @var Alumni $alumni */
+        $alumni = Auth::guard('alumni')->user();
+        if (! $alumni?->portfolio_path || ! Storage::disk('local')->exists($alumni->portfolio_path)) {
+            abort(404, 'File Portofolio belum diunggah atau tidak ditemukan.');
+        }
+
+        $extension = pathinfo($alumni->portfolio_path, PATHINFO_EXTENSION) ?: 'pdf';
+        $filename = 'Portofolio-' . \Illuminate\Support\Str::slug($alumni->nama) . '.' . $extension;
+
+        return Storage::disk('local')->response($alumni->portfolio_path, $filename);
     }
 
     /**

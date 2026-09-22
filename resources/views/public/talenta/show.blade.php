@@ -17,7 +17,7 @@
         }
 
         // Cleaner empty state check
-        $hasDocuments = !empty($alumni->portfolio_url) || !empty($alumni->cv_path);
+        $hasDocuments = !empty($alumni->portfolio_url) || !empty($alumni->cv_path) || !empty($alumni->portfolio_path);
     @endphp
 
     {{-- Hero Section --}}
@@ -148,33 +148,72 @@
                     </div>
                     
                     <div class="space-y-3">
-                        @if (!empty($alumni->portfolio_url))
-                            <a href="{{ $alumni->portfolio_url }}" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between p-4 rounded-xl border border-slate-200 hover:border-[#024CD4] hover:bg-blue-50/50 transition-all duration-200">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center group-hover:bg-[#024CD4] group-hover:text-white transition-colors">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm font-semibold text-slate-900 group-hover:text-[#024CD4]">Lihat Portofolio Online</p>
-                                        <p class="text-xs text-slate-500 truncate max-w-[200px] sm:max-w-xs">{{ $alumni->portfolio_url }}</p>
-                                    </div>
-                                </div>
-                                <svg class="w-5 h-5 text-slate-400 group-hover:text-[#024CD4] group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4m-5-5l5-5m0 0v4m0-4h-4"/></svg>
-                            </a>
-                        @endif
-
+                        {{-- CV Document --}}
                         @if (!empty($alumni->cv_path))
-                            <a href="{{ route('talenta.document', [$alumni, 'cv']) }}" class="group flex items-center justify-between p-4 rounded-xl border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50/50 transition-all duration-200">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl border border-slate-200 hover:border-emerald-500/50 hover:bg-emerald-50/30 transition-all duration-200 gap-3">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+                                    <div class="w-10 h-10 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
                                     </div>
                                     <div>
-                                        <p class="text-sm font-semibold text-slate-900 group-hover:text-emerald-700">Unduh Curriculum Vitae (CV)</p>
-                                        <p class="text-xs text-slate-500">Format PDF / DOCX</p>
+                                        <p class="text-sm font-semibold text-slate-900">Curriculum Vitae (CV)</p>
+                                        <p class="text-xs text-slate-500">Berkas Curriculum Vitae alumni</p>
                                     </div>
                                 </div>
-                                <svg class="w-5 h-5 text-slate-400 group-hover:text-emerald-600 group-hover:translate-y-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                                <div class="flex items-center gap-2 sm:self-center">
+                                    <a href="{{ route('talenta.document.view', [$alumni, 'cv']) }}" target="_blank" class="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-semibold bg-white text-slate-700 hover:bg-emerald-50 hover:text-emerald-700 border border-slate-200 hover:border-emerald-300 transition-colors shadow-sm">
+                                        <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                        Lihat
+                                    </a>
+                                    <a href="{{ route('talenta.document.download', [$alumni, 'cv']) }}" class="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-semibold bg-emerald-600 text-white hover:bg-emerald-700 transition-colors shadow-sm shadow-emerald-600/20">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                                        Unduh
+                                    </a>
+                                </div>
+                            </div>
+                        @endif
+
+                        {{-- Portfolio File --}}
+                        @if (!empty($alumni->portfolio_path))
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl border border-slate-200 hover:border-indigo-500/50 hover:bg-indigo-50/30 transition-all duration-200 gap-3">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center shrink-0">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-semibold text-slate-900">Berkas Portofolio</p>
+                                        <p class="text-xs text-slate-500">File karya dan dokumentasi proyek</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-2 sm:self-center">
+                                    <a href="{{ route('talenta.document.view', [$alumni, 'portfolio']) }}" target="_blank" class="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-semibold bg-white text-slate-700 hover:bg-indigo-50 hover:text-indigo-700 border border-slate-200 hover:border-indigo-300 transition-colors shadow-sm">
+                                        <svg class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                        Lihat
+                                    </a>
+                                    <a href="{{ route('talenta.document.download', [$alumni, 'portfolio']) }}" class="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-semibold bg-indigo-600 text-white hover:bg-indigo-700 transition-colors shadow-sm shadow-indigo-600/20">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                                        Unduh
+                                    </a>
+                                </div>
+                            </div>
+                        @endif
+
+                        {{-- Portfolio URL --}}
+                        @if (!empty($alumni->portfolio_url))
+                            <a href="{{ $alumni->portfolio_url }}" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between p-4 rounded-xl border border-slate-200 hover:border-[#024CD4] hover:bg-blue-50/50 transition-all duration-200">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center group-hover:bg-[#024CD4] group-hover:text-white transition-colors shrink-0">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-semibold text-slate-900 group-hover:text-[#024CD4]">Portofolio Online</p>
+                                        <p class="text-xs text-slate-500 truncate max-w-[200px] sm:max-w-xs">{{ $alumni->portfolio_url }}</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-1.5 text-xs font-semibold text-[#024CD4] group-hover:underline">
+                                    <span>Buka</span>
+                                    <svg class="w-4 h-4 text-slate-400 group-hover:text-[#024CD4] group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4m-5-5l5-5m0 0v4m0-4h-4"/></svg>
+                                </div>
                             </a>
                         @endif
 

@@ -34,6 +34,8 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
 
     Route::get('/talenta-alumni', [TalentPoolController::class, 'index'])->name('talent-pool.index');
     Route::get('/talenta-alumni/{alumni}', [TalentPoolController::class, 'show'])->name('talent-pool.show');
+    Route::get('/talenta-alumni/{alumni}/dokumen/{document}/view', [TalentPoolController::class, 'view'])->name('talent-pool.document.view');
+    Route::get('/talenta-alumni/{alumni}/dokumen/{document}/download', [TalentPoolController::class, 'download'])->name('talent-pool.document.download');
     Route::get('/talenta-alumni/{alumni}/dokumen/{document}', [TalentPoolController::class, 'download'])->name('talent-pool.document');
     Route::patch('/talenta-alumni/{alumni}/approve', [TalentPoolController::class, 'approve'])->name('talent-pool.approve');
     Route::patch('/talenta-alumni/{alumni}/reject', [TalentPoolController::class, 'reject'])->name('talent-pool.reject');

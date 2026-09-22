@@ -49,10 +49,11 @@ Route::get('/artikel', [ArtikelController::class, 'index'])->name('artikel.index
 Route::get('/artikel/{artikel}', [ArtikelController::class, 'show'])->name('artikel.show');
 
 Route::get('/galeri', [GaleriController::class, 'index'])->name('galeri.index');
-
 Route::get('/statistik', [StatistikController::class, 'index'])->name('statistik.index');
 Route::get('/talenta', [TalentaController::class, 'index'])->name('talenta.index');
-Route::get('/talenta/{alumni}/dokumen/{document}', [TalentaController::class, 'download'])->name('talenta.document');
+Route::get('/talenta/{alumni}/dokumen/{document}/view', [TalentaController::class, 'viewDocument'])->name('talenta.document.view');
+Route::get('/talenta/{alumni}/dokumen/{document}/download', [TalentaController::class, 'downloadDocument'])->name('talenta.document.download');
+Route::get('/talenta/{alumni}/dokumen/{document}', [TalentaController::class, 'downloadDocument'])->name('talenta.document');
 Route::get('/talenta/{alumni}', [TalentaController::class, 'show'])->name('talenta.show');
 
 Route::get('/kontak', [KontakController::class, 'index'])->name('kontak.index');

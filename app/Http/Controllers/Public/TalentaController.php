@@ -47,17 +47,42 @@ class TalentaController extends Controller
         return view('public.talenta.show', compact('alumni', 'whatsappNumber'));
     }
 
-    public function download(Alumni $alumni, string $document): StreamedResponse
+    public function viewDocument(Alumni $alumni, string $document)
     {
         abort_unless(
             $alumni->is_visible && $alumni->talent_approval_status === 'disetujui',
             404
         );
-        abort_unless($document === 'cv', 404);
+        abort_unless(in_array($document, ['cv', 'portfolio'], true), 404);
 
-        $path = $alumni->cv_path;
+        $path = $alumni->{$document . '_path'};
         abort_unless($path && Storage::disk('local')->exists($path), 404);
 
-        return Storage::disk('local')->download($path);
+        $extension = pathinfo($path, PATHINFO_EXTENSION) ?: 'pdf';
+        $filename = strtoupper($document) . '-' . \Illuminate\Support\Str::slug($alumni->nama) . '.' . $extension;
+
+        return Storage::disk('local')->response($path, $filename);
+    }
+
+    public function downloadDocument(Alumni $alumni, string $document): StreamedResponse
+    {
+        abort_unless(
+            $alumni->is_visible && $alumni->talent_approval_status === 'disetujui',
+            404
+        );
+        abort_unless(in_array($document, ['cv', 'portfolio'], true), 404);
+
+        $path = $alumni->{$document . '_path'};
+        abort_unless($path && Storage::disk('local')->exists($path), 404);
+
+        $extension = pathinfo($path, PATHINFO_EXTENSION) ?: 'pdf';
+        $filename = strtoupper($document) . '-' . \Illuminate\Support\Str::slug($alumni->nama) . '.' . $extension;
+
+        return Storage::disk('local')->download($path, $filename);
+    }
+
+    public function download(Alumni $alumni, string $document): StreamedResponse
+    {
+        return $this->downloadDocument($alumni, $document);
     }
 }

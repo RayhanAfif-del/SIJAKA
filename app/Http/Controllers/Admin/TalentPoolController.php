@@ -40,6 +40,19 @@ class TalentPoolController extends Controller
         return view('admin.talent-pool.show', compact('alumni'));
     }
 
+    public function view(Alumni $alumni, string $document)
+    {
+        abort_unless(in_array($document, ['cv', 'portfolio'], true), 404);
+
+        $path = $alumni->{$document.'_path'};
+        abort_unless($path && Storage::disk('local')->exists($path), 404);
+
+        $extension = pathinfo($path, PATHINFO_EXTENSION) ?: 'pdf';
+        $filename = strtoupper($document) . '-' . \Illuminate\Support\Str::slug($alumni->nama) . '.' . $extension;
+
+        return Storage::disk('local')->response($path, $filename);
+    }
+
     public function download(Alumni $alumni, string $document): StreamedResponse
     {
         abort_unless(in_array($document, ['cv', 'portfolio'], true), 404);
@@ -47,7 +60,10 @@ class TalentPoolController extends Controller
         $path = $alumni->{$document.'_path'};
         abort_unless($path && Storage::disk('local')->exists($path), 404);
 
-        return Storage::disk('local')->download($path);
+        $extension = pathinfo($path, PATHINFO_EXTENSION) ?: 'pdf';
+        $filename = strtoupper($document) . '-' . \Illuminate\Support\Str::slug($alumni->nama) . '.' . $extension;
+
+        return Storage::disk('local')->download($path, $filename);
     }
 
     public function approve(Alumni $alumni): RedirectResponse
