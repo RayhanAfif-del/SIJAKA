@@ -42,6 +42,7 @@ Route::get('/profil', [ProfilController::class, 'index'])->name('profil.index');
 Route::get('/struktur-organisasi', [StrukturOrganisasiController::class, 'index'])->name('struktur-organisasi.index');
 
 Route::get('/lowongan', [LowonganController::class, 'index'])->name('lowongan.index');
+Route::redirect('/daftar-lowongan', '/lowongan')->name('lowongan');
 Route::get('/lowongan/{lowongan}', [LowonganController::class, 'show'])->name('lowongan.show');
 
 Route::get('/artikel', [ArtikelController::class, 'index'])->name('artikel.index');
