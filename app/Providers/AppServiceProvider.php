@@ -16,6 +16,12 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        if (app()->environment('production')
+            || str_contains((string) config('app.url'), 'https://')
+            || request()->server('HTTP_X_FORWARDED_PROTO') === 'https') {
+            \Illuminate\Support\Facades\URL::forceScheme('https');
+        }
+
         app('url')->resolveMissingNamedRoutesUsing(function (string $name, array $parameters, bool $absolute) {
             return match ($name) {
                 'sipintu.callback' => route('oauth.callback', $parameters, $absolute),

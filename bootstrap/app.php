@@ -14,6 +14,8 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->trustProxies(at: '*');
+
         $middleware->redirectUsersTo(function (Request $request) {
             if ($request->is('panel-sijaka')) {
                 if (Auth::guard('mitra')->check()) {

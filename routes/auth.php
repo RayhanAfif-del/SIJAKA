@@ -43,12 +43,12 @@ Route::middleware('guest:admin')->group(function () {
 Route::middleware('guest:admin,mitra,alumni')->group(function () {
     Route::match(['get', 'head'], '/oauth/redirect', [\App\Http\Controllers\OAuthController::class, 'redirect'])->name('oauth.redirect');
     Route::match(['get', 'head'], '/sipintu/redirect', [\App\Http\Controllers\OAuthController::class, 'redirect'])->name('sipintu.redirect');
-    Route::match(['get', 'head'], '/oauth/callback', [\App\Http\Controllers\OAuthController::class, 'callback'])->name('oauth.callback');
 });
 
-// Route callback SSO aliases untuk pengujian probe dari SiPintu Gateway
-Route::match(['get', 'post', 'head'], '/callback', [\App\Http\Controllers\OAuthController::class, 'callback']);
-Route::match(['get', 'post', 'head'], '/sipintu/callback', [\App\Http\Controllers\OAuthController::class, 'callback']);
+// Route callback SSO & aliases (mendukung GET, HEAD, dan POST dari SiPintu Gateway)
+Route::match(['get', 'head', 'post'], '/oauth/callback', [\App\Http\Controllers\OAuthController::class, 'callback'])->name('oauth.callback');
+Route::match(['get', 'head', 'post'], '/callback', [\App\Http\Controllers\OAuthController::class, 'callback']);
+Route::match(['get', 'head', 'post'], '/sipintu/callback', [\App\Http\Controllers\OAuthController::class, 'callback']);
 
 Route::middleware('auth:admin,mitra,alumni')->group(function () {
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');

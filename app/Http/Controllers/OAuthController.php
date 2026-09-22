@@ -20,6 +20,34 @@ use Illuminate\Support\Str;
 class OAuthController extends Controller
 {
     /**
+     * Dapatkan URI callback OAuth yang konsisten dan valid
+     */
+    public function getRedirectUri(Request $request): string
+    {
+        $configured = config('services.sipintu.redirect_uri') ?: env('SIPINTU_REDIRECT_URI');
+
+        // Jika domain adalah domain produksi resmi SMKN 1 Bangsri, selalu gunakan endpoint HTTPS resmi
+        if (str_contains($request->getHost(), 'sijaka.smkn1bangsri.sch.id')) {
+            return 'https://sijaka.smkn1bangsri.sch.id/oauth/callback';
+        }
+
+        if ($configured && ! str_contains($configured, 'localhost') && ! str_contains($configured, '127.0.0.1')) {
+            return preg_replace('/^http:/i', 'https:', $configured);
+        }
+
+        if ($configured) {
+            return $configured;
+        }
+
+        $url = route('oauth.callback');
+        if (! str_contains($url, 'localhost') && ! str_contains($url, '127.0.0.1')) {
+            $url = preg_replace('/^http:/i', 'https:', $url);
+        }
+
+        return $url;
+    }
+
+    /**
      * Redirect pengguna ke portal login SiPintu Gateway
      */
     public function redirect(Request $request): RedirectResponse
@@ -34,7 +62,7 @@ class OAuthController extends Controller
 
         $baseUrl = rtrim((string) config('services.sipintu.base_url', env('SIPINTU_BASE_URL', 'http://localhost:8000')), '/');
         $authorizePath = (string) config('services.sipintu.authorize_path', '/oauth/authorize');
-        $redirectUri = (string) config('services.sipintu.redirect_uri', env('SIPINTU_REDIRECT_URI', url('/oauth/callback')));
+        $redirectUri = $this->getRedirectUri($request);
 
         $url = "{$baseUrl}{$authorizePath}?" . http_build_query([
             'client_id'     => $clientId,
@@ -80,13 +108,20 @@ class OAuthController extends Controller
         }
 
         if ($request->filled('error')) {
-            return redirect()->route('login')->with('error', 'Login SiPintu dibatalkan atau gagal.');
+            Log::warning('SiPintu SSO Callback returned error parameter', [
+                'error' => $request->input('error'),
+                'error_description' => $request->input('error_description'),
+            ]);
+            return redirect()->route('login')->with('error', 'Login SiPintu dibatalkan atau gagal: ' . ($request->input('error_description') ?? $request->input('error')));
         }
 
         // 2. Tangkap kode otorisasi dari SiPintu
         $code = (string) $request->input('code');
 
         if (! $code) {
+            Log::warning('SiPintu SSO Callback missing authorization code', [
+                'query' => $request->query(),
+            ]);
             return redirect()->route('login')->with('error', 'Otorisasi dari SiPintu gagal: Kode otorisasi tidak ditemukan.');
         }
 
@@ -95,14 +130,18 @@ class OAuthController extends Controller
             $expectedState = (string) $request->session()->pull('sipintu_oauth_state');
             $givenState = (string) $request->query('state');
             if ($expectedState !== '' && $givenState !== '' && ! hash_equals($expectedState, $givenState)) {
-                return redirect()->route('login')->with('error', 'Sesi login SiPintu tidak valid atau sudah kedaluwarsa.');
+                Log::warning('SiPintu SSO State Mismatch', [
+                    'expected' => $expectedState,
+                    'given' => $givenState,
+                ]);
+                return redirect()->route('login')->with('error', 'Sesi login SiPintu tidak valid atau sudah kedaluwarsa. Silakan coba klik Masuk dengan SiPintu kembali.');
             }
         }
 
         $baseUrl = rtrim((string) config('services.sipintu.base_url', env('SIPINTU_BASE_URL', 'http://localhost:8000')), '/');
         $clientId = config('services.sipintu.client_id', env('SIPINTU_CLIENT_ID'));
         $clientSecret = config('services.sipintu.client_secret', env('SIPINTU_CLIENT_SECRET'));
-        $redirectUri = config('services.sipintu.redirect_uri', env('SIPINTU_REDIRECT_URI', url('/oauth/callback')));
+        $redirectUri = $this->getRedirectUri($request);
         $tokenPath = config('services.sipintu.token_path', '/oauth/token');
         $userPath = config('services.sipintu.user_path', '/api/v1/user');
 
@@ -118,15 +157,23 @@ class OAuthController extends Controller
             ]);
 
             if ($tokenResponse->failed()) {
+                Log::error('SiPintu OAuth Token Exchange Failed', [
+                    'status'       => $tokenResponse->status(),
+                    'body'         => $tokenResponse->body(),
+                    'redirect_uri' => $redirectUri,
+                    'token_url'    => $tokenUrl,
+                ]);
+
                 $errorMsg = $tokenResponse->json('error_description')
                     ?? $tokenResponse->json('message')
-                    ?? 'Gagal memverifikasi token ke SiPintu Gateway.';
+                    ?? ('Gagal memverifikasi token ke SiPintu Gateway (HTTP ' . $tokenResponse->status() . ').');
                 return redirect()->route('login')->with('error', $errorMsg);
             }
 
             $accessToken = $tokenResponse->json('access_token');
             if (! $accessToken) {
-                return redirect()->route('login')->with('error', 'Access token SiPintu tidak ditemukan dalam respons.');
+                Log::error('SiPintu OAuth Missing Access Token', ['response' => $tokenResponse->json()]);
+                return redirect()->route('login')->with('error', 'Access token SiPintu tidak ditemukan dalam respons gateway.');
             }
 
             // 4. Ambil data profil siswa dari endpoint SiPintu Gateway
@@ -136,30 +183,62 @@ class OAuthController extends Controller
                 ->get($userUrl);
 
             if ($userResponse->failed()) {
-                return redirect()->route('login')->with('error', 'Gagal mengambil data akun dari SiPintu Gateway.');
+                Log::error('SiPintu OAuth User Profile Failed', [
+                    'status'   => $userResponse->status(),
+                    'body'     => $userResponse->body(),
+                    'user_url' => $userUrl,
+                ]);
+                return redirect()->route('login')->with('error', 'Gagal mengambil data akun dari SiPintu Gateway (HTTP ' . $userResponse->status() . ').');
             }
 
             $sipintuUser = $userResponse->json('data')
                 ?? $userResponse->json('user')
                 ?? $userResponse->json();
 
+            Log::info('SiPintu OAuth User Data Received', [
+                'keys'   => is_array($sipintuUser) ? array_keys($sipintuUser) : [],
+                'sample' => is_array($sipintuUser) ? [
+                    'id'           => data_get($sipintuUser, 'id'),
+                    'name'         => data_get($sipintuUser, 'name'),
+                    'email'        => data_get($sipintuUser, 'email'),
+                    'student_nis'  => data_get($sipintuUser, 'student.nis'),
+                    'student_nama' => data_get($sipintuUser, 'student.nama'),
+                ] : null,
+            ]);
+
             $email = (string) (data_get($sipintuUser, 'email') ?? data_get($sipintuUser, 'user.email') ?? '');
-            $externalId = (string) (data_get($sipintuUser, 'external_id') ?? data_get($sipintuUser, 'nis') ?? data_get($sipintuUser, 'student.nis') ?? '');
-            if ($externalId === '' && is_numeric(data_get($sipintuUser, 'name'))) {
-                $externalId = (string) data_get($sipintuUser, 'name');
-            }
-            if ($externalId === '' && is_numeric(data_get($sipintuUser, 'user.name'))) {
-                $externalId = (string) data_get($sipintuUser, 'user.name');
+            $externalId = (string) (
+                data_get($sipintuUser, 'external_id')
+                ?? data_get($sipintuUser, 'nis')
+                ?? data_get($sipintuUser, 'student.nis')
+                ?? data_get($sipintuUser, 'student.external_id')
+                ?? (is_numeric(data_get($sipintuUser, 'username')) ? data_get($sipintuUser, 'username') : null)
+                ?? (is_numeric(data_get($sipintuUser, 'name')) ? data_get($sipintuUser, 'name') : null)
+                ?? (is_numeric(data_get($sipintuUser, 'user.name')) ? data_get($sipintuUser, 'user.name') : null)
+                ?? ''
+            );
+
+            // Jika externalId belum terisi dan email diawali angka NIS (contoh: 4444@smkn1bangsri.sch.id / 4444@sijuna.com)
+            if ($externalId === '' && $email !== '') {
+                $emailPrefix = Str::before($email, '@');
+                if (is_numeric($emailPrefix)) {
+                    $externalId = $emailPrefix;
+                }
             }
 
             // Nama kandidat siswa (hindari menggunakan string angka NIS jika ada nama asli)
-            $candidateNama = data_get($sipintuUser, 'student.nama') ?? data_get($sipintuUser, 'nama');
+            $candidateNama = data_get($sipintuUser, 'student.nama')
+                ?? data_get($sipintuUser, 'student.name')
+                ?? data_get($sipintuUser, 'nama');
             if (! $candidateNama && ! is_numeric(data_get($sipintuUser, 'name'))) {
                 $candidateNama = data_get($sipintuUser, 'name');
             }
+            if (! $candidateNama && ! is_numeric(data_get($sipintuUser, 'user.name'))) {
+                $candidateNama = data_get($sipintuUser, 'user.name');
+            }
             $nama = (string) ($candidateNama ?? 'Alumni SiPintu');
 
-            $incomingPassword = (string) (data_get($sipintuUser, 'password') ?? data_get($sipintuUser, 'password_hash'));
+            $incomingPassword = (string) (data_get($sipintuUser, 'password') ?? data_get($sipintuUser, 'password_hash') ?? data_get($sipintuUser, 'user.password'));
             $phone = data_get($sipintuUser, 'phone') ?? data_get($sipintuUser, 'student.hp') ?? data_get($sipintuUser, 'hp');
             $classroom = data_get($sipintuUser, 'classroom') ?? data_get($sipintuUser, 'student.classroom');
             $syncTime = now();
@@ -185,18 +264,33 @@ class OAuthController extends Controller
             } else {
                 // 5. Cocokkan dengan data siswa/alumni di database lokal (via NIS atau Email)
                 if ($email === '' && $externalId === '') {
+                    Log::warning('SiPintu OAuth: No NIS or Email in payload', ['payload' => $sipintuUser]);
                     return redirect()->route('login')->with('error', 'Data akun dari SiPintu tidak memiliki informasi NIS atau Email yang valid.');
                 }
 
+                $emailPrefix = $email !== '' ? Str::before($email, '@') : '';
                 $alumniQuery = Alumni::query();
+
                 if ($email !== '' && $externalId !== '') {
-                    $alumniQuery->where(function ($q) use ($email, $externalId) {
-                        $q->where('nis', $externalId)->orWhere('email', $email);
+                    $alumniQuery->where(function ($q) use ($email, $externalId, $emailPrefix) {
+                        $q->where('nis', $externalId)
+                          ->orWhere('email', $email)
+                          ->orWhere('email', 'like', "{$externalId}@%");
+                        if ($emailPrefix !== '' && is_numeric($emailPrefix)) {
+                            $q->orWhere('nis', $emailPrefix)
+                              ->orWhere('email', 'like', "{$emailPrefix}@%");
+                        }
                     });
                 } elseif ($externalId !== '') {
-                    $alumniQuery->where('nis', $externalId);
+                    $alumniQuery->where(function ($q) use ($externalId) {
+                        $q->where('nis', $externalId)
+                          ->orWhere('email', 'like', "{$externalId}@%");
+                    });
                 } elseif ($email !== '') {
                     $alumniQuery->where('email', $email);
+                    if ($emailPrefix !== '' && is_numeric($emailPrefix)) {
+                        $alumniQuery->orWhere('nis', $emailPrefix);
+                    }
                 }
 
                 $alumnus = $alumniQuery->first();
@@ -210,10 +304,10 @@ class OAuthController extends Controller
                     if ($incomingPassword !== '' && $alumnus->password !== $incomingPassword) {
                         $updates['password'] = $incomingPassword;
                     }
-                    if ($nama !== '' && ! is_numeric($nama)) {
+                    if ($nama !== '' && ! is_numeric($nama) && $alumnus->nama !== $nama) {
                         $updates['nama'] = $nama;
                     }
-                    if ($email !== '' && $alumnus->email !== $email) {
+                    if ($email !== '' && $alumnus->email !== $email && filter_var($email, FILTER_VALIDATE_EMAIL)) {
                         $updates['email'] = $email;
                     }
                     if ($phone && blank($alumnus->phone)) {
@@ -233,10 +327,12 @@ class OAuthController extends Controller
                     $jurusan = $this->resolveJurusan($sipintuUser);
                     $tahunLulus = $this->resolveTahunLulus($sipintuUser);
 
+                    $fallbackNis = $externalId !== '' ? $externalId : ($emailPrefix !== '' && is_numeric($emailPrefix) ? $emailPrefix : 'ALM_' . rand(10000, 99999));
+
                     $matchedUser = Alumni::create([
                         'nama'                   => $nama,
-                        'nis'                    => $externalId !== '' ? $externalId : Str::before($email, '@'),
-                        'email'                  => $email !== '' ? $email : null,
+                        'nis'                    => $fallbackNis,
+                        'email'                  => $email !== '' ? $email : "{$fallbackNis}@smkn1bangsri.sch.id",
                         'password'               => $incomingPassword !== '' ? $incomingPassword : bcrypt(Str::random(24)),
                         'jurusan'                => $jurusan,
                         'classroom'              => $classroom,
@@ -257,12 +353,18 @@ class OAuthController extends Controller
 
                 $targetUrl = match ($matchedGuard) {
                     'alumni' => route('alumni.dashboard'),
-                    'mitra' => route('mitra.dashboard'),
-                    'admin' => route('admin.dashboard'),
-                    default => route('dashboard'),
+                    'mitra'  => route('mitra.dashboard'),
+                    'admin'  => route('admin.dashboard'),
+                    default  => route('dashboard'),
                 };
 
-                return redirect()->intended($targetUrl)->with('success', "Selamat datang, {$displayName}!");
+                // Bersihkan intended jika mengarah ke halaman login atau SSO callback agar tidak memantul kembali ke panel login
+                $intended = $request->session()->pull('url.intended');
+                if ($intended && ! str_contains($intended, 'panel-sijaka') && ! str_contains($intended, 'login') && ! str_contains($intended, 'oauth')) {
+                    return redirect()->to($intended)->with('success', "Selamat datang, {$displayName}!");
+                }
+
+                return redirect()->to($targetUrl)->with('success', "Selamat datang, {$displayName}!");
             }
 
             return redirect()->route('login')->with('error', 'Akun SiPintu tidak dapat dipetakan ke profil SIJAKA.');
