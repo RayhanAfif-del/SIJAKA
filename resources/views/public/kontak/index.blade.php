@@ -114,7 +114,7 @@
                         @endif
                         @if ($kontak->tiktok)
                             <a href="{{ $kontak->tiktok }}" target="_blank" class="w-11 h-11 rounded-full bg-gray-50 text-gray-600 flex items-center justify-center hover:bg-slate-950 hover:text-white transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-0.5" aria-label="TikTok">
-                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M16.6 5.82c-.4-.44-.7-.96-.86-1.53a4.5 4.5 0 01-.11-.79h-3.24v12.67a2.65 2.65 0 01-2.65 2.63 2.65 2.65 0 01-2.65-2.63c0-1.46 1.19-2.64 2.65-2.64.28 0 .55.04.8.12v-3.3a5.91 5.91 0 00-.8-.06A5.89 5.89 0 003.86 16.2 5.89 5.89 0 009.74 22a5.89 5.89 0 005.89-5.81V9.77a7.7 7.7 0 004.5 1.44V7.97a4.53 4.53 0 01-3.53-2.15z"/></svg>
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V9.05a8.19 8.19 0 0 0 4.78 1.52V7.12a4.85 4.85 0 0 1-1.01-.43z"/></svg>
                             </a>
                         @endif
                     </div>
