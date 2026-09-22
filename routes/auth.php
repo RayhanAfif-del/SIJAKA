@@ -42,6 +42,7 @@ Route::middleware('guest:admin')->group(function () {
 
 Route::middleware('guest:admin,mitra,alumni')->group(function () {
     Route::match(['get', 'head'], '/oauth/redirect', [\App\Http\Controllers\OAuthController::class, 'redirect'])->name('oauth.redirect');
+    Route::match(['get', 'head'], '/sipintu/redirect', [\App\Http\Controllers\OAuthController::class, 'redirect'])->name('sipintu.redirect');
     Route::match(['get', 'head'], '/oauth/callback', [\App\Http\Controllers\OAuthController::class, 'callback'])->name('oauth.callback');
 });
 

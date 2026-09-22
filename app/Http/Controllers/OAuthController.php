@@ -142,16 +142,25 @@ class OAuthController extends Controller
                 ?? $userResponse->json('user')
                 ?? $userResponse->json();
 
-            $email = (string) data_get($sipintuUser, 'email');
-            $externalId = (string) (data_get($sipintuUser, 'external_id') ?? data_get($sipintuUser, 'nis') ?? '');
+            $email = (string) (data_get($sipintuUser, 'email') ?? data_get($sipintuUser, 'user.email') ?? '');
+            $externalId = (string) (data_get($sipintuUser, 'external_id') ?? data_get($sipintuUser, 'nis') ?? data_get($sipintuUser, 'student.nis') ?? '');
             if ($externalId === '' && is_numeric(data_get($sipintuUser, 'name'))) {
                 $externalId = (string) data_get($sipintuUser, 'name');
             }
+            if ($externalId === '' && is_numeric(data_get($sipintuUser, 'user.name'))) {
+                $externalId = (string) data_get($sipintuUser, 'user.name');
+            }
 
-            $nama = (string) (data_get($sipintuUser, 'name') ?? data_get($sipintuUser, 'nama') ?? 'Alumni SiPintu');
+            // Nama kandidat siswa (hindari menggunakan string angka NIS jika ada nama asli)
+            $candidateNama = data_get($sipintuUser, 'student.nama') ?? data_get($sipintuUser, 'nama');
+            if (! $candidateNama && ! is_numeric(data_get($sipintuUser, 'name'))) {
+                $candidateNama = data_get($sipintuUser, 'name');
+            }
+            $nama = (string) ($candidateNama ?? 'Alumni SiPintu');
+
             $incomingPassword = (string) (data_get($sipintuUser, 'password') ?? data_get($sipintuUser, 'password_hash'));
-            $phone = data_get($sipintuUser, 'phone');
-            $classroom = data_get($sipintuUser, 'classroom');
+            $phone = data_get($sipintuUser, 'phone') ?? data_get($sipintuUser, 'student.hp') ?? data_get($sipintuUser, 'hp');
+            $classroom = data_get($sipintuUser, 'classroom') ?? data_get($sipintuUser, 'student.classroom');
             $syncTime = now();
 
             $matchedUser = null;
@@ -174,6 +183,10 @@ class OAuthController extends Controller
                 }
             } else {
                 // 5. Cocokkan dengan data siswa/alumni di database lokal (via NIS atau Email)
+                if ($email === '' && $externalId === '') {
+                    return redirect()->route('login')->with('error', 'Data akun dari SiPintu tidak memiliki informasi NIS atau Email yang valid.');
+                }
+
                 $alumniQuery = Alumni::query();
                 if ($email !== '' && $externalId !== '') {
                     $alumniQuery->where(function ($q) use ($email, $externalId) {
@@ -241,7 +254,14 @@ class OAuthController extends Controller
 
                 $displayName = $matchedUser->nama ?? $matchedUser->name ?? 'User';
 
-                return redirect()->intended('/dashboard')->with('success', "Selamat datang, {$displayName}!");
+                $targetUrl = match ($matchedGuard) {
+                    'alumni' => route('alumni.dashboard'),
+                    'mitra' => route('mitra.dashboard'),
+                    'admin' => route('admin.dashboard'),
+                    default => route('dashboard'),
+                };
+
+                return redirect()->intended($targetUrl)->with('success', "Selamat datang, {$displayName}!");
             }
 
             return redirect()->route('login')->with('error', 'Akun SiPintu tidak dapat dipetakan ke profil SIJAKA.');

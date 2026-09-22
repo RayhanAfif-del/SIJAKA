@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Alumni;
 use App\Http\Controllers\Controller;
 use App\Models\Alumni;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
@@ -16,7 +17,7 @@ class ProfileController extends Controller
     public function edit(Request $request)
     {
         /** @var Alumni $alumni */
-        $alumni = $request->user();
+        $alumni = Auth::guard('alumni')->user() ?? $request->user('alumni');
         return view('alumni.profile.edit', compact('alumni'));
     }
 
@@ -26,7 +27,7 @@ class ProfileController extends Controller
     public function update(Request $request)
     {
         /** @var Alumni $alumni */
-        $alumni = $request->user();
+        $alumni = Auth::guard('alumni')->user() ?? $request->user('alumni');
 
         $validated = $request->validate([
             'headline'      => 'nullable|string|max:255',
