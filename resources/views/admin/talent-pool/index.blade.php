@@ -63,8 +63,12 @@
                             {{-- Alumni Column --}}
                             <td class="px-6 py-4">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-sm font-bold text-slate-600 shrink-0">
-                                        {{ strtoupper(substr($item->nama, 0, 1)) }}
+                                    <div class="w-10 h-10 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-sm font-bold text-slate-600 shrink-0 overflow-hidden">
+                                        @if ($item->foto_path)
+                                            <img src="{{ Storage::url($item->foto_path) }}" alt="{{ $item->nama }}" class="w-full h-full object-cover">
+                                        @else
+                                            {{ strtoupper(substr($item->nama, 0, 1)) }}
+                                        @endif
                                     </div>
                                     <div>
                                         <p class="text-sm font-semibold text-slate-900 group-hover:text-blue-600 transition-colors">{{ $item->nama }}</p>

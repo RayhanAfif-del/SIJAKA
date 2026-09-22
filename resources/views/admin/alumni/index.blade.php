@@ -195,8 +195,12 @@
                             {{-- Nama + Avatar --}}
                             <td class="px-5 py-4">
                                 <div class="flex items-center gap-3 min-w-0">
-                                    <div class="w-9 h-9 rounded-full bg-gradient-to-br {{ $gradient }} flex items-center justify-center text-white text-xs font-bold shrink-0 shadow-sm">
-                                        {{ $inisial }}
+                                    <div class="w-9 h-9 rounded-full bg-gradient-to-br {{ $gradient }} flex items-center justify-center text-white text-xs font-bold shrink-0 shadow-sm overflow-hidden">
+                                        @if ($item->foto_path)
+                                            <img src="{{ Storage::url($item->foto_path) }}" alt="{{ $item->nama }}" class="w-full h-full object-cover">
+                                        @else
+                                            {{ $inisial }}
+                                        @endif
                                     </div>
                                     <div class="min-w-0 flex-1">
                                         <p class="text-sm font-semibold text-slate-900 line-clamp-1" title="{{ $item->nama }}">
