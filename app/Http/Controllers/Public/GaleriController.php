@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
 use App\Models\Galeri;
+use App\Models\KategoriGaleri;
 use App\Models\PengaturanWebsite;
 use App\Support\GaleriStack;
 use Illuminate\Http\Request;
@@ -25,7 +26,10 @@ class GaleriController extends Controller
             8
         )->withQueryString();
 
-        $kategoriList = Galeri::distinct()->pluck('kategori');
+        $kategoriList = KategoriGaleri::whereHas('galeri')->orderBy('nama')->pluck('nama');
+        if ($kategoriList->isEmpty()) {
+            $kategoriList = KategoriGaleri::orderBy('nama')->pluck('nama');
+        }
 
         return view('public.galeri.index', [
             'galeri' => $galeri,

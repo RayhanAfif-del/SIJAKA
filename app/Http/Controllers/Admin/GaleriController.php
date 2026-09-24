@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\GaleriRequest;
 use App\Models\Galeri;
+use App\Models\KategoriGaleri;
 use App\Support\GaleriStack;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
@@ -31,9 +32,11 @@ class GaleriController extends Controller
         }
 
         $stackedGaleri = GaleriStack::group($query->get());
+        $kategoriList = KategoriGaleri::orderBy('nama')->get();
 
         return view('admin.galeri.index', [
             'galeri' => GaleriStack::paginate($stackedGaleri, 12)->withQueryString(),
+            'kategoriList' => $kategoriList,
         ]);
     }
 
@@ -42,7 +45,8 @@ class GaleriController extends Controller
      */
     public function create()
     {
-        return view('admin.galeri.create');
+        $kategoriList = KategoriGaleri::orderBy('nama')->get();
+        return view('admin.galeri.create', compact('kategoriList'));
     }
 
     /**
@@ -79,7 +83,8 @@ class GaleriController extends Controller
      */
     public function edit(Galeri $galeri)
     {
-        return view('admin.galeri.edit', compact('galeri'));
+        $kategoriList = KategoriGaleri::orderBy('nama')->get();
+        return view('admin.galeri.edit', compact('galeri', 'kategoriList'));
     }
 
     /**

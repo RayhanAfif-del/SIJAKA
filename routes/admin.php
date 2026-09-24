@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AlumniController;
 use App\Http\Controllers\Admin\ArtikelController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GaleriController;
+use App\Http\Controllers\Admin\KategoriGaleriController;
 use App\Http\Controllers\Admin\KontakController;
 use App\Http\Controllers\Admin\LowonganController;
 use App\Http\Controllers\Admin\MitraController;
@@ -42,6 +43,7 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
 
     Route::resource('artikel', ArtikelController::class);
     Route::resource('galeri', GaleriController::class);
+    Route::resource('kategori-galeri', KategoriGaleriController::class)->except(['create', 'show', 'edit']);
     Route::post('/alumni/sync-sipintu', [AlumniController::class, 'syncSipintu'])->name('alumni.sync-sipintu');
     Route::resource('alumni', AlumniController::class)->parameters(['alumni' => 'alumni']);
     // Convert alumni with status 'Belum Bekerja' to 'Berwirausaha'

@@ -21,4 +21,9 @@ class Galeri extends Model
             'tanggal' => 'date',
         ];
     }
+
+    public function kategoriGaleri()
+    {
+        return $this->belongsTo(KategoriGaleri::class, 'kategori', 'nama');
+    }
 }
