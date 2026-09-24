@@ -106,6 +106,42 @@ class SipintuIntegrationTest extends TestCase
         $this->assertAuthenticatedAs($alumni, 'alumni');
     }
 
+    public function test_oauth_callback_redirects_non_graduated_student_to_public_home(): void
+    {
+        $testNis = 'NON_GRAD_' . rand(10000, 99999);
+        $testEmail = "student_{$testNis}@sijuna.sch.id";
+
+        Http::fake([
+            'http://localhost:8000/oauth/token' => Http::response([
+                'access_token' => 'mock_access_token_non_grad',
+                'token_type' => 'Bearer',
+                'expires_in' => 3600,
+            ], 200),
+            'http://localhost:8000/api/v1/user' => Http::response([
+                'status' => 'success',
+                'data' => [
+                    'id' => 888,
+                    'external_id' => $testNis,
+                    'name' => 'Siswa Belum Lulus',
+                    'email' => $testEmail,
+                    'role' => 'student',
+                    'graduated' => false,
+                    'classroom' => 'XI PPLG 2',
+                    'kode_jurusan' => 'PPLG',
+                    'nama_jurusan' => 'Pengembangan Perangkat Lunak dan Gim',
+                ],
+            ], 200),
+        ]);
+
+        $response = $this->get("/oauth/callback?code=mock_non_grad_code");
+
+        $response->assertRedirect('/');
+        $response->assertSessionHas('info');
+
+        $this->assertNull(Alumni::where('nis', $testNis)->first());
+        $this->assertGuest('alumni');
+    }
+
     public function test_oauth_callback_syncs_password_for_existing_alumni(): void
     {
         $testNis = 'EXISTING_NIS_' . rand(10000, 99999);

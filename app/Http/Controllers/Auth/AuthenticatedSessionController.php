@@ -21,11 +21,8 @@ class AuthenticatedSessionController extends Controller
             return redirect()->route('alumni.dashboard');
         }
 
-        // Jika pengguna datang dari portal SiPintu dan belum login, otomatis arahkan ke SSO
-        $referer = (string) $request->header('referer');
-        $fromSipintu = str_contains($referer, 'sipintu.smkn1bangsri.sch.id')
-            || $request->has('from_sipintu')
-            || $request->has('sso');
+        // Otomatis arahkan ke SSO hanya jika ada parameter eksplisit sso / from_sipintu
+        $fromSipintu = $request->has('from_sipintu') || $request->has('sso');
 
         if ($fromSipintu && ! $request->has('manual') && ! session('error')) {
             return redirect()->route('oauth.redirect');

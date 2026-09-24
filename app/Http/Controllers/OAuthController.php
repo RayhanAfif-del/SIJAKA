@@ -274,7 +274,26 @@ class OAuthController extends Controller
                     $mitra->save();
                 }
             } else {
-                // 5. Cocokkan dengan data siswa/alumni di database lokal (via NIS atau Email)
+                // 5. Verifikasi status kelulusan (graduated).
+                // Siswa yang belum lulus (graduated != true) bukan alumni dan tidak boleh masuk dashboard alumni.
+                if (! $this->isStudentGraduated($sipintuUser, $externalId, $email)) {
+                    Log::info('SiPintu OAuth: Pengguna terdeteksi belum lulus (graduated != true). Mengalihkan ke web publik.', [
+                        'external_id' => $externalId,
+                        'email'       => $email,
+                    ]);
+
+                    // Pastikan tidak ada sesi alumni yang aktif
+                    Auth::guard('alumni')->logout();
+
+                    // Bersihkan record alumni jika sebelumnya pernah tersimpan secara keliru
+                    if ($externalId !== '') {
+                        Alumni::where('nis', $externalId)->delete();
+                    }
+
+                    return redirect()->route('home')->with('info', 'Selamat datang di SIJAKA! Status akun Anda di SiPintu masih sebagai siswa aktif (belum lulus), sehingga Anda diarahkan ke halaman utama website.');
+                }
+
+                // 6. Cocokkan dengan data siswa/alumni di database lokal (via NIS atau Email)
                 if ($email === '' && $externalId === '') {
                     Log::warning('SiPintu OAuth: No NIS or Email in payload', ['payload' => $sipintuUser]);
                     return redirect()->route('login')->with('error', 'Data akun dari SiPintu tidak memiliki informasi NIS atau Email yang valid.');
@@ -380,10 +399,10 @@ class OAuthController extends Controller
                 $displayName = $matchedUser->nama ?? $matchedUser->name ?? 'User';
 
                 $targetUrl = match ($matchedGuard) {
-                    'alumni' => route('alumni.dashboard'),
+                    'alumni' => route('dashboard'),
                     'mitra'  => route('mitra.dashboard'),
-                    'admin'  => route('admin.dashboard'),
-                    default  => route('dashboard'),
+                    'admin'  => route('home'),
+                    default  => route('home'),
                 };
 
                 // Bersihkan intended jika mengarah ke halaman login atau SSO callback agar tidak memantul kembali ke panel login
@@ -478,6 +497,31 @@ class OAuthController extends Controller
                     $mitra->save();
                     return response()->json(['status' => 'success', 'healthy' => true, 'action' => 'mitra_updated', 'user_id' => $mitra->id]);
                 }
+            }
+
+            $hasExplicitGraduated = data_get($userData, 'graduated') !== null
+                || data_get($userData, 'user.graduated') !== null
+                || data_get($userData, 'is_graduated') !== null;
+
+            if ($hasExplicitGraduated && ! $this->isStudentGraduated($userData)) {
+                if ($user) {
+                    $user->delete();
+                    return response()->json([
+                        'status'    => 'success',
+                        'healthy'   => true,
+                        'action'    => 'pruned',
+                        'message'   => 'Alumni dihapus karena status di SiPintu belum lulus (graduated != true).',
+                        'timestamp' => $syncTime->toIso8601String(),
+                    ]);
+                }
+
+                return response()->json([
+                    'status'    => 'success',
+                    'healthy'   => true,
+                    'action'    => 'skipped',
+                    'message'   => 'Siswa belum lulus (graduated != true), dilewati.',
+                    'timestamp' => $syncTime->toIso8601String(),
+                ]);
             }
 
             // 3. Jika belum ada: Auto-provision akun baru
@@ -739,5 +783,57 @@ class OAuthController extends Controller
     protected function resolveTahunLulus(array $data): string
     {
         return app(SipintuAlumniSyncService::class)->determineTahunLulus($data);
+    }
+
+    /**
+     * Memeriksa apakah data siswa dari SiPintu memiliki status kelulusan (graduated = true).
+     */
+    protected function isStudentGraduated(mixed $sipintuUser, ?string $nis = null, ?string $email = null): bool
+    {
+        $graduated = data_get($sipintuUser, 'graduated')
+            ?? data_get($sipintuUser, 'user.graduated')
+            ?? data_get($sipintuUser, 'student.graduated')
+            ?? data_get($sipintuUser, 'is_graduated')
+            ?? data_get($sipintuUser, 'student.is_graduated')
+            ?? data_get($sipintuUser, 'user.is_graduated');
+
+        if ($graduated !== null) {
+            return filter_var($graduated, FILTER_VALIDATE_BOOLEAN) === true
+                || $graduated === 1
+                || $graduated === '1'
+                || $graduated === true;
+        }
+
+        $role = (string) (data_get($sipintuUser, 'role') ?? data_get($sipintuUser, 'user.role') ?? '');
+        if ($role !== '') {
+            if (in_array(strtolower($role), ['student', 'siswa'], true)) {
+                return false;
+            }
+            if (strtolower($role) === 'alumni') {
+                return true;
+            }
+        }
+
+        $status = strtolower((string) (data_get($sipintuUser, 'status') ?? data_get($sipintuUser, 'student.status') ?? ''));
+        if (in_array($status, ['lulus', 'alumni'], true)) {
+            return true;
+        }
+        if (in_array($status, ['aktif', 'siswa', 'belum lulus'], true)) {
+            return false;
+        }
+
+        // Jika tidak ada info spesifik dalam payload (misal generic payload),
+        // periksa apakah akun sudah tercatat sebagai alumni di database lokal.
+        if (! empty($nis) || ! empty($email)) {
+            $exists = Alumni::query()
+                ->when(! empty($nis), fn ($q) => $q->where('nis', $nis))
+                ->when(! empty($email), fn ($q) => $q->orWhere('email', $email))
+                ->exists();
+            if ($exists) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
