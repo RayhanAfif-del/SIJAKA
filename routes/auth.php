@@ -3,7 +3,7 @@
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('guest:admin,mitra,alumni')->group(function () {
+Route::middleware('guest:mitra,alumni')->group(function () {
     $alumniMitraLoginPath = config('app.admin_login_path', 'panel-sijaka');
     if ($alumniMitraLoginPath !== 'panel-sijaka') {
         Route::get($alumniMitraLoginPath, [AuthenticatedSessionController::class, 'create'])->name('login');
@@ -40,7 +40,7 @@ Route::middleware('guest:admin')->group(function () {
     }
 });
 
-Route::middleware('guest:admin,mitra,alumni')->group(function () {
+Route::middleware('guest:mitra,alumni')->group(function () {
     Route::match(['get', 'head'], '/oauth/redirect', [\App\Http\Controllers\OAuthController::class, 'redirect'])->name('oauth.redirect');
     Route::match(['get', 'head'], '/sipintu/redirect', [\App\Http\Controllers\OAuthController::class, 'redirect'])->name('sipintu.redirect');
 });

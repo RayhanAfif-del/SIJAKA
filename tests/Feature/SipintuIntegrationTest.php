@@ -408,7 +408,7 @@ class SipintuIntegrationTest extends TestCase
         $response->assertRedirect(route('admin.dashboard'));
     }
 
-    public function test_admin_accessing_panel_sijaka_redirects_to_admin_dashboard_without_loop(): void
+    public function test_admin_can_access_panel_sijaka_login_page_to_login_as_alumni(): void
     {
         $admin = Admin::first() ?? Admin::create([
             'name' => 'Test Admin',
@@ -417,6 +417,7 @@ class SipintuIntegrationTest extends TestCase
         ]);
 
         $response = $this->actingAs($admin, 'admin')->get('/panel-sijaka');
-        $response->assertRedirect(route('admin.dashboard'));
+        $response->assertStatus(200);
+        $response->assertSee('Masuk');
     }
 }
