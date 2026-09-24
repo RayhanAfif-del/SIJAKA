@@ -13,6 +13,10 @@ class AuthenticatedSessionController extends Controller
 {
     public function create(Request $request): \Illuminate\View\View|\Illuminate\Http\RedirectResponse
     {
+        if (Auth::guard('admin')->check()) {
+            return redirect()->route('admin.dashboard');
+        }
+
         if (Auth::guard('mitra')->check()) {
             return redirect()->route('mitra.dashboard');
         }

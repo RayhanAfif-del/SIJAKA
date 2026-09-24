@@ -129,11 +129,11 @@
                 </div>
                 <p class="mt-3 text-sm text-blue-100">
                     @if ($completionPercent < 50)
-                        <span class="font-semibold text-amber-300">📌 Tip:</span> Lengkapi headline, keahlian, dan unggah CV agar profil siap dilirik perusahaan!
+                        <span class="font-semibold text-amber-300">Tip:</span> Lengkapi headline, keahlian, dan unggah CV agar profil siap dilirik perusahaan!
                     @elseif ($completionPercent < 80)
-                        <span class="font-semibold text-blue-300">👍 Bagus!</span> Tambahkan portofolio dan media sosial untuk peluang lebih besar.
+                        <span class="font-semibold text-blue-300">Bagus!</span> Tambahkan portofolio dan media sosial untuk peluang lebih besar.
                     @else
-                        <span class="font-semibold text-emerald-300">🎉 Sempurna!</span> Profil Anda sudah siap bersaing di dunia kerja!
+                        <span class="font-semibold text-emerald-300">Sempurna!</span> Profil Anda sudah siap bersaing di dunia kerja!
                     @endif
                 </p>
             </div>

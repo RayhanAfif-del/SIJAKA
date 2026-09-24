@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Admin;
 use App\Models\Alumni;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Auth;
@@ -386,5 +387,36 @@ class SipintuIntegrationTest extends TestCase
 
         $response = $this->actingAs($alumni, 'alumni')->get('/dashboard');
         $response->assertRedirect(route('alumni.dashboard'));
+    }
+
+    public function test_unauthenticated_user_accessing_alumni_dashboard_redirects_to_home_with_info(): void
+    {
+        $response = $this->get('/alumni/dashboard');
+        $response->assertRedirect(route('home'));
+        $response->assertSessionHas('info');
+    }
+
+    public function test_admin_accessing_alumni_dashboard_redirects_to_admin_dashboard_without_loop(): void
+    {
+        $admin = Admin::first() ?? Admin::create([
+            'name' => 'Test Admin',
+            'email' => 'admin_test@smkn1bangsri.sch.id',
+            'password' => Hash::make('password'),
+        ]);
+
+        $response = $this->actingAs($admin, 'admin')->get('/alumni/dashboard');
+        $response->assertRedirect(route('admin.dashboard'));
+    }
+
+    public function test_admin_accessing_panel_sijaka_redirects_to_admin_dashboard_without_loop(): void
+    {
+        $admin = Admin::first() ?? Admin::create([
+            'name' => 'Test Admin',
+            'email' => 'admin_test2@smkn1bangsri.sch.id',
+            'password' => Hash::make('password'),
+        ]);
+
+        $response = $this->actingAs($admin, 'admin')->get('/panel-sijaka');
+        $response->assertRedirect(route('admin.dashboard'));
     }
 }

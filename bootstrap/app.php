@@ -17,17 +17,6 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->trustProxies(at: '*');
 
         $middleware->redirectUsersTo(function (Request $request) {
-            if ($request->is('panel-sijaka')) {
-                if (Auth::guard('mitra')->check()) {
-                    return route('mitra.dashboard');
-                }
-                return route('alumni.dashboard');
-            }
-
-            if ($request->is('panel-admin-sijaka') || $request->is('panel-admin-sijaka')) {
-                return route('admin.dashboard');
-            }
-
             return match (true) {
                 Auth::guard('admin')->check() => route('admin.dashboard'),
                 Auth::guard('mitra')->check() => route('mitra.dashboard'),
@@ -37,6 +26,16 @@ return Application::configure(basePath: dirname(__DIR__))
         });
 
         $middleware->redirectGuestsTo(function (Request $request) {
+            if (Auth::guard('admin')->check()) {
+                return route('admin.dashboard');
+            }
+            if (Auth::guard('mitra')->check()) {
+                return route('mitra.dashboard');
+            }
+            if (Auth::guard('alumni')->check()) {
+                return route('alumni.dashboard');
+            }
+
             return $request->is('admin') || $request->is('admin/*')
                 ? route('admin.login')
                 : route('login');
