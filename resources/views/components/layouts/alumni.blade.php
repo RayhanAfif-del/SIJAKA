@@ -23,9 +23,9 @@
 </head>
 <body class="bg-slate-50 font-sans antialiased text-slate-900" x-data="{ sidebarOpen: false }">
     <div class="flex min-h-screen">
-        <div x-show="sidebarOpen" x-transition:enter="transition-opacity ease-linear duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition-opacity ease-linear duration-300" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" @click="sidebarOpen = false" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-20 lg:hidden"></div>
+        <div x-show="sidebarOpen" x-transition:enter="transition-opacity ease-linear duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition-opacity ease-linear duration-300" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" @click="sidebarOpen = false" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-40 lg:hidden"></div>
 
-        <aside class="fixed inset-y-0 left-0 z-30 w-64 bg-slate-950 border-r border-white/10 flex flex-col transform transition-transform duration-300 ease-in-out lg:translate-x-0" :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'">
+        <aside class="fixed inset-y-0 left-0 z-50 w-64 bg-slate-950 border-r border-white/10 flex flex-col transform transition-transform duration-300 ease-in-out lg:translate-x-0" :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'">
             <div class="h-16 flex items-center gap-3 px-5 border-b border-white/10 bg-white/5 shrink-0">
                 <div class="w-9 h-9 rounded-xl flex items-center justify-center overflow-hidden shrink-0 bg-transparent">
                     <x-application-logo class="w-full h-full object-contain" />
@@ -72,7 +72,7 @@
         </aside>
 
         <div class="flex-1 lg:ml-64 min-w-0 flex flex-col">
-            <header class="h-16 bg-white/80 backdrop-blur-md border-b border-slate-200/80 flex items-center justify-between px-4 sm:px-6 sticky top-0 z-10">
+            <header class="h-16 bg-white/95 backdrop-blur-md border-b border-slate-200/80 flex items-center justify-between px-4 sm:px-6 sticky top-0 z-30 shadow-xs">
                 <div class="flex items-center gap-3">
                     <button @click="sidebarOpen = !sidebarOpen" class="lg:hidden -ml-2 inline-flex h-11 w-11 items-center justify-center rounded-lg text-slate-500 hover:text-slate-700 hover:bg-slate-100 transition" aria-label="Buka menu navigasi" :aria-expanded="sidebarOpen">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
