@@ -1,14 +1,37 @@
 @php
-    $logoFiles = [
-        public_path('logo.png'),
-        public_path('logo.png'),
-        public_path('logo.webp'),
-        public_path('logo.jpg'),
-        public_path('logo.jpeg'),
-    ];
+    $pengaturanLayout = null;
+    try {
+        if (\Illuminate\Support\Facades\Schema::hasTable('pengaturan_website')) {
+            $pengaturanLayout = \App\Models\PengaturanWebsite::singleton();
+        }
+    } catch (\Throwable $e) {}
 
-    $logoPath = collect($logoFiles)->first(fn ($path) => file_exists($path));
-    $logoUrl = $logoPath ? asset(basename($logoPath)) : null;
+    $logoUrl = null;
+    if ($pengaturanLayout && !empty($pengaturanLayout->site_icon)) {
+        $logoUrl = \Illuminate\Support\Facades\Storage::url($pengaturanLayout->site_icon);
+    }
+
+    if (!$logoUrl) {
+        $logoFiles = [
+            'logo.png',
+            'logo.svg',
+            'logo.webp',
+            'logo.jpg',
+            'logo.jpeg',
+        ];
+
+        foreach ($logoFiles as $file) {
+            if (file_exists(public_path($file))) {
+                $logoUrl = asset($file);
+                break;
+            }
+        }
+
+        // Fallback jika file_exists gagal karena perbedaan path webroot hosting/cPanel
+        if (!$logoUrl) {
+            $logoUrl = asset('logo.png');
+        }
+    }
 @endphp
 
 @if ($logoUrl)

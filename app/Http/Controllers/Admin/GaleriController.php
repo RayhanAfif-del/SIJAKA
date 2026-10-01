@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Schema;
+
 class GaleriController extends Controller
 {
     /**
@@ -32,7 +34,15 @@ class GaleriController extends Controller
         }
 
         $stackedGaleri = GaleriStack::group($query->get());
-        $kategoriList = KategoriGaleri::orderBy('nama')->get();
+
+        $kategoriList = collect();
+        try {
+            if (Schema::hasTable('kategori_galeri')) {
+                $kategoriList = KategoriGaleri::orderBy('nama')->get();
+            }
+        } catch (\Throwable $e) {
+            $kategoriList = collect();
+        }
 
         return view('admin.galeri.index', [
             'galeri' => GaleriStack::paginate($stackedGaleri, 12)->withQueryString(),
@@ -45,7 +55,15 @@ class GaleriController extends Controller
      */
     public function create()
     {
-        $kategoriList = KategoriGaleri::orderBy('nama')->get();
+        $kategoriList = collect();
+        try {
+            if (Schema::hasTable('kategori_galeri')) {
+                $kategoriList = KategoriGaleri::orderBy('nama')->get();
+            }
+        } catch (\Throwable $e) {
+            $kategoriList = collect();
+        }
+
         return view('admin.galeri.create', compact('kategoriList'));
     }
 
@@ -83,7 +101,15 @@ class GaleriController extends Controller
      */
     public function edit(Galeri $galeri)
     {
-        $kategoriList = KategoriGaleri::orderBy('nama')->get();
+        $kategoriList = collect();
+        try {
+            if (Schema::hasTable('kategori_galeri')) {
+                $kategoriList = KategoriGaleri::orderBy('nama')->get();
+            }
+        } catch (\Throwable $e) {
+            $kategoriList = collect();
+        }
+
         return view('admin.galeri.edit', compact('galeri', 'kategoriList'));
     }
 

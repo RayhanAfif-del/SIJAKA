@@ -69,11 +69,19 @@
                 <select name="kategori" id="selectKategori" x-ref="selectKategori" required
                     class="w-full rounded-lg border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 text-sm transition bg-white">
                     <option value="">-- Pilih Kategori --</option>
-                    @foreach ($kategoriList as $kat)
-                        <option value="{{ $kat->nama }}" {{ old('kategori', $galeri->kategori ?? '') == $kat->nama ? 'selected' : '' }}>
-                            {{ $kat->nama }}
-                        </option>
-                    @endforeach
+                    @if (isset($kategoriList) && $kategoriList->isNotEmpty())
+                        @foreach ($kategoriList as $kat)
+                            <option value="{{ $kat->nama }}" {{ old('kategori', $galeri->kategori ?? '') == $kat->nama ? 'selected' : '' }}>
+                                {{ $kat->nama }}
+                            </option>
+                        @endforeach
+                    @else
+                        @foreach (['Workshop', 'Seminar', 'Kunjungan Industri', 'Job Fair', 'Training', 'Sosialisasi', 'Kegiatan Sekolah', 'Kerja Sama', 'Kegiatan Lain'] as $fallbackKat)
+                            <option value="{{ $fallbackKat }}" {{ old('kategori', $galeri->kategori ?? '') == $fallbackKat ? 'selected' : '' }}>
+                                {{ $fallbackKat }}
+                            </option>
+                        @endforeach
+                    @endif
                 </select>
 
                 {{-- Quick Suggestion Chips from Database --}}

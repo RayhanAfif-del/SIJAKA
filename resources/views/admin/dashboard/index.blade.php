@@ -9,7 +9,7 @@
             </p>
             <h1 class="text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight">Dashboard Admin</h1>
             <p class="text-sm text-slate-500 mt-1">
-                Selamat datang kembali, <span class="font-semibold text-slate-800">{{ auth('admin')->user()->name }}</span> 👋
+                Selamat datang kembali, <span class="font-semibold text-slate-800">{{ auth('admin')->user()->name }}</span>
             </p>
         </div>
         <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full lg:w-auto">

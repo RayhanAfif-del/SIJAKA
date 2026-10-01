@@ -6,6 +6,14 @@
     <title>{{ $title ?? 'Dashboard Mitra' }} - SIJAKA</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     
+    @php
+        $pengaturanLayout = \App\Models\PengaturanWebsite::singleton();
+        $siteIconUrl = $pengaturanLayout->site_icon
+            ? \Illuminate\Support\Facades\Storage::url($pengaturanLayout->site_icon)
+            : asset('logo.png');
+    @endphp
+    <link rel="icon" href="{{ $siteIconUrl }}">
+
     {{-- Custom Scrollbar untuk Sidebar --}}
     <style>
         .custom-scrollbar::-webkit-scrollbar {
@@ -46,7 +54,11 @@
             {{-- Logo Area --}}
             <div class="h-16 flex items-center gap-3 px-5 border-b border-white/10 bg-white/5 shrink-0">
                 <div class="w-9 h-9 rounded-xl flex items-center justify-center overflow-hidden shrink-0 bg-transparent">
-                    <x-application-logo class="w-full h-full object-contain" />
+                    @if ($pengaturanLayout->site_icon)
+                        <img src="{{ $siteIconUrl }}" alt="Icon SIJAKA" class="w-full h-full rounded-xl object-contain bg-transparent">
+                    @else
+                        <x-application-logo class="w-full h-full object-contain" />
+                    @endif
                 </div>
                 <div class="min-w-0">
                     <p class="font-bold text-sm text-white leading-tight tracking-wide">SIJAKA</p>

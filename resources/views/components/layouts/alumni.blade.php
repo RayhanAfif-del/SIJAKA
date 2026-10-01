@@ -28,7 +28,11 @@
         <aside class="fixed inset-y-0 left-0 z-50 w-64 bg-slate-950 border-r border-white/10 flex flex-col transform transition-transform duration-300 ease-in-out lg:translate-x-0" :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'">
             <div class="h-16 flex items-center gap-3 px-5 border-b border-white/10 bg-white/5 shrink-0">
                 <div class="w-9 h-9 rounded-xl flex items-center justify-center overflow-hidden shrink-0 bg-transparent">
-                    <x-application-logo class="w-full h-full object-contain" />
+                    @if ($pengaturanLayout->site_icon)
+                        <img src="{{ $siteIconUrl }}" alt="Icon SIJAKA" class="w-full h-full rounded-xl object-contain bg-transparent">
+                    @else
+                        <x-application-logo class="w-full h-full object-contain" />
+                    @endif
                 </div>
                 <div class="min-w-0">
                     <p class="font-bold text-sm text-white leading-tight tracking-wide">SIJAKA</p>

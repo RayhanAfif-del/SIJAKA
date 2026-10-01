@@ -52,7 +52,15 @@ class GaleriStack
     {
         $judul = mb_strtolower(trim((string) ($item->judul ?? '')));
         $kategori = mb_strtolower(trim((string) ($item->kategori ?? '')));
-        $tanggal = optional($item->tanggal)->format('Y-m-d') ?? '';
+        
+        $tanggal = '';
+        if (!empty($item->tanggal)) {
+            if ($item->tanggal instanceof \DateTimeInterface) {
+                $tanggal = $item->tanggal->format('Y-m-d');
+            } else {
+                $tanggal = (string) $item->tanggal;
+            }
+        }
 
         return implode('|', [$judul, $kategori, $tanggal]);
     }
