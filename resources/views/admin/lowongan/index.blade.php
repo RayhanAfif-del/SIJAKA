@@ -14,20 +14,22 @@
         ];
     @endphp
 
-    {{-- Header --}}
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-        <div>
-            <div class="flex items-center gap-2 text-xs text-slate-500 mb-2">
-                <a href="{{ route('admin.dashboard') }}" class="hover:text-slate-700 transition">Dashboard</a>
-                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
-                </svg>
-                <span class="text-slate-700 font-medium">Kelola Lowongan</span>
+    <div class="space-y-6">
+
+        {{-- Header --}}
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+                <div class="flex items-center gap-2 text-xs text-slate-500 mb-2">
+                    <a href="{{ route('admin.dashboard') }}" class="hover:text-slate-700 transition">Dashboard</a>
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                    </svg>
+                    <span class="text-slate-700 font-medium">Kelola Lowongan</span>
+                </div>
+                <h1 class="text-2xl font-semibold text-slate-900 tracking-tight">Kelola Lowongan</h1>
+                <p class="text-sm text-slate-500 mt-1">Verifikasi dan kelola lowongan kerja yang diajukan oleh mitra perusahaan.</p>
             </div>
-            <h1 class="text-2xl font-semibold text-slate-900 tracking-tight">Kelola Lowongan</h1>
-            <p class="text-sm text-slate-500 mt-1">Verifikasi dan kelola lowongan kerja yang diajukan oleh mitra perusahaan.</p>
         </div>
-    </div>
 
     {{-- Filter Pills --}}
     <div class="bg-white border border-slate-200/70 rounded-xl shadow-sm p-2 mb-5">
@@ -243,5 +245,7 @@
             {{ $lowongan->links() }}
         </div>
     @endif
+
+    </div>
 
 </x-layouts.admin>

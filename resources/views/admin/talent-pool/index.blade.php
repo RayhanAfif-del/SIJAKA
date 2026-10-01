@@ -9,23 +9,25 @@
         ];
     @endphp
 
-    {{-- Header Section --}}
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-        <div>
-            <div class="flex items-center gap-2 text-xs text-slate-500 mb-2">
-                <a href="{{ route('admin.dashboard') }}" class="hover:text-slate-700 transition flex items-center gap-1">
-                    Dashboard
-                </a>
-                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                <span class="text-slate-700 font-medium">Talenta Alumni</span>
-            </div>
-            <h1 class="text-2xl font-semibold text-slate-900 tracking-tight">Talenta Alumni</h1>
-            <p class="text-sm text-slate-500 mt-1">Tinjau pengajuan profil alumni sebelum ditampilkan kepada mitra perusahaan.</p>
-        </div>
-    </div>
+    <div class="space-y-6">
 
-    {{-- Filter Tabs --}}
-    <div class="bg-white border border-slate-200/70 rounded-xl p-1.5 mb-5 flex flex-wrap gap-1 shadow-sm">
+        {{-- Header Section --}}
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+                <div class="flex items-center gap-2 text-xs text-slate-500 mb-2">
+                    <a href="{{ route('admin.dashboard') }}" class="hover:text-slate-700 transition flex items-center gap-1">
+                        Dashboard
+                    </a>
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    <span class="text-slate-700 font-medium">Talenta Alumni</span>
+                </div>
+                <h1 class="text-2xl font-semibold text-slate-900 tracking-tight">Talenta Alumni</h1>
+                <p class="text-sm text-slate-500 mt-1">Tinjau pengajuan profil alumni sebelum ditampilkan kepada mitra perusahaan.</p>
+            </div>
+        </div>
+
+        {{-- Filter Tabs --}}
+        <div class="bg-white border border-slate-200/70 rounded-xl p-1.5 flex flex-wrap gap-1 shadow-sm">
         @foreach ($statuses as $label => $value)
             @php
                 $isActive = (request('status') === $value) || (is_null($value) && !request('status'));
@@ -163,6 +165,7 @@
                 {{ $talents->links() }}
             </div>
         @endif
+    </div>
     </div>
 
 </x-layouts.admin>

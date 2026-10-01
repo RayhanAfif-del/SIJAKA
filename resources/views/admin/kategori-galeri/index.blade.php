@@ -1,7 +1,9 @@
 <x-layouts.admin title="Kategori Galeri">
 
-    {{-- Header --}}
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+    <div class="space-y-6">
+
+        {{-- Header --}}
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
             <div class="flex items-center gap-2 text-xs text-slate-500 mb-2 flex-wrap">
                 <a href="{{ route('admin.dashboard') }}" class="hover:text-slate-700 transition">Dashboard</a>
@@ -281,6 +283,7 @@
             </div>
         </div>
 
+    </div>
     </div>
 
 </x-layouts.admin>

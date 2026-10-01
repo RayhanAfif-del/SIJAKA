@@ -1,25 +1,27 @@
 <x-layouts.admin title="Struktur Organisasi">
 
-    {{-- Header --}}
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-        <div>
-            <div class="flex items-center gap-2 text-xs text-slate-500 mb-2">
-                <a href="{{ route('admin.dashboard') }}" class="hover:text-slate-700 transition">Dashboard</a>
-                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
-                </svg>
-                <span class="text-slate-700 font-medium">Struktur Organisasi</span>
+    <div class="space-y-6">
+
+        {{-- Header --}}
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+                <div class="flex items-center gap-2 text-xs text-slate-500 mb-2">
+                    <a href="{{ route('admin.dashboard') }}" class="hover:text-slate-700 transition">Dashboard</a>
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                    </svg>
+                    <span class="text-slate-700 font-medium">Struktur Organisasi</span>
+                </div>
+                <h1 class="text-2xl font-semibold text-slate-900 tracking-tight">Struktur Organisasi</h1>
+                <p class="text-sm text-slate-500 mt-1">Kelola data pengurus BKK yang tampil di halaman publik.</p>
             </div>
-            <h1 class="text-2xl font-semibold text-slate-900 tracking-tight">Struktur Organisasi</h1>
-            <p class="text-sm text-slate-500 mt-1">Kelola data pengurus BKK yang tampil di halaman publik.</p>
+            <a href="{{ route('admin.struktur-organisasi.create') }}" class="btn-primary w-full sm:w-auto justify-center">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+                </svg>
+                Tambah Pengurus
+            </a>
         </div>
-        <a href="{{ route('admin.struktur-organisasi.create') }}" class="btn-primary w-full sm:w-auto justify-center">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
-            </svg>
-            Tambah Pengurus
-        </a>
-    </div>
 
     {{-- Grid Cards --}}
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
@@ -81,7 +83,7 @@
                     </svg>
                 </div>
                 <h3 class="text-base font-semibold text-slate-900 mb-1">Belum ada data struktur organisasi</h3>
-                <p class="text-sm text-slate-500 mb-5 max-w-sm text-center">Mulai tambahkan pengurus BKK agar informasi dapat dilihat oleh publik di halaman depan.</p>
+                <p class="text-sm text-slate-500 mb-5 max-w-full text-center">Mulai tambahkan pengurus BKK agar informasi dapat dilihat oleh publik di halaman depan.</p>
                 <a href="{{ route('admin.struktur-organisasi.create') }}" class="btn-primary w-full sm:w-auto justify-center">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
@@ -90,6 +92,7 @@
                 </a>
             </div>
         @endforelse
+    </div>
     </div>
 
 </x-layouts.admin>

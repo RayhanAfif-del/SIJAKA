@@ -1,26 +1,33 @@
 <x-layouts.mitra title="Profil Perusahaan">
 
-    {{-- Header --}}
-    <div class="mb-8">
-        <div class="flex items-center gap-2 text-xs text-slate-500 mb-3">
-            <a href="{{ route('mitra.dashboard') }}" class="hover:text-[#024CD4] transition flex items-center gap-1">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
-                Dashboard
-            </a>
-            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-            <span class="text-slate-700 font-medium">Pengaturan</span>
-            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-            <span class="text-[#024CD4] font-semibold">Profil Perusahaan</span>
-        </div>
+    <div class="space-y-6">
+
+        {{-- Header --}}
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-                <h1 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">Profil Perusahaan</h1>
-                <p class="text-sm text-slate-500 mt-1.5 max-w-2xl">Kelola informasi, branding, dan deskripsi perusahaan Anda agar tampil profesional di mata para pelamar kerja.</p>
+                <div class="flex items-center gap-2 text-xs text-slate-500 mb-2">
+                    <a href="{{ route('mitra.dashboard') }}" class="hover:text-slate-700 transition">Dashboard</a>
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                    </svg>
+                    <span class="text-slate-700 font-medium">Pengaturan</span>
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                    </svg>
+                    <span class="text-slate-700 font-medium">Profil Perusahaan</span>
+                </div>
+                <h1 class="text-2xl font-semibold text-slate-900 tracking-tight">Profil Perusahaan</h1>
+                <p class="text-sm text-slate-500 mt-1">Kelola informasi, branding, dan deskripsi perusahaan Anda agar tampil profesional di mata para pelamar kerja.</p>
             </div>
+            <a href="{{ route('mitra.dashboard') }}" class="btn-secondary w-full sm:w-auto justify-center shrink-0">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                </svg>
+                Kembali
+            </a>
         </div>
-    </div>
 
-    <form method="POST" action="{{ route('mitra.profil.update') }}" enctype="multipart/form-data" class="grid lg:grid-cols-3 gap-6 max-w-7xl">
+        <form method="POST" action="{{ route('mitra.profil.update') }}" enctype="multipart/form-data" class="grid lg:grid-cols-3 gap-6">
         
         {{-- Left Column: Form --}}
         <div class="lg:col-span-2 space-y-6">
@@ -288,5 +295,6 @@
         </div>
 
     </form>
+    </div>
 
 </x-layouts.mitra>

@@ -1,35 +1,37 @@
 <x-layouts.admin title="Pengaturan Beranda">
 
-    {{-- Header --}}
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-        <div>
-            <div class="flex items-center gap-2 text-xs text-slate-500 mb-2" aria-label="Breadcrumb">
-                <a href="{{ route('admin.dashboard') }}" class="hover:text-slate-700 transition">Dashboard</a>
-                <svg class="hidden h-3 w-3 sm:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
-                </svg>
-                <span class="hidden font-medium text-slate-700 sm:inline">Pengaturan</span>
-                <svg class="hidden h-3 w-3 sm:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
-                </svg>
-                <span class="text-slate-700 font-medium">Beranda</span>
+    <div class="space-y-6">
+
+        {{-- Header --}}
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+                <div class="flex items-center gap-2 text-xs text-slate-500 mb-2" aria-label="Breadcrumb">
+                    <a href="{{ route('admin.dashboard') }}" class="hover:text-slate-700 transition">Dashboard</a>
+                    <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                    </svg>
+                    <span class="font-medium text-slate-700">Pengaturan</span>
+                    <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                    </svg>
+                    <span class="text-slate-700 font-medium">Beranda</span>
+                </div>
+                <h1 class="text-2xl font-semibold text-slate-900 tracking-tight">Pengaturan Beranda</h1>
+                <p class="text-sm text-slate-500 mt-1">Atur teks utama, tombol, dan identitas singkat yang tampil di halaman utama web.</p>
             </div>
-            <h1 class="text-2xl font-semibold text-slate-900 tracking-tight">Pengaturan Beranda</h1>
-            <p class="text-sm text-slate-500 mt-1">Atur teks utama, tombol, dan identitas singkat yang tampil di halaman utama web.</p>
+            <a href="{{ route('admin.dashboard') }}" class="btn-secondary w-full sm:w-auto justify-center shrink-0">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                </svg>
+                Kembali
+            </a>
         </div>
-        <a href="{{ route('admin.dashboard') }}" class="btn-secondary w-full sm:w-auto justify-center">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-            </svg>
-            Kembali
-        </a>
-    </div>
 
-    <form method="POST" action="{{ route('admin.pengaturan-beranda.update') }}" enctype="multipart/form-data">
-        @csrf
-        @method('PUT')
+        <form method="POST" action="{{ route('admin.pengaturan-beranda.update') }}" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
 
-        <div class="grid gap-4 sm:gap-5 md:grid-cols-2 lg:grid-cols-3 max-w-7xl">
+            <div class="grid gap-4 sm:gap-5 md:grid-cols-2 lg:grid-cols-3">
 
             {{-- Form Panel --}}
             <div class="md:col-span-2 lg:col-span-2 space-y-5">
@@ -153,7 +155,7 @@
                         </div>
 
                         {{-- Badge --}}
-                        <div class="max-w-sm">
+                        <div class="max-w-full">
                             <label class="flex items-center gap-1.5 text-sm font-medium text-slate-700 mb-1.5">
                                 <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
@@ -384,5 +386,6 @@
             </div>
         </div>
     </form>
+    </div>
 
 </x-layouts.admin>

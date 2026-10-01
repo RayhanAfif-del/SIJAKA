@@ -1,4 +1,4 @@
-<div class="space-y-5 max-w-4xl mx-auto">
+<div class="space-y-5">
     
     {{-- Section 1: Informasi Dasar --}}
     <div class="bg-white border border-slate-200/70 rounded-xl shadow-sm overflow-hidden">

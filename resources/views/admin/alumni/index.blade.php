@@ -20,37 +20,39 @@
         ];
     @endphp
 
-    {{-- Header --}}
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-        <div>
-            <div class="flex items-center gap-2 text-xs text-slate-500 mb-2">
-                <a href="{{ route('admin.dashboard') }}" class="hover:text-slate-700 transition">Dashboard</a>
-                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
-                </svg>
-                <span class="text-slate-700 font-medium">Data Alumni</span>
-            </div>
-            <h1 class="text-2xl font-semibold text-slate-900 tracking-tight">Data Alumni</h1>
-            <p class="text-sm text-slate-500 mt-1">Kelola data alumni untuk statistik penyerapan kerja dan tracer study.</p>
-        </div>
-        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto">
-            <form method="POST" action="{{ route('admin.alumni.sync-sipintu') }}" class="w-full sm:w-auto">
-                @csrf
-                <button type="submit" class="w-full sm:w-auto inline-flex min-h-11 items-center justify-center gap-1.5 px-3.5 py-2.5 text-sm font-medium text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-xl shadow-sm transition">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h5M20 20v-5h-5M5.5 15a7 7 0 0011.9 1.9L20 15M4 9l2.6-1.9A7 7 0 0118.5 9"/>
+    <div class="space-y-6">
+
+        {{-- Header --}}
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+                <div class="flex items-center gap-2 text-xs text-slate-500 mb-2">
+                    <a href="{{ route('admin.dashboard') }}" class="hover:text-slate-700 transition">Dashboard</a>
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
                     </svg>
-                    Sinkronkan SiPintu
-                </button>
-            </form>
-            <a href="{{ route('admin.alumni.create') }}" class="w-full sm:w-auto inline-flex min-h-11 items-center justify-center gap-1.5 px-4 py-2.5 text-sm font-medium text-white bg-slate-900 hover:bg-slate-800 rounded-xl shadow-sm transition">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"/>
-                </svg>
-                Tambah Alumni
-            </a>
+                    <span class="text-slate-700 font-medium">Data Alumni</span>
+                </div>
+                <h1 class="text-2xl font-semibold text-slate-900 tracking-tight">Data Alumni</h1>
+                <p class="text-sm text-slate-500 mt-1">Kelola data alumni untuk statistik penyerapan kerja dan tracer study.</p>
+            </div>
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto">
+                <form method="POST" action="{{ route('admin.alumni.sync-sipintu') }}" class="w-full sm:w-auto">
+                    @csrf
+                    <button type="submit" class="btn-secondary text-blue-700 bg-blue-50 border-blue-200 hover:bg-blue-100 w-full sm:w-auto justify-center">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h5M20 20v-5h-5M5.5 15a7 7 0 0011.9 1.9L20 15M4 9l2.6-1.9A7 7 0 0118.5 9"/>
+                        </svg>
+                        Sinkronkan SiPintu
+                    </button>
+                </form>
+                <a href="{{ route('admin.alumni.create') }}" class="btn-primary w-full sm:w-auto justify-center">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"/>
+                    </svg>
+                    Tambah Alumni
+                </a>
+            </div>
         </div>
-    </div>
 
     {{-- Search & Filter Section --}}
     <div class="space-y-3 mb-5">
@@ -324,5 +326,7 @@
             {{ $alumni->links() }}
         </div>
     @endif
+
+    </div>
 
 </x-layouts.admin>

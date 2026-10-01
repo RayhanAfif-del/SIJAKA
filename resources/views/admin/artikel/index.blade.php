@@ -11,26 +11,28 @@
         ];
     @endphp
 
-    {{-- Header --}}
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-        <div>
-            <div class="flex items-center gap-2 text-xs text-slate-500 mb-2">
-                <a href="{{ route('admin.dashboard') }}" class="hover:text-slate-700 transition">Dashboard</a>
-                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
-                </svg>
-                <span class="text-slate-700 font-medium">Artikel</span>
+    <div class="space-y-6">
+
+        {{-- Header --}}
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+                <div class="flex items-center gap-2 text-xs text-slate-500 mb-2">
+                    <a href="{{ route('admin.dashboard') }}" class="hover:text-slate-700 transition">Dashboard</a>
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                    </svg>
+                    <span class="text-slate-700 font-medium">Artikel</span>
+                </div>
+                <h1 class="text-2xl font-semibold text-slate-900 tracking-tight">Artikel</h1>
+                <p class="text-sm text-slate-500 mt-1">Kelola artikel dunia kerja yang tampil di halaman publik.</p>
             </div>
-            <h1 class="text-2xl font-semibold text-slate-900 tracking-tight">Artikel</h1>
-            <p class="text-sm text-slate-500 mt-1">Kelola artikel dunia kerja yang tampil di halaman publik.</p>
+            <a href="{{ route('admin.artikel.create') }}" class="btn-primary w-full sm:w-auto justify-center">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                </svg>
+                Tulis Artikel
+            </a>
         </div>
-        <a href="{{ route('admin.artikel.create') }}" class="btn-primary w-full sm:w-auto justify-center">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-            </svg>
-            Tulis Artikel
-        </a>
-    </div>
 
     {{-- Table Container --}}
     <div class="bg-white border border-slate-200/70 rounded-xl shadow-sm overflow-hidden">
@@ -165,5 +167,7 @@
             {{ $artikel->links() }}
         </div>
     @endif
+
+    </div>
 
 </x-layouts.admin>

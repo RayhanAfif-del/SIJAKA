@@ -22,34 +22,36 @@
         ];
     @endphp
 
-    {{-- Header --}}
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-        <div>
-            <div class="flex items-center gap-2 text-xs text-slate-500 mb-2">
-                <a href="{{ route('admin.dashboard') }}" class="hover:text-slate-700 transition">Dashboard</a>
-                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
-                </svg>
-                <span class="text-slate-700 font-medium">Galeri Kegiatan</span>
+    <div class="space-y-6">
+
+        {{-- Header --}}
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+                <div class="flex items-center gap-2 text-xs text-slate-500 mb-2">
+                    <a href="{{ route('admin.dashboard') }}" class="hover:text-slate-700 transition">Dashboard</a>
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                    </svg>
+                    <span class="text-slate-700 font-medium">Galeri Kegiatan</span>
+                </div>
+                <h1 class="text-2xl font-semibold text-slate-900 tracking-tight">Galeri Kegiatan</h1>
+                <p class="text-sm text-slate-500 mt-1">Kelola dokumentasi foto kegiatan BKK yang tampil di halaman publik.</p>
             </div>
-            <h1 class="text-2xl font-semibold text-slate-900 tracking-tight">Galeri Kegiatan</h1>
-            <p class="text-sm text-slate-500 mt-1">Kelola dokumentasi foto kegiatan BKK yang tampil di halaman publik.</p>
+            <div class="flex items-center gap-2.5">
+                <a href="{{ route('admin.kategori-galeri.index') }}" class="btn-secondary w-full sm:w-auto justify-center">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+                    </svg>
+                    Kelola Kategori
+                </a>
+                <a href="{{ route('admin.galeri.create') }}" class="btn-primary w-full sm:w-auto justify-center">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+                    </svg>
+                    Tambah Foto
+                </a>
+            </div>
         </div>
-        <div class="flex items-center gap-2.5">
-            <a href="{{ route('admin.kategori-galeri.index') }}" class="btn-secondary w-full sm:w-auto justify-center">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
-                </svg>
-                Kelola Kategori
-            </a>
-            <a href="{{ route('admin.galeri.create') }}" class="btn-primary w-full sm:w-auto justify-center">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
-                </svg>
-                Tambah Foto
-            </a>
-        </div>
-    </div>
 
     {{-- Search & Filter Bar --}}
     <div class="bg-white border border-slate-200/70 rounded-xl shadow-sm p-4 mb-5">
@@ -444,6 +446,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
 </x-layouts.admin>

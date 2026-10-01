@@ -1,4 +1,4 @@
-<div class="space-y-5 max-w-4xl mx-auto">
+<div class="space-y-5">
     @php
         $isEdit = isset($galeri) && !empty($galeri->exists);
     @endphp

@@ -13,7 +13,7 @@
         $completionPercent = round(($completedCount / count($completionFields)) * 100);
     @endphp
 
-    <div class="max-w-6xl mx-auto space-y-6" x-data="{
+    <div class="space-y-6" x-data="{
         photoPreview: null,
         fileChosen(event) {
             const file = event.target.files[0];

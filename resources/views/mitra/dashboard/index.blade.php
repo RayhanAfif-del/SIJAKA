@@ -8,7 +8,7 @@
             </p>
             <h1 class="text-2xl font-semibold text-slate-900 tracking-tight">Dashboard Mitra</h1>
             <p class="text-sm text-slate-500 mt-1">
-                Selamat datang kembali, <span class="font-medium text-slate-700">{{ auth('mitra')->user()->nama_perusahaan }}</span> 👋
+                Selamat datang kembali, <span class="font-medium text-slate-700">{{ auth('mitra')->user()->nama_perusahaan }}</span>
             </p>
         </div>
         <div class="flex items-center gap-2">
